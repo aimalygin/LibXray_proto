@@ -127,6 +127,12 @@ public struct Xray_App_Dns_NameServer: @unchecked Sendable {
 
   public var queryStrategy: Xray_App_Dns_QueryStrategy = .useIp
 
+  public var allowUnexpectedIps: Bool = false
+
+  public var tag: String = String()
+
+  public var timeoutMs: UInt64 = 0
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public struct PriorityDomain: Sendable {
@@ -245,6 +251,9 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
     3: .same(proto: "geoip"),
     4: .standard(proto: "original_rules"),
     7: .standard(proto: "query_strategy"),
+    8: .same(proto: "allowUnexpectedIPs"),
+    9: .same(proto: "tag"),
+    10: .same(proto: "timeoutMs"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -260,6 +269,9 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
       case 5: try { try decoder.decodeSingularBytesField(value: &self.clientIp) }()
       case 6: try { try decoder.decodeSingularBoolField(value: &self.skipFallback) }()
       case 7: try { try decoder.decodeSingularEnumField(value: &self.queryStrategy) }()
+      case 8: try { try decoder.decodeSingularBoolField(value: &self.allowUnexpectedIps) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.tag) }()
+      case 10: try { try decoder.decodeSingularUInt64Field(value: &self.timeoutMs) }()
       default: break
       }
     }
@@ -291,6 +303,15 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
     if self.queryStrategy != .useIp {
       try visitor.visitSingularEnumField(value: self.queryStrategy, fieldNumber: 7)
     }
+    if self.allowUnexpectedIps != false {
+      try visitor.visitSingularBoolField(value: self.allowUnexpectedIps, fieldNumber: 8)
+    }
+    if !self.tag.isEmpty {
+      try visitor.visitSingularStringField(value: self.tag, fieldNumber: 9)
+    }
+    if self.timeoutMs != 0 {
+      try visitor.visitSingularUInt64Field(value: self.timeoutMs, fieldNumber: 10)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -302,6 +323,9 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
     if lhs.geoip != rhs.geoip {return false}
     if lhs.originalRules != rhs.originalRules {return false}
     if lhs.queryStrategy != rhs.queryStrategy {return false}
+    if lhs.allowUnexpectedIps != rhs.allowUnexpectedIps {return false}
+    if lhs.tag != rhs.tag {return false}
+    if lhs.timeoutMs != rhs.timeoutMs {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

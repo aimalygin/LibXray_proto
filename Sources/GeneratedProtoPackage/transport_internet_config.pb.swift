@@ -91,6 +91,60 @@ public enum Xray_Transport_Internet_DomainStrategy: SwiftProtobuf.Enum, Swift.Ca
 
 }
 
+public enum Xray_Transport_Internet_AddressPortStrategy: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case none // = 0
+  case srvPortOnly // = 1
+  case srvAddressOnly // = 2
+  case srvPortAndAddress // = 3
+  case txtPortOnly // = 4
+  case txtAddressOnly // = 5
+  case txtPortAndAddress // = 6
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .none
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .none
+    case 1: self = .srvPortOnly
+    case 2: self = .srvAddressOnly
+    case 3: self = .srvPortAndAddress
+    case 4: self = .txtPortOnly
+    case 5: self = .txtAddressOnly
+    case 6: self = .txtPortAndAddress
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .none: return 0
+    case .srvPortOnly: return 1
+    case .srvAddressOnly: return 2
+    case .srvPortAndAddress: return 3
+    case .txtPortOnly: return 4
+    case .txtAddressOnly: return 5
+    case .txtPortAndAddress: return 6
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Xray_Transport_Internet_AddressPortStrategy] = [
+    .none,
+    .srvPortOnly,
+    .srvAddressOnly,
+    .srvPortAndAddress,
+    .txtPortOnly,
+    .txtAddressOnly,
+    .txtPortAndAddress,
+  ]
+
+}
+
 public struct Xray_Transport_Internet_TransportConfig: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -178,6 +232,8 @@ public struct Xray_Transport_Internet_CustomSockopt: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
+
+  public var network: String = String()
 
   public var level: String = String()
 
@@ -288,9 +344,9 @@ public struct Xray_Transport_Internet_SocketConfig: @unchecked Sendable {
     set {_uniqueStorage()._tcpMaxSeg = newValue}
   }
 
-  public var tcpNoDelay: Bool {
-    get {return _storage._tcpNoDelay}
-    set {_uniqueStorage()._tcpNoDelay = newValue}
+  public var penetrate: Bool {
+    get {return _storage._penetrate}
+    set {_uniqueStorage()._penetrate = newValue}
   }
 
   public var tcpMptcp: Bool {
@@ -301,6 +357,11 @@ public struct Xray_Transport_Internet_SocketConfig: @unchecked Sendable {
   public var customSockopt: [Xray_Transport_Internet_CustomSockopt] {
     get {return _storage._customSockopt}
     set {_uniqueStorage()._customSockopt = newValue}
+  }
+
+  public var addressPortStrategy: Xray_Transport_Internet_AddressPortStrategy {
+    get {return _storage._addressPortStrategy}
+    set {_uniqueStorage()._addressPortStrategy = newValue}
   }
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -371,6 +432,18 @@ extension Xray_Transport_Internet_DomainStrategy: SwiftProtobuf._ProtoNameProvid
     8: .same(proto: "FORCE_IP6"),
     9: .same(proto: "FORCE_IP46"),
     10: .same(proto: "FORCE_IP64"),
+  ]
+}
+
+extension Xray_Transport_Internet_AddressPortStrategy: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "None"),
+    1: .same(proto: "SrvPortOnly"),
+    2: .same(proto: "SrvAddressOnly"),
+    3: .same(proto: "SrvPortAndAddress"),
+    4: .same(proto: "TxtPortOnly"),
+    5: .same(proto: "TxtAddressOnly"),
+    6: .same(proto: "TxtPortAndAddress"),
   ]
 }
 
@@ -529,10 +602,11 @@ extension Xray_Transport_Internet_ProxyConfig: SwiftProtobuf.Message, SwiftProto
 extension Xray_Transport_Internet_CustomSockopt: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CustomSockopt"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "level"),
-    2: .same(proto: "opt"),
-    3: .same(proto: "value"),
-    4: .same(proto: "type"),
+    1: .same(proto: "network"),
+    2: .same(proto: "level"),
+    3: .same(proto: "opt"),
+    4: .same(proto: "value"),
+    5: .same(proto: "type"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -541,32 +615,37 @@ extension Xray_Transport_Internet_CustomSockopt: SwiftProtobuf.Message, SwiftPro
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.level) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.opt) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.value) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.type) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.network) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.level) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.opt) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.value) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.type) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.network.isEmpty {
+      try visitor.visitSingularStringField(value: self.network, fieldNumber: 1)
+    }
     if !self.level.isEmpty {
-      try visitor.visitSingularStringField(value: self.level, fieldNumber: 1)
+      try visitor.visitSingularStringField(value: self.level, fieldNumber: 2)
     }
     if !self.opt.isEmpty {
-      try visitor.visitSingularStringField(value: self.opt, fieldNumber: 2)
+      try visitor.visitSingularStringField(value: self.opt, fieldNumber: 3)
     }
     if !self.value.isEmpty {
-      try visitor.visitSingularStringField(value: self.value, fieldNumber: 3)
+      try visitor.visitSingularStringField(value: self.value, fieldNumber: 4)
     }
     if !self.type.isEmpty {
-      try visitor.visitSingularStringField(value: self.type, fieldNumber: 4)
+      try visitor.visitSingularStringField(value: self.type, fieldNumber: 5)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_Transport_Internet_CustomSockopt, rhs: Xray_Transport_Internet_CustomSockopt) -> Bool {
+    if lhs.network != rhs.network {return false}
     if lhs.level != rhs.level {return false}
     if lhs.opt != rhs.opt {return false}
     if lhs.value != rhs.value {return false}
@@ -596,9 +675,10 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
     15: .standard(proto: "tcp_window_clamp"),
     16: .standard(proto: "tcp_user_timeout"),
     17: .standard(proto: "tcp_max_seg"),
-    18: .standard(proto: "tcp_no_delay"),
+    18: .same(proto: "penetrate"),
     19: .standard(proto: "tcp_mptcp"),
     20: .same(proto: "customSockopt"),
+    21: .standard(proto: "address_port_strategy"),
   ]
 
   fileprivate class _StorageClass {
@@ -619,9 +699,10 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
     var _tcpWindowClamp: Int32 = 0
     var _tcpUserTimeout: Int32 = 0
     var _tcpMaxSeg: Int32 = 0
-    var _tcpNoDelay: Bool = false
+    var _penetrate: Bool = false
     var _tcpMptcp: Bool = false
     var _customSockopt: [Xray_Transport_Internet_CustomSockopt] = []
+    var _addressPortStrategy: Xray_Transport_Internet_AddressPortStrategy = .none
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -653,9 +734,10 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
       _tcpWindowClamp = source._tcpWindowClamp
       _tcpUserTimeout = source._tcpUserTimeout
       _tcpMaxSeg = source._tcpMaxSeg
-      _tcpNoDelay = source._tcpNoDelay
+      _penetrate = source._penetrate
       _tcpMptcp = source._tcpMptcp
       _customSockopt = source._customSockopt
+      _addressPortStrategy = source._addressPortStrategy
     }
   }
 
@@ -691,9 +773,10 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
         case 15: try { try decoder.decodeSingularInt32Field(value: &_storage._tcpWindowClamp) }()
         case 16: try { try decoder.decodeSingularInt32Field(value: &_storage._tcpUserTimeout) }()
         case 17: try { try decoder.decodeSingularInt32Field(value: &_storage._tcpMaxSeg) }()
-        case 18: try { try decoder.decodeSingularBoolField(value: &_storage._tcpNoDelay) }()
+        case 18: try { try decoder.decodeSingularBoolField(value: &_storage._penetrate) }()
         case 19: try { try decoder.decodeSingularBoolField(value: &_storage._tcpMptcp) }()
         case 20: try { try decoder.decodeRepeatedMessageField(value: &_storage._customSockopt) }()
+        case 21: try { try decoder.decodeSingularEnumField(value: &_storage._addressPortStrategy) }()
         default: break
         }
       }
@@ -753,14 +836,17 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
       if _storage._tcpMaxSeg != 0 {
         try visitor.visitSingularInt32Field(value: _storage._tcpMaxSeg, fieldNumber: 17)
       }
-      if _storage._tcpNoDelay != false {
-        try visitor.visitSingularBoolField(value: _storage._tcpNoDelay, fieldNumber: 18)
+      if _storage._penetrate != false {
+        try visitor.visitSingularBoolField(value: _storage._penetrate, fieldNumber: 18)
       }
       if _storage._tcpMptcp != false {
         try visitor.visitSingularBoolField(value: _storage._tcpMptcp, fieldNumber: 19)
       }
       if !_storage._customSockopt.isEmpty {
         try visitor.visitRepeatedMessageField(value: _storage._customSockopt, fieldNumber: 20)
+      }
+      if _storage._addressPortStrategy != .none {
+        try visitor.visitSingularEnumField(value: _storage._addressPortStrategy, fieldNumber: 21)
       }
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -788,9 +874,10 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
         if _storage._tcpWindowClamp != rhs_storage._tcpWindowClamp {return false}
         if _storage._tcpUserTimeout != rhs_storage._tcpUserTimeout {return false}
         if _storage._tcpMaxSeg != rhs_storage._tcpMaxSeg {return false}
-        if _storage._tcpNoDelay != rhs_storage._tcpNoDelay {return false}
+        if _storage._penetrate != rhs_storage._penetrate {return false}
         if _storage._tcpMptcp != rhs_storage._tcpMptcp {return false}
         if _storage._customSockopt != rhs_storage._customSockopt {return false}
+        if _storage._addressPortStrategy != rhs_storage._addressPortStrategy {return false}
         return true
       }
       if !storagesAreEqual {return false}

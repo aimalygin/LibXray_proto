@@ -77,7 +77,7 @@ public struct Xray_Proxy_Freedom_Noise: @unchecked Sendable {
 
   public var delayMax: UInt64 = 0
 
-  public var strNoise: Data = Data()
+  public var packet: Data = Data()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -302,7 +302,7 @@ extension Xray_Proxy_Freedom_Noise: SwiftProtobuf.Message, SwiftProtobuf._Messag
     2: .standard(proto: "length_max"),
     3: .standard(proto: "delay_min"),
     4: .standard(proto: "delay_max"),
-    5: .standard(proto: "str_noise"),
+    5: .same(proto: "packet"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -315,7 +315,7 @@ extension Xray_Proxy_Freedom_Noise: SwiftProtobuf.Message, SwiftProtobuf._Messag
       case 2: try { try decoder.decodeSingularUInt64Field(value: &self.lengthMax) }()
       case 3: try { try decoder.decodeSingularUInt64Field(value: &self.delayMin) }()
       case 4: try { try decoder.decodeSingularUInt64Field(value: &self.delayMax) }()
-      case 5: try { try decoder.decodeSingularBytesField(value: &self.strNoise) }()
+      case 5: try { try decoder.decodeSingularBytesField(value: &self.packet) }()
       default: break
       }
     }
@@ -334,8 +334,8 @@ extension Xray_Proxy_Freedom_Noise: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if self.delayMax != 0 {
       try visitor.visitSingularUInt64Field(value: self.delayMax, fieldNumber: 4)
     }
-    if !self.strNoise.isEmpty {
-      try visitor.visitSingularBytesField(value: self.strNoise, fieldNumber: 5)
+    if !self.packet.isEmpty {
+      try visitor.visitSingularBytesField(value: self.packet, fieldNumber: 5)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -345,7 +345,7 @@ extension Xray_Proxy_Freedom_Noise: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if lhs.lengthMax != rhs.lengthMax {return false}
     if lhs.delayMin != rhs.delayMin {return false}
     if lhs.delayMax != rhs.delayMax {return false}
-    if lhs.strNoise != rhs.strNoise {return false}
+    if lhs.packet != rhs.packet {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -66,15 +66,6 @@ public struct Xray_Transport_Internet_Splithttp_XmuxConfig: Sendable {
   /// Clears the value of `cMaxReuseTimes`. Subsequent reads from it will return its default value.
   public mutating func clearCMaxReuseTimes() {self._cMaxReuseTimes = nil}
 
-  public var cMaxLifetimeMs: Xray_Transport_Internet_Splithttp_RangeConfig {
-    get {return _cMaxLifetimeMs ?? Xray_Transport_Internet_Splithttp_RangeConfig()}
-    set {_cMaxLifetimeMs = newValue}
-  }
-  /// Returns true if `cMaxLifetimeMs` has been explicitly set.
-  public var hasCMaxLifetimeMs: Bool {return self._cMaxLifetimeMs != nil}
-  /// Clears the value of `cMaxLifetimeMs`. Subsequent reads from it will return its default value.
-  public mutating func clearCMaxLifetimeMs() {self._cMaxLifetimeMs = nil}
-
   public var hMaxRequestTimes: Xray_Transport_Internet_Splithttp_RangeConfig {
     get {return _hMaxRequestTimes ?? Xray_Transport_Internet_Splithttp_RangeConfig()}
     set {_hMaxRequestTimes = newValue}
@@ -83,6 +74,15 @@ public struct Xray_Transport_Internet_Splithttp_XmuxConfig: Sendable {
   public var hasHMaxRequestTimes: Bool {return self._hMaxRequestTimes != nil}
   /// Clears the value of `hMaxRequestTimes`. Subsequent reads from it will return its default value.
   public mutating func clearHMaxRequestTimes() {self._hMaxRequestTimes = nil}
+
+  public var hMaxReusableSecs: Xray_Transport_Internet_Splithttp_RangeConfig {
+    get {return _hMaxReusableSecs ?? Xray_Transport_Internet_Splithttp_RangeConfig()}
+    set {_hMaxReusableSecs = newValue}
+  }
+  /// Returns true if `hMaxReusableSecs` has been explicitly set.
+  public var hasHMaxReusableSecs: Bool {return self._hMaxReusableSecs != nil}
+  /// Clears the value of `hMaxReusableSecs`. Subsequent reads from it will return its default value.
+  public mutating func clearHMaxReusableSecs() {self._hMaxReusableSecs = nil}
 
   public var hKeepAlivePeriod: Int64 = 0
 
@@ -93,8 +93,8 @@ public struct Xray_Transport_Internet_Splithttp_XmuxConfig: Sendable {
   fileprivate var _maxConcurrency: Xray_Transport_Internet_Splithttp_RangeConfig? = nil
   fileprivate var _maxConnections: Xray_Transport_Internet_Splithttp_RangeConfig? = nil
   fileprivate var _cMaxReuseTimes: Xray_Transport_Internet_Splithttp_RangeConfig? = nil
-  fileprivate var _cMaxLifetimeMs: Xray_Transport_Internet_Splithttp_RangeConfig? = nil
   fileprivate var _hMaxRequestTimes: Xray_Transport_Internet_Splithttp_RangeConfig? = nil
+  fileprivate var _hMaxReusableSecs: Xray_Transport_Internet_Splithttp_RangeConfig? = nil
 }
 
 public struct Xray_Transport_Internet_Splithttp_Config: @unchecked Sendable {
@@ -163,6 +163,15 @@ public struct Xray_Transport_Internet_Splithttp_Config: @unchecked Sendable {
     get {return _storage._scMaxBufferedPosts}
     set {_uniqueStorage()._scMaxBufferedPosts = newValue}
   }
+
+  public var scStreamUpServerSecs: Xray_Transport_Internet_Splithttp_RangeConfig {
+    get {return _storage._scStreamUpServerSecs ?? Xray_Transport_Internet_Splithttp_RangeConfig()}
+    set {_uniqueStorage()._scStreamUpServerSecs = newValue}
+  }
+  /// Returns true if `scStreamUpServerSecs` has been explicitly set.
+  public var hasScStreamUpServerSecs: Bool {return _storage._scStreamUpServerSecs != nil}
+  /// Clears the value of `scStreamUpServerSecs`. Subsequent reads from it will return its default value.
+  public mutating func clearScStreamUpServerSecs() {_uniqueStorage()._scStreamUpServerSecs = nil}
 
   public var xmux: Xray_Transport_Internet_Splithttp_XmuxConfig {
     get {return _storage._xmux ?? Xray_Transport_Internet_Splithttp_XmuxConfig()}
@@ -237,8 +246,8 @@ extension Xray_Transport_Internet_Splithttp_XmuxConfig: SwiftProtobuf.Message, S
     1: .same(proto: "maxConcurrency"),
     2: .same(proto: "maxConnections"),
     3: .same(proto: "cMaxReuseTimes"),
-    4: .same(proto: "cMaxLifetimeMs"),
-    5: .same(proto: "hMaxRequestTimes"),
+    4: .same(proto: "hMaxRequestTimes"),
+    5: .same(proto: "hMaxReusableSecs"),
     6: .same(proto: "hKeepAlivePeriod"),
   ]
 
@@ -251,8 +260,8 @@ extension Xray_Transport_Internet_Splithttp_XmuxConfig: SwiftProtobuf.Message, S
       case 1: try { try decoder.decodeSingularMessageField(value: &self._maxConcurrency) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._maxConnections) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._cMaxReuseTimes) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._cMaxLifetimeMs) }()
-      case 5: try { try decoder.decodeSingularMessageField(value: &self._hMaxRequestTimes) }()
+      case 4: try { try decoder.decodeSingularMessageField(value: &self._hMaxRequestTimes) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._hMaxReusableSecs) }()
       case 6: try { try decoder.decodeSingularInt64Field(value: &self.hKeepAlivePeriod) }()
       default: break
       }
@@ -273,10 +282,10 @@ extension Xray_Transport_Internet_Splithttp_XmuxConfig: SwiftProtobuf.Message, S
     try { if let v = self._cMaxReuseTimes {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
     } }()
-    try { if let v = self._cMaxLifetimeMs {
+    try { if let v = self._hMaxRequestTimes {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     } }()
-    try { if let v = self._hMaxRequestTimes {
+    try { if let v = self._hMaxReusableSecs {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     } }()
     if self.hKeepAlivePeriod != 0 {
@@ -289,8 +298,8 @@ extension Xray_Transport_Internet_Splithttp_XmuxConfig: SwiftProtobuf.Message, S
     if lhs._maxConcurrency != rhs._maxConcurrency {return false}
     if lhs._maxConnections != rhs._maxConnections {return false}
     if lhs._cMaxReuseTimes != rhs._cMaxReuseTimes {return false}
-    if lhs._cMaxLifetimeMs != rhs._cMaxLifetimeMs {return false}
     if lhs._hMaxRequestTimes != rhs._hMaxRequestTimes {return false}
+    if lhs._hMaxReusableSecs != rhs._hMaxReusableSecs {return false}
     if lhs.hKeepAlivePeriod != rhs.hKeepAlivePeriod {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -310,8 +319,9 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
     8: .same(proto: "scMaxEachPostBytes"),
     9: .same(proto: "scMinPostsIntervalMs"),
     10: .same(proto: "scMaxBufferedPosts"),
-    11: .same(proto: "xmux"),
-    12: .same(proto: "downloadSettings"),
+    11: .same(proto: "scStreamUpServerSecs"),
+    12: .same(proto: "xmux"),
+    13: .same(proto: "downloadSettings"),
   ]
 
   fileprivate class _StorageClass {
@@ -325,6 +335,7 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
     var _scMaxEachPostBytes: Xray_Transport_Internet_Splithttp_RangeConfig? = nil
     var _scMinPostsIntervalMs: Xray_Transport_Internet_Splithttp_RangeConfig? = nil
     var _scMaxBufferedPosts: Int64 = 0
+    var _scStreamUpServerSecs: Xray_Transport_Internet_Splithttp_RangeConfig? = nil
     var _xmux: Xray_Transport_Internet_Splithttp_XmuxConfig? = nil
     var _downloadSettings: Xray_Transport_Internet_StreamConfig? = nil
 
@@ -351,6 +362,7 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
       _scMaxEachPostBytes = source._scMaxEachPostBytes
       _scMinPostsIntervalMs = source._scMinPostsIntervalMs
       _scMaxBufferedPosts = source._scMaxBufferedPosts
+      _scStreamUpServerSecs = source._scStreamUpServerSecs
       _xmux = source._xmux
       _downloadSettings = source._downloadSettings
     }
@@ -381,8 +393,9 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
         case 8: try { try decoder.decodeSingularMessageField(value: &_storage._scMaxEachPostBytes) }()
         case 9: try { try decoder.decodeSingularMessageField(value: &_storage._scMinPostsIntervalMs) }()
         case 10: try { try decoder.decodeSingularInt64Field(value: &_storage._scMaxBufferedPosts) }()
-        case 11: try { try decoder.decodeSingularMessageField(value: &_storage._xmux) }()
-        case 12: try { try decoder.decodeSingularMessageField(value: &_storage._downloadSettings) }()
+        case 11: try { try decoder.decodeSingularMessageField(value: &_storage._scStreamUpServerSecs) }()
+        case 12: try { try decoder.decodeSingularMessageField(value: &_storage._xmux) }()
+        case 13: try { try decoder.decodeSingularMessageField(value: &_storage._downloadSettings) }()
         default: break
         }
       }
@@ -425,11 +438,14 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
       if _storage._scMaxBufferedPosts != 0 {
         try visitor.visitSingularInt64Field(value: _storage._scMaxBufferedPosts, fieldNumber: 10)
       }
-      try { if let v = _storage._xmux {
+      try { if let v = _storage._scStreamUpServerSecs {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 11)
       } }()
-      try { if let v = _storage._downloadSettings {
+      try { if let v = _storage._xmux {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
+      } }()
+      try { if let v = _storage._downloadSettings {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
       } }()
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -450,6 +466,7 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
         if _storage._scMaxEachPostBytes != rhs_storage._scMaxEachPostBytes {return false}
         if _storage._scMinPostsIntervalMs != rhs_storage._scMinPostsIntervalMs {return false}
         if _storage._scMaxBufferedPosts != rhs_storage._scMaxBufferedPosts {return false}
+        if _storage._scStreamUpServerSecs != rhs_storage._scStreamUpServerSecs {return false}
         if _storage._xmux != rhs_storage._xmux {return false}
         if _storage._downloadSettings != rhs_storage._downloadSettings {return false}
         return true

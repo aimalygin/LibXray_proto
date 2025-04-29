@@ -29,6 +29,8 @@ public struct Xray_App_Metrics_Config: Sendable {
   /// Tag of the outbound handler that handles metrics http connections.
   public var tag: String = String()
 
+  public var listen: String = String()
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -42,6 +44,7 @@ extension Xray_App_Metrics_Config: SwiftProtobuf.Message, SwiftProtobuf._Message
   public static let protoMessageName: String = _protobuf_package + ".Config"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "tag"),
+    2: .same(proto: "listen"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -51,6 +54,7 @@ extension Xray_App_Metrics_Config: SwiftProtobuf.Message, SwiftProtobuf._Message
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.tag) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.listen) }()
       default: break
       }
     }
@@ -60,11 +64,15 @@ extension Xray_App_Metrics_Config: SwiftProtobuf.Message, SwiftProtobuf._Message
     if !self.tag.isEmpty {
       try visitor.visitSingularStringField(value: self.tag, fieldNumber: 1)
     }
+    if !self.listen.isEmpty {
+      try visitor.visitSingularStringField(value: self.listen, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_App_Metrics_Config, rhs: Xray_App_Metrics_Config) -> Bool {
     if lhs.tag != rhs.tag {return false}
+    if lhs.listen != rhs.listen {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

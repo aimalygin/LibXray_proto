@@ -128,15 +128,13 @@ public struct Xray_Transport_Internet_Tls_Config: @unchecked Sendable {
 
   public var rejectUnknownSni: Bool = false
 
-  /// @Document A pinned certificate chain sha256 hash.
-  ///@Document If the server's hash does not match this value, the connection will be aborted.
-  ///@Document This value replace allow_insecure.
+  /// @Document Some certificate chain sha256 hashes.
+  ///@Document After normal validation or allow_insecure, if the server's cert chain hash does not match any of these values, the connection will be aborted.
   ///@Critical
   public var pinnedPeerCertificateChainSha256: [Data] = []
 
-  /// @Document A pinned certificate public key sha256 hash.
-  ///@Document If the server's public key hash does not match this value, the connection will be aborted.
-  ///@Document This value replace allow_insecure.
+  /// @Document Some certificate public key sha256 hashes.
+  ///@Document After normal validation (required), if one of certs in verified chain matches one of these values, the connection will be eventually accepted.
   ///@Critical
   public var pinnedPeerCertificatePublicKeySha256: [Data] = []
 
@@ -144,6 +142,11 @@ public struct Xray_Transport_Internet_Tls_Config: @unchecked Sendable {
 
   /// Lists of string as CurvePreferences values.
   public var curvePreferences: [String] = []
+
+  /// @Document Replaces server_name to verify the peer cert.
+  ///@Document After allow_insecure (automatically), if the server's cert can't be verified by any of these names, pinned_peer_certificate_chain_sha256 will be tried.
+  ///@Critical
+  public var verifyPeerCertInNames: [String] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -254,6 +257,7 @@ extension Xray_Transport_Internet_Tls_Config: SwiftProtobuf.Message, SwiftProtob
     14: .standard(proto: "pinned_peer_certificate_public_key_sha256"),
     15: .standard(proto: "master_key_log"),
     16: .standard(proto: "curve_preferences"),
+    17: .standard(proto: "verify_peer_cert_in_names"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -277,6 +281,7 @@ extension Xray_Transport_Internet_Tls_Config: SwiftProtobuf.Message, SwiftProtob
       case 14: try { try decoder.decodeRepeatedBytesField(value: &self.pinnedPeerCertificatePublicKeySha256) }()
       case 15: try { try decoder.decodeSingularStringField(value: &self.masterKeyLog) }()
       case 16: try { try decoder.decodeRepeatedStringField(value: &self.curvePreferences) }()
+      case 17: try { try decoder.decodeRepeatedStringField(value: &self.verifyPeerCertInNames) }()
       default: break
       }
     }
@@ -328,6 +333,9 @@ extension Xray_Transport_Internet_Tls_Config: SwiftProtobuf.Message, SwiftProtob
     if !self.curvePreferences.isEmpty {
       try visitor.visitRepeatedStringField(value: self.curvePreferences, fieldNumber: 16)
     }
+    if !self.verifyPeerCertInNames.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.verifyPeerCertInNames, fieldNumber: 17)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -347,6 +355,7 @@ extension Xray_Transport_Internet_Tls_Config: SwiftProtobuf.Message, SwiftProtob
     if lhs.pinnedPeerCertificatePublicKeySha256 != rhs.pinnedPeerCertificatePublicKeySha256 {return false}
     if lhs.masterKeyLog != rhs.masterKeyLog {return false}
     if lhs.curvePreferences != rhs.curvePreferences {return false}
+    if lhs.verifyPeerCertInNames != rhs.verifyPeerCertInNames {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
