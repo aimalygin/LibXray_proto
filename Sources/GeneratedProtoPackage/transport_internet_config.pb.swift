@@ -233,6 +233,8 @@ public struct Xray_Transport_Internet_CustomSockopt: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  public var system: String = String()
+
   public var network: String = String()
 
   public var level: String = String()
@@ -364,6 +366,15 @@ public struct Xray_Transport_Internet_SocketConfig: @unchecked Sendable {
     set {_uniqueStorage()._addressPortStrategy = newValue}
   }
 
+  public var happyEyeballs: Xray_Transport_Internet_HappyEyeballsConfig {
+    get {return _storage._happyEyeballs ?? Xray_Transport_Internet_HappyEyeballsConfig()}
+    set {_uniqueStorage()._happyEyeballs = newValue}
+  }
+  /// Returns true if `happyEyeballs` has been explicitly set.
+  public var hasHappyEyeballs: Bool {return _storage._happyEyeballs != nil}
+  /// Clears the value of `happyEyeballs`. Subsequent reads from it will return its default value.
+  public mutating func clearHappyEyeballs() {_uniqueStorage()._happyEyeballs = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum TProxyMode: SwiftProtobuf.Enum, Swift.CaseIterable {
@@ -413,6 +424,24 @@ public struct Xray_Transport_Internet_SocketConfig: @unchecked Sendable {
   public init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+public struct Xray_Transport_Internet_HappyEyeballsConfig: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var prioritizeIpv6: Bool = false
+
+  public var interleave: UInt32 = 0
+
+  public var tryDelayMs: UInt64 = 0
+
+  public var maxConcurrentTry: UInt32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -602,11 +631,12 @@ extension Xray_Transport_Internet_ProxyConfig: SwiftProtobuf.Message, SwiftProto
 extension Xray_Transport_Internet_CustomSockopt: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".CustomSockopt"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "network"),
-    2: .same(proto: "level"),
-    3: .same(proto: "opt"),
-    4: .same(proto: "value"),
-    5: .same(proto: "type"),
+    1: .same(proto: "system"),
+    2: .same(proto: "network"),
+    3: .same(proto: "level"),
+    4: .same(proto: "opt"),
+    5: .same(proto: "value"),
+    6: .same(proto: "type"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -615,36 +645,41 @@ extension Xray_Transport_Internet_CustomSockopt: SwiftProtobuf.Message, SwiftPro
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.network) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.level) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.opt) }()
-      case 4: try { try decoder.decodeSingularStringField(value: &self.value) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.type) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.system) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.network) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.level) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.opt) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.value) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.type) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.system.isEmpty {
+      try visitor.visitSingularStringField(value: self.system, fieldNumber: 1)
+    }
     if !self.network.isEmpty {
-      try visitor.visitSingularStringField(value: self.network, fieldNumber: 1)
+      try visitor.visitSingularStringField(value: self.network, fieldNumber: 2)
     }
     if !self.level.isEmpty {
-      try visitor.visitSingularStringField(value: self.level, fieldNumber: 2)
+      try visitor.visitSingularStringField(value: self.level, fieldNumber: 3)
     }
     if !self.opt.isEmpty {
-      try visitor.visitSingularStringField(value: self.opt, fieldNumber: 3)
+      try visitor.visitSingularStringField(value: self.opt, fieldNumber: 4)
     }
     if !self.value.isEmpty {
-      try visitor.visitSingularStringField(value: self.value, fieldNumber: 4)
+      try visitor.visitSingularStringField(value: self.value, fieldNumber: 5)
     }
     if !self.type.isEmpty {
-      try visitor.visitSingularStringField(value: self.type, fieldNumber: 5)
+      try visitor.visitSingularStringField(value: self.type, fieldNumber: 6)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_Transport_Internet_CustomSockopt, rhs: Xray_Transport_Internet_CustomSockopt) -> Bool {
+    if lhs.system != rhs.system {return false}
     if lhs.network != rhs.network {return false}
     if lhs.level != rhs.level {return false}
     if lhs.opt != rhs.opt {return false}
@@ -679,6 +714,7 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
     19: .standard(proto: "tcp_mptcp"),
     20: .same(proto: "customSockopt"),
     21: .standard(proto: "address_port_strategy"),
+    22: .standard(proto: "happy_eyeballs"),
   ]
 
   fileprivate class _StorageClass {
@@ -703,6 +739,7 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
     var _tcpMptcp: Bool = false
     var _customSockopt: [Xray_Transport_Internet_CustomSockopt] = []
     var _addressPortStrategy: Xray_Transport_Internet_AddressPortStrategy = .none
+    var _happyEyeballs: Xray_Transport_Internet_HappyEyeballsConfig? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -738,6 +775,7 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
       _tcpMptcp = source._tcpMptcp
       _customSockopt = source._customSockopt
       _addressPortStrategy = source._addressPortStrategy
+      _happyEyeballs = source._happyEyeballs
     }
   }
 
@@ -777,6 +815,7 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
         case 19: try { try decoder.decodeSingularBoolField(value: &_storage._tcpMptcp) }()
         case 20: try { try decoder.decodeRepeatedMessageField(value: &_storage._customSockopt) }()
         case 21: try { try decoder.decodeSingularEnumField(value: &_storage._addressPortStrategy) }()
+        case 22: try { try decoder.decodeSingularMessageField(value: &_storage._happyEyeballs) }()
         default: break
         }
       }
@@ -785,6 +824,10 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
       if _storage._mark != 0 {
         try visitor.visitSingularInt32Field(value: _storage._mark, fieldNumber: 1)
       }
@@ -848,6 +891,9 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
       if _storage._addressPortStrategy != .none {
         try visitor.visitSingularEnumField(value: _storage._addressPortStrategy, fieldNumber: 21)
       }
+      try { if let v = _storage._happyEyeballs {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 22)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -878,6 +924,7 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
         if _storage._tcpMptcp != rhs_storage._tcpMptcp {return false}
         if _storage._customSockopt != rhs_storage._customSockopt {return false}
         if _storage._addressPortStrategy != rhs_storage._addressPortStrategy {return false}
+        if _storage._happyEyeballs != rhs_storage._happyEyeballs {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -893,4 +940,54 @@ extension Xray_Transport_Internet_SocketConfig.TProxyMode: SwiftProtobuf._ProtoN
     1: .same(proto: "TProxy"),
     2: .same(proto: "Redirect"),
   ]
+}
+
+extension Xray_Transport_Internet_HappyEyeballsConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".HappyEyeballsConfig"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "prioritize_ipv6"),
+    2: .same(proto: "interleave"),
+    3: .standard(proto: "try_delayMs"),
+    4: .standard(proto: "max_concurrent_try"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularBoolField(value: &self.prioritizeIpv6) }()
+      case 2: try { try decoder.decodeSingularUInt32Field(value: &self.interleave) }()
+      case 3: try { try decoder.decodeSingularUInt64Field(value: &self.tryDelayMs) }()
+      case 4: try { try decoder.decodeSingularUInt32Field(value: &self.maxConcurrentTry) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.prioritizeIpv6 != false {
+      try visitor.visitSingularBoolField(value: self.prioritizeIpv6, fieldNumber: 1)
+    }
+    if self.interleave != 0 {
+      try visitor.visitSingularUInt32Field(value: self.interleave, fieldNumber: 2)
+    }
+    if self.tryDelayMs != 0 {
+      try visitor.visitSingularUInt64Field(value: self.tryDelayMs, fieldNumber: 3)
+    }
+    if self.maxConcurrentTry != 0 {
+      try visitor.visitSingularUInt32Field(value: self.maxConcurrentTry, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Xray_Transport_Internet_HappyEyeballsConfig, rhs: Xray_Transport_Internet_HappyEyeballsConfig) -> Bool {
+    if lhs.prioritizeIpv6 != rhs.prioritizeIpv6 {return false}
+    if lhs.interleave != rhs.interleave {return false}
+    if lhs.tryDelayMs != rhs.tryDelayMs {return false}
+    if lhs.maxConcurrentTry != rhs.maxConcurrentTry {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
 }
