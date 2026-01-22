@@ -59,10 +59,6 @@ public struct Xray_Proxy_Freedom_Fragment: Sendable {
 
   public var intervalMax: UInt64 = 0
 
-  public var maxSplitMin: UInt64 = 0
-
-  public var maxSplitMax: UInt64 = 0
-
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -83,61 +79,118 @@ public struct Xray_Proxy_Freedom_Noise: @unchecked Sendable {
 
   public var packet: Data = Data()
 
-  public var applyTo: String = String()
-
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 }
 
-public struct Xray_Proxy_Freedom_Config: @unchecked Sendable {
+public struct Xray_Proxy_Freedom_Config: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var domainStrategy: Xray_Transport_Internet_DomainStrategy {
-    get {return _storage._domainStrategy}
-    set {_uniqueStorage()._domainStrategy = newValue}
-  }
+  public var domainStrategy: Xray_Proxy_Freedom_Config.DomainStrategy = .asIs
 
   public var destinationOverride: Xray_Proxy_Freedom_DestinationOverride {
-    get {return _storage._destinationOverride ?? Xray_Proxy_Freedom_DestinationOverride()}
-    set {_uniqueStorage()._destinationOverride = newValue}
+    get {return _destinationOverride ?? Xray_Proxy_Freedom_DestinationOverride()}
+    set {_destinationOverride = newValue}
   }
   /// Returns true if `destinationOverride` has been explicitly set.
-  public var hasDestinationOverride: Bool {return _storage._destinationOverride != nil}
+  public var hasDestinationOverride: Bool {return self._destinationOverride != nil}
   /// Clears the value of `destinationOverride`. Subsequent reads from it will return its default value.
-  public mutating func clearDestinationOverride() {_uniqueStorage()._destinationOverride = nil}
+  public mutating func clearDestinationOverride() {self._destinationOverride = nil}
 
-  public var userLevel: UInt32 {
-    get {return _storage._userLevel}
-    set {_uniqueStorage()._userLevel = newValue}
-  }
+  public var userLevel: UInt32 = 0
 
   public var fragment: Xray_Proxy_Freedom_Fragment {
-    get {return _storage._fragment ?? Xray_Proxy_Freedom_Fragment()}
-    set {_uniqueStorage()._fragment = newValue}
+    get {return _fragment ?? Xray_Proxy_Freedom_Fragment()}
+    set {_fragment = newValue}
   }
   /// Returns true if `fragment` has been explicitly set.
-  public var hasFragment: Bool {return _storage._fragment != nil}
+  public var hasFragment: Bool {return self._fragment != nil}
   /// Clears the value of `fragment`. Subsequent reads from it will return its default value.
-  public mutating func clearFragment() {_uniqueStorage()._fragment = nil}
+  public mutating func clearFragment() {self._fragment = nil}
 
-  public var proxyProtocol: UInt32 {
-    get {return _storage._proxyProtocol}
-    set {_uniqueStorage()._proxyProtocol = newValue}
-  }
+  public var proxyProtocol: UInt32 = 0
 
-  public var noises: [Xray_Proxy_Freedom_Noise] {
-    get {return _storage._noises}
-    set {_uniqueStorage()._noises = newValue}
-  }
+  public var noises: [Xray_Proxy_Freedom_Noise] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
+  public enum DomainStrategy: SwiftProtobuf.Enum, Swift.CaseIterable {
+    public typealias RawValue = Int
+    case asIs // = 0
+    case useIp // = 1
+    case useIp4 // = 2
+    case useIp6 // = 3
+    case useIp46 // = 4
+    case useIp64 // = 5
+    case forceIp // = 6
+    case forceIp4 // = 7
+    case forceIp6 // = 8
+    case forceIp46 // = 9
+    case forceIp64 // = 10
+    case UNRECOGNIZED(Int)
+
+    public init() {
+      self = .asIs
+    }
+
+    public init?(rawValue: Int) {
+      switch rawValue {
+      case 0: self = .asIs
+      case 1: self = .useIp
+      case 2: self = .useIp4
+      case 3: self = .useIp6
+      case 4: self = .useIp46
+      case 5: self = .useIp64
+      case 6: self = .forceIp
+      case 7: self = .forceIp4
+      case 8: self = .forceIp6
+      case 9: self = .forceIp46
+      case 10: self = .forceIp64
+      default: self = .UNRECOGNIZED(rawValue)
+      }
+    }
+
+    public var rawValue: Int {
+      switch self {
+      case .asIs: return 0
+      case .useIp: return 1
+      case .useIp4: return 2
+      case .useIp6: return 3
+      case .useIp46: return 4
+      case .useIp64: return 5
+      case .forceIp: return 6
+      case .forceIp4: return 7
+      case .forceIp6: return 8
+      case .forceIp46: return 9
+      case .forceIp64: return 10
+      case .UNRECOGNIZED(let i): return i
+      }
+    }
+
+    // The compiler won't synthesize support with the UNRECOGNIZED case.
+    public static let allCases: [Xray_Proxy_Freedom_Config.DomainStrategy] = [
+      .asIs,
+      .useIp,
+      .useIp4,
+      .useIp6,
+      .useIp46,
+      .useIp64,
+      .forceIp,
+      .forceIp4,
+      .forceIp6,
+      .forceIp46,
+      .forceIp64,
+    ]
+
+  }
+
   public init() {}
 
-  fileprivate var _storage = _StorageClass.defaultInstance
+  fileprivate var _destinationOverride: Xray_Proxy_Freedom_DestinationOverride? = nil
+  fileprivate var _fragment: Xray_Proxy_Freedom_Fragment? = nil
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -189,8 +242,6 @@ extension Xray_Proxy_Freedom_Fragment: SwiftProtobuf.Message, SwiftProtobuf._Mes
     4: .standard(proto: "length_max"),
     5: .standard(proto: "interval_min"),
     6: .standard(proto: "interval_max"),
-    7: .standard(proto: "max_split_min"),
-    8: .standard(proto: "max_split_max"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -205,8 +256,6 @@ extension Xray_Proxy_Freedom_Fragment: SwiftProtobuf.Message, SwiftProtobuf._Mes
       case 4: try { try decoder.decodeSingularUInt64Field(value: &self.lengthMax) }()
       case 5: try { try decoder.decodeSingularUInt64Field(value: &self.intervalMin) }()
       case 6: try { try decoder.decodeSingularUInt64Field(value: &self.intervalMax) }()
-      case 7: try { try decoder.decodeSingularUInt64Field(value: &self.maxSplitMin) }()
-      case 8: try { try decoder.decodeSingularUInt64Field(value: &self.maxSplitMax) }()
       default: break
       }
     }
@@ -231,12 +280,6 @@ extension Xray_Proxy_Freedom_Fragment: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if self.intervalMax != 0 {
       try visitor.visitSingularUInt64Field(value: self.intervalMax, fieldNumber: 6)
     }
-    if self.maxSplitMin != 0 {
-      try visitor.visitSingularUInt64Field(value: self.maxSplitMin, fieldNumber: 7)
-    }
-    if self.maxSplitMax != 0 {
-      try visitor.visitSingularUInt64Field(value: self.maxSplitMax, fieldNumber: 8)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -247,8 +290,6 @@ extension Xray_Proxy_Freedom_Fragment: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if lhs.lengthMax != rhs.lengthMax {return false}
     if lhs.intervalMin != rhs.intervalMin {return false}
     if lhs.intervalMax != rhs.intervalMax {return false}
-    if lhs.maxSplitMin != rhs.maxSplitMin {return false}
-    if lhs.maxSplitMax != rhs.maxSplitMax {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -262,7 +303,6 @@ extension Xray_Proxy_Freedom_Noise: SwiftProtobuf.Message, SwiftProtobuf._Messag
     3: .standard(proto: "delay_min"),
     4: .standard(proto: "delay_max"),
     5: .same(proto: "packet"),
-    6: .standard(proto: "apply_to"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -276,7 +316,6 @@ extension Xray_Proxy_Freedom_Noise: SwiftProtobuf.Message, SwiftProtobuf._Messag
       case 3: try { try decoder.decodeSingularUInt64Field(value: &self.delayMin) }()
       case 4: try { try decoder.decodeSingularUInt64Field(value: &self.delayMax) }()
       case 5: try { try decoder.decodeSingularBytesField(value: &self.packet) }()
-      case 6: try { try decoder.decodeSingularStringField(value: &self.applyTo) }()
       default: break
       }
     }
@@ -298,9 +337,6 @@ extension Xray_Proxy_Freedom_Noise: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if !self.packet.isEmpty {
       try visitor.visitSingularBytesField(value: self.packet, fieldNumber: 5)
     }
-    if !self.applyTo.isEmpty {
-      try visitor.visitSingularStringField(value: self.applyTo, fieldNumber: 6)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -310,7 +346,6 @@ extension Xray_Proxy_Freedom_Noise: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if lhs.delayMin != rhs.delayMin {return false}
     if lhs.delayMax != rhs.delayMax {return false}
     if lhs.packet != rhs.packet {return false}
-    if lhs.applyTo != rhs.applyTo {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -327,107 +362,73 @@ extension Xray_Proxy_Freedom_Config: SwiftProtobuf.Message, SwiftProtobuf._Messa
     7: .same(proto: "noises"),
   ]
 
-  fileprivate class _StorageClass {
-    var _domainStrategy: Xray_Transport_Internet_DomainStrategy = .asIs
-    var _destinationOverride: Xray_Proxy_Freedom_DestinationOverride? = nil
-    var _userLevel: UInt32 = 0
-    var _fragment: Xray_Proxy_Freedom_Fragment? = nil
-    var _proxyProtocol: UInt32 = 0
-    var _noises: [Xray_Proxy_Freedom_Noise] = []
-
-    #if swift(>=5.10)
-      // This property is used as the initial default value for new instances of the type.
-      // The type itself is protecting the reference to its storage via CoW semantics.
-      // This will force a copy to be made of this reference when the first mutation occurs;
-      // hence, it is safe to mark this as `nonisolated(unsafe)`.
-      static nonisolated(unsafe) let defaultInstance = _StorageClass()
-    #else
-      static let defaultInstance = _StorageClass()
-    #endif
-
-    private init() {}
-
-    init(copying source: _StorageClass) {
-      _domainStrategy = source._domainStrategy
-      _destinationOverride = source._destinationOverride
-      _userLevel = source._userLevel
-      _fragment = source._fragment
-      _proxyProtocol = source._proxyProtocol
-      _noises = source._noises
-    }
-  }
-
-  fileprivate mutating func _uniqueStorage() -> _StorageClass {
-    if !isKnownUniquelyReferenced(&_storage) {
-      _storage = _StorageClass(copying: _storage)
-    }
-    return _storage
-  }
-
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    _ = _uniqueStorage()
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      while let fieldNumber = try decoder.nextFieldNumber() {
-        // The use of inline closures is to circumvent an issue where the compiler
-        // allocates stack space for every case branch when no optimizations are
-        // enabled. https://github.com/apple/swift-protobuf/issues/1034
-        switch fieldNumber {
-        case 1: try { try decoder.decodeSingularEnumField(value: &_storage._domainStrategy) }()
-        case 3: try { try decoder.decodeSingularMessageField(value: &_storage._destinationOverride) }()
-        case 4: try { try decoder.decodeSingularUInt32Field(value: &_storage._userLevel) }()
-        case 5: try { try decoder.decodeSingularMessageField(value: &_storage._fragment) }()
-        case 6: try { try decoder.decodeSingularUInt32Field(value: &_storage._proxyProtocol) }()
-        case 7: try { try decoder.decodeRepeatedMessageField(value: &_storage._noises) }()
-        default: break
-        }
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.domainStrategy) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._destinationOverride) }()
+      case 4: try { try decoder.decodeSingularUInt32Field(value: &self.userLevel) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._fragment) }()
+      case 6: try { try decoder.decodeSingularUInt32Field(value: &self.proxyProtocol) }()
+      case 7: try { try decoder.decodeRepeatedMessageField(value: &self.noises) }()
+      default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every if/case branch local when no optimizations
-      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-      // https://github.com/apple/swift-protobuf/issues/1182
-      if _storage._domainStrategy != .asIs {
-        try visitor.visitSingularEnumField(value: _storage._domainStrategy, fieldNumber: 1)
-      }
-      try { if let v = _storage._destinationOverride {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-      } }()
-      if _storage._userLevel != 0 {
-        try visitor.visitSingularUInt32Field(value: _storage._userLevel, fieldNumber: 4)
-      }
-      try { if let v = _storage._fragment {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
-      } }()
-      if _storage._proxyProtocol != 0 {
-        try visitor.visitSingularUInt32Field(value: _storage._proxyProtocol, fieldNumber: 6)
-      }
-      if !_storage._noises.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._noises, fieldNumber: 7)
-      }
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if self.domainStrategy != .asIs {
+      try visitor.visitSingularEnumField(value: self.domainStrategy, fieldNumber: 1)
+    }
+    try { if let v = self._destinationOverride {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    if self.userLevel != 0 {
+      try visitor.visitSingularUInt32Field(value: self.userLevel, fieldNumber: 4)
+    }
+    try { if let v = self._fragment {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    } }()
+    if self.proxyProtocol != 0 {
+      try visitor.visitSingularUInt32Field(value: self.proxyProtocol, fieldNumber: 6)
+    }
+    if !self.noises.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.noises, fieldNumber: 7)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_Proxy_Freedom_Config, rhs: Xray_Proxy_Freedom_Config) -> Bool {
-    if lhs._storage !== rhs._storage {
-      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
-        let _storage = _args.0
-        let rhs_storage = _args.1
-        if _storage._domainStrategy != rhs_storage._domainStrategy {return false}
-        if _storage._destinationOverride != rhs_storage._destinationOverride {return false}
-        if _storage._userLevel != rhs_storage._userLevel {return false}
-        if _storage._fragment != rhs_storage._fragment {return false}
-        if _storage._proxyProtocol != rhs_storage._proxyProtocol {return false}
-        if _storage._noises != rhs_storage._noises {return false}
-        return true
-      }
-      if !storagesAreEqual {return false}
-    }
+    if lhs.domainStrategy != rhs.domainStrategy {return false}
+    if lhs._destinationOverride != rhs._destinationOverride {return false}
+    if lhs.userLevel != rhs.userLevel {return false}
+    if lhs._fragment != rhs._fragment {return false}
+    if lhs.proxyProtocol != rhs.proxyProtocol {return false}
+    if lhs.noises != rhs.noises {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
+}
+
+extension Xray_Proxy_Freedom_Config.DomainStrategy: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "AS_IS"),
+    1: .same(proto: "USE_IP"),
+    2: .same(proto: "USE_IP4"),
+    3: .same(proto: "USE_IP6"),
+    4: .same(proto: "USE_IP46"),
+    5: .same(proto: "USE_IP64"),
+    6: .same(proto: "FORCE_IP"),
+    7: .same(proto: "FORCE_IP4"),
+    8: .same(proto: "FORCE_IP6"),
+    9: .same(proto: "FORCE_IP46"),
+    10: .same(proto: "FORCE_IP64"),
+  ]
 }

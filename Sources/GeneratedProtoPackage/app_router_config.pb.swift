@@ -270,25 +270,7 @@ public struct Xray_App_Router_RoutingRule: Sendable {
 
   public var attributes: Dictionary<String,String> = [:]
 
-  public var localGeoip: [Xray_App_Router_GeoIP] = []
-
-  public var localPortList: Xray_Common_Net_PortList {
-    get {return _localPortList ?? Xray_Common_Net_PortList()}
-    set {_localPortList = newValue}
-  }
-  /// Returns true if `localPortList` has been explicitly set.
-  public var hasLocalPortList: Bool {return self._localPortList != nil}
-  /// Clears the value of `localPortList`. Subsequent reads from it will return its default value.
-  public mutating func clearLocalPortList() {self._localPortList = nil}
-
-  public var vlessRouteList: Xray_Common_Net_PortList {
-    get {return _vlessRouteList ?? Xray_Common_Net_PortList()}
-    set {_vlessRouteList = newValue}
-  }
-  /// Returns true if `vlessRouteList` has been explicitly set.
-  public var hasVlessRouteList: Bool {return self._vlessRouteList != nil}
-  /// Clears the value of `vlessRouteList`. Subsequent reads from it will return its default value.
-  public mutating func clearVlessRouteList() {self._vlessRouteList = nil}
+  public var domainMatcher: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -304,8 +286,6 @@ public struct Xray_App_Router_RoutingRule: Sendable {
 
   fileprivate var _portList: Xray_Common_Net_PortList? = nil
   fileprivate var _sourcePortList: Xray_Common_Net_PortList? = nil
-  fileprivate var _localPortList: Xray_Common_Net_PortList? = nil
-  fileprivate var _vlessRouteList: Xray_Common_Net_PortList? = nil
 }
 
 public struct Xray_App_Router_BalancingRule: Sendable {
@@ -397,6 +377,9 @@ public struct Xray_App_Router_Config: Sendable {
     /// Use domain as is.
     case asIs // = 0
 
+    /// Always resolve IP for domains.
+    case useIp // = 1
+
     /// Resolve to IP if the domain doesn't match any rules.
     case ipIfNonMatch // = 2
 
@@ -411,6 +394,7 @@ public struct Xray_App_Router_Config: Sendable {
     public init?(rawValue: Int) {
       switch rawValue {
       case 0: self = .asIs
+      case 1: self = .useIp
       case 2: self = .ipIfNonMatch
       case 3: self = .ipOnDemand
       default: self = .UNRECOGNIZED(rawValue)
@@ -420,6 +404,7 @@ public struct Xray_App_Router_Config: Sendable {
     public var rawValue: Int {
       switch self {
       case .asIs: return 0
+      case .useIp: return 1
       case .ipIfNonMatch: return 2
       case .ipOnDemand: return 3
       case .UNRECOGNIZED(let i): return i
@@ -429,6 +414,7 @@ public struct Xray_App_Router_Config: Sendable {
     // The compiler won't synthesize support with the UNRECOGNIZED case.
     public static let allCases: [Xray_App_Router_Config.DomainStrategy] = [
       .asIs,
+      .useIp,
       .ipIfNonMatch,
       .ipOnDemand,
     ]
@@ -750,7 +736,7 @@ extension Xray_App_Router_RoutingRule: SwiftProtobuf.Message, SwiftProtobuf._Mes
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "tag"),
     12: .standard(proto: "balancing_tag"),
-    19: .standard(proto: "rule_tag"),
+    18: .standard(proto: "rule_tag"),
     2: .same(proto: "domain"),
     10: .same(proto: "geoip"),
     14: .standard(proto: "port_list"),
@@ -761,9 +747,7 @@ extension Xray_App_Router_RoutingRule: SwiftProtobuf.Message, SwiftProtobuf._Mes
     8: .standard(proto: "inbound_tag"),
     9: .same(proto: "protocol"),
     15: .same(proto: "attributes"),
-    17: .standard(proto: "local_geoip"),
-    18: .standard(proto: "local_port_list"),
-    20: .standard(proto: "vless_route_list"),
+    17: .standard(proto: "domain_matcher"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -798,10 +782,8 @@ extension Xray_App_Router_RoutingRule: SwiftProtobuf.Message, SwiftProtobuf._Mes
       case 14: try { try decoder.decodeSingularMessageField(value: &self._portList) }()
       case 15: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &self.attributes) }()
       case 16: try { try decoder.decodeSingularMessageField(value: &self._sourcePortList) }()
-      case 17: try { try decoder.decodeRepeatedMessageField(value: &self.localGeoip) }()
-      case 18: try { try decoder.decodeSingularMessageField(value: &self._localPortList) }()
-      case 19: try { try decoder.decodeSingularStringField(value: &self.ruleTag) }()
-      case 20: try { try decoder.decodeSingularMessageField(value: &self._vlessRouteList) }()
+      case 17: try { try decoder.decodeSingularStringField(value: &self.domainMatcher) }()
+      case 18: try { try decoder.decodeSingularStringField(value: &self.ruleTag) }()
       default: break
       }
     }
@@ -848,18 +830,12 @@ extension Xray_App_Router_RoutingRule: SwiftProtobuf.Message, SwiftProtobuf._Mes
     try { if let v = self._sourcePortList {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
     } }()
-    if !self.localGeoip.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.localGeoip, fieldNumber: 17)
+    if !self.domainMatcher.isEmpty {
+      try visitor.visitSingularStringField(value: self.domainMatcher, fieldNumber: 17)
     }
-    try { if let v = self._localPortList {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
-    } }()
     if !self.ruleTag.isEmpty {
-      try visitor.visitSingularStringField(value: self.ruleTag, fieldNumber: 19)
+      try visitor.visitSingularStringField(value: self.ruleTag, fieldNumber: 18)
     }
-    try { if let v = self._vlessRouteList {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 20)
-    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -876,9 +852,7 @@ extension Xray_App_Router_RoutingRule: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if lhs.inboundTag != rhs.inboundTag {return false}
     if lhs.`protocol` != rhs.`protocol` {return false}
     if lhs.attributes != rhs.attributes {return false}
-    if lhs.localGeoip != rhs.localGeoip {return false}
-    if lhs._localPortList != rhs._localPortList {return false}
-    if lhs._vlessRouteList != rhs._vlessRouteList {return false}
+    if lhs.domainMatcher != rhs.domainMatcher {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1091,6 +1065,7 @@ extension Xray_App_Router_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageI
 extension Xray_App_Router_Config.DomainStrategy: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "AsIs"),
+    1: .same(proto: "UseIp"),
     2: .same(proto: "IpIfNonMatch"),
     3: .same(proto: "IpOnDemand"),
   ]

@@ -96,135 +96,61 @@ public struct Xray_Transport_Internet_Tls_Config: @unchecked Sendable {
   // methods supported on all messages.
 
   /// Whether or not to allow self-signed certificates.
-  public var allowInsecure: Bool {
-    get {return _storage._allowInsecure}
-    set {_uniqueStorage()._allowInsecure = newValue}
-  }
+  public var allowInsecure: Bool = false
 
   /// List of certificates to be served on server.
-  public var certificate: [Xray_Transport_Internet_Tls_Certificate] {
-    get {return _storage._certificate}
-    set {_uniqueStorage()._certificate = newValue}
-  }
+  public var certificate: [Xray_Transport_Internet_Tls_Certificate] = []
 
   /// Override server name.
-  public var serverName: String {
-    get {return _storage._serverName}
-    set {_uniqueStorage()._serverName = newValue}
-  }
+  public var serverName: String = String()
 
   /// Lists of string as ALPN values.
-  public var nextProtocol: [String] {
-    get {return _storage._nextProtocol}
-    set {_uniqueStorage()._nextProtocol = newValue}
-  }
+  public var nextProtocol: [String] = []
 
   /// Whether or not to enable session (ticket) resumption.
-  public var enableSessionResumption: Bool {
-    get {return _storage._enableSessionResumption}
-    set {_uniqueStorage()._enableSessionResumption = newValue}
-  }
+  public var enableSessionResumption: Bool = false
 
   /// If true, root certificates on the system will not be loaded for
   /// verification.
-  public var disableSystemRoot: Bool {
-    get {return _storage._disableSystemRoot}
-    set {_uniqueStorage()._disableSystemRoot = newValue}
-  }
+  public var disableSystemRoot: Bool = false
 
   /// The minimum TLS version.
-  public var minVersion: String {
-    get {return _storage._minVersion}
-    set {_uniqueStorage()._minVersion = newValue}
-  }
+  public var minVersion: String = String()
 
   /// The maximum TLS version.
-  public var maxVersion: String {
-    get {return _storage._maxVersion}
-    set {_uniqueStorage()._maxVersion = newValue}
-  }
+  public var maxVersion: String = String()
 
   /// Specify cipher suites, except for TLS 1.3.
-  public var cipherSuites: String {
-    get {return _storage._cipherSuites}
-    set {_uniqueStorage()._cipherSuites = newValue}
-  }
+  public var cipherSuites: String = String()
 
   /// TLS Client Hello fingerprint (uTLS).
-  public var fingerprint: String {
-    get {return _storage._fingerprint}
-    set {_uniqueStorage()._fingerprint = newValue}
-  }
+  public var fingerprint: String = String()
 
-  public var rejectUnknownSni: Bool {
-    get {return _storage._rejectUnknownSni}
-    set {_uniqueStorage()._rejectUnknownSni = newValue}
-  }
+  public var rejectUnknownSni: Bool = false
 
   /// @Document Some certificate chain sha256 hashes.
   ///@Document After normal validation or allow_insecure, if the server's cert chain hash does not match any of these values, the connection will be aborted.
   ///@Critical
-  public var pinnedPeerCertificateChainSha256: [Data] {
-    get {return _storage._pinnedPeerCertificateChainSha256}
-    set {_uniqueStorage()._pinnedPeerCertificateChainSha256 = newValue}
-  }
+  public var pinnedPeerCertificateChainSha256: [Data] = []
 
   /// @Document Some certificate public key sha256 hashes.
   ///@Document After normal validation (required), if one of certs in verified chain matches one of these values, the connection will be eventually accepted.
   ///@Critical
-  public var pinnedPeerCertificatePublicKeySha256: [Data] {
-    get {return _storage._pinnedPeerCertificatePublicKeySha256}
-    set {_uniqueStorage()._pinnedPeerCertificatePublicKeySha256 = newValue}
-  }
+  public var pinnedPeerCertificatePublicKeySha256: [Data] = []
 
-  public var masterKeyLog: String {
-    get {return _storage._masterKeyLog}
-    set {_uniqueStorage()._masterKeyLog = newValue}
-  }
+  public var masterKeyLog: String = String()
 
   /// Lists of string as CurvePreferences values.
-  public var curvePreferences: [String] {
-    get {return _storage._curvePreferences}
-    set {_uniqueStorage()._curvePreferences = newValue}
-  }
+  public var curvePreferences: [String] = []
 
   /// @Document Replaces server_name to verify the peer cert.
   ///@Document After allow_insecure (automatically), if the server's cert can't be verified by any of these names, pinned_peer_certificate_chain_sha256 will be tried.
   ///@Critical
-  public var verifyPeerCertInNames: [String] {
-    get {return _storage._verifyPeerCertInNames}
-    set {_uniqueStorage()._verifyPeerCertInNames = newValue}
-  }
-
-  public var echServerKeys: Data {
-    get {return _storage._echServerKeys}
-    set {_uniqueStorage()._echServerKeys = newValue}
-  }
-
-  public var echConfigList: String {
-    get {return _storage._echConfigList}
-    set {_uniqueStorage()._echConfigList = newValue}
-  }
-
-  public var echForceQuery: String {
-    get {return _storage._echForceQuery}
-    set {_uniqueStorage()._echForceQuery = newValue}
-  }
-
-  public var echSocketSettings: Xray_Transport_Internet_SocketConfig {
-    get {return _storage._echSocketSettings ?? Xray_Transport_Internet_SocketConfig()}
-    set {_uniqueStorage()._echSocketSettings = newValue}
-  }
-  /// Returns true if `echSocketSettings` has been explicitly set.
-  public var hasEchSocketSettings: Bool {return _storage._echSocketSettings != nil}
-  /// Clears the value of `echSocketSettings`. Subsequent reads from it will return its default value.
-  public mutating func clearEchSocketSettings() {_uniqueStorage()._echSocketSettings = nil}
+  public var verifyPeerCertInNames: [String] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
-
-  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -332,210 +258,104 @@ extension Xray_Transport_Internet_Tls_Config: SwiftProtobuf.Message, SwiftProtob
     15: .standard(proto: "master_key_log"),
     16: .standard(proto: "curve_preferences"),
     17: .standard(proto: "verify_peer_cert_in_names"),
-    18: .standard(proto: "ech_server_keys"),
-    19: .standard(proto: "ech_config_list"),
-    20: .standard(proto: "ech_force_query"),
-    21: .standard(proto: "ech_socket_settings"),
   ]
 
-  fileprivate class _StorageClass {
-    var _allowInsecure: Bool = false
-    var _certificate: [Xray_Transport_Internet_Tls_Certificate] = []
-    var _serverName: String = String()
-    var _nextProtocol: [String] = []
-    var _enableSessionResumption: Bool = false
-    var _disableSystemRoot: Bool = false
-    var _minVersion: String = String()
-    var _maxVersion: String = String()
-    var _cipherSuites: String = String()
-    var _fingerprint: String = String()
-    var _rejectUnknownSni: Bool = false
-    var _pinnedPeerCertificateChainSha256: [Data] = []
-    var _pinnedPeerCertificatePublicKeySha256: [Data] = []
-    var _masterKeyLog: String = String()
-    var _curvePreferences: [String] = []
-    var _verifyPeerCertInNames: [String] = []
-    var _echServerKeys: Data = Data()
-    var _echConfigList: String = String()
-    var _echForceQuery: String = String()
-    var _echSocketSettings: Xray_Transport_Internet_SocketConfig? = nil
-
-    #if swift(>=5.10)
-      // This property is used as the initial default value for new instances of the type.
-      // The type itself is protecting the reference to its storage via CoW semantics.
-      // This will force a copy to be made of this reference when the first mutation occurs;
-      // hence, it is safe to mark this as `nonisolated(unsafe)`.
-      static nonisolated(unsafe) let defaultInstance = _StorageClass()
-    #else
-      static let defaultInstance = _StorageClass()
-    #endif
-
-    private init() {}
-
-    init(copying source: _StorageClass) {
-      _allowInsecure = source._allowInsecure
-      _certificate = source._certificate
-      _serverName = source._serverName
-      _nextProtocol = source._nextProtocol
-      _enableSessionResumption = source._enableSessionResumption
-      _disableSystemRoot = source._disableSystemRoot
-      _minVersion = source._minVersion
-      _maxVersion = source._maxVersion
-      _cipherSuites = source._cipherSuites
-      _fingerprint = source._fingerprint
-      _rejectUnknownSni = source._rejectUnknownSni
-      _pinnedPeerCertificateChainSha256 = source._pinnedPeerCertificateChainSha256
-      _pinnedPeerCertificatePublicKeySha256 = source._pinnedPeerCertificatePublicKeySha256
-      _masterKeyLog = source._masterKeyLog
-      _curvePreferences = source._curvePreferences
-      _verifyPeerCertInNames = source._verifyPeerCertInNames
-      _echServerKeys = source._echServerKeys
-      _echConfigList = source._echConfigList
-      _echForceQuery = source._echForceQuery
-      _echSocketSettings = source._echSocketSettings
-    }
-  }
-
-  fileprivate mutating func _uniqueStorage() -> _StorageClass {
-    if !isKnownUniquelyReferenced(&_storage) {
-      _storage = _StorageClass(copying: _storage)
-    }
-    return _storage
-  }
-
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    _ = _uniqueStorage()
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      while let fieldNumber = try decoder.nextFieldNumber() {
-        // The use of inline closures is to circumvent an issue where the compiler
-        // allocates stack space for every case branch when no optimizations are
-        // enabled. https://github.com/apple/swift-protobuf/issues/1034
-        switch fieldNumber {
-        case 1: try { try decoder.decodeSingularBoolField(value: &_storage._allowInsecure) }()
-        case 2: try { try decoder.decodeRepeatedMessageField(value: &_storage._certificate) }()
-        case 3: try { try decoder.decodeSingularStringField(value: &_storage._serverName) }()
-        case 4: try { try decoder.decodeRepeatedStringField(value: &_storage._nextProtocol) }()
-        case 5: try { try decoder.decodeSingularBoolField(value: &_storage._enableSessionResumption) }()
-        case 6: try { try decoder.decodeSingularBoolField(value: &_storage._disableSystemRoot) }()
-        case 7: try { try decoder.decodeSingularStringField(value: &_storage._minVersion) }()
-        case 8: try { try decoder.decodeSingularStringField(value: &_storage._maxVersion) }()
-        case 9: try { try decoder.decodeSingularStringField(value: &_storage._cipherSuites) }()
-        case 11: try { try decoder.decodeSingularStringField(value: &_storage._fingerprint) }()
-        case 12: try { try decoder.decodeSingularBoolField(value: &_storage._rejectUnknownSni) }()
-        case 13: try { try decoder.decodeRepeatedBytesField(value: &_storage._pinnedPeerCertificateChainSha256) }()
-        case 14: try { try decoder.decodeRepeatedBytesField(value: &_storage._pinnedPeerCertificatePublicKeySha256) }()
-        case 15: try { try decoder.decodeSingularStringField(value: &_storage._masterKeyLog) }()
-        case 16: try { try decoder.decodeRepeatedStringField(value: &_storage._curvePreferences) }()
-        case 17: try { try decoder.decodeRepeatedStringField(value: &_storage._verifyPeerCertInNames) }()
-        case 18: try { try decoder.decodeSingularBytesField(value: &_storage._echServerKeys) }()
-        case 19: try { try decoder.decodeSingularStringField(value: &_storage._echConfigList) }()
-        case 20: try { try decoder.decodeSingularStringField(value: &_storage._echForceQuery) }()
-        case 21: try { try decoder.decodeSingularMessageField(value: &_storage._echSocketSettings) }()
-        default: break
-        }
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularBoolField(value: &self.allowInsecure) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.certificate) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.serverName) }()
+      case 4: try { try decoder.decodeRepeatedStringField(value: &self.nextProtocol) }()
+      case 5: try { try decoder.decodeSingularBoolField(value: &self.enableSessionResumption) }()
+      case 6: try { try decoder.decodeSingularBoolField(value: &self.disableSystemRoot) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.minVersion) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.maxVersion) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.cipherSuites) }()
+      case 11: try { try decoder.decodeSingularStringField(value: &self.fingerprint) }()
+      case 12: try { try decoder.decodeSingularBoolField(value: &self.rejectUnknownSni) }()
+      case 13: try { try decoder.decodeRepeatedBytesField(value: &self.pinnedPeerCertificateChainSha256) }()
+      case 14: try { try decoder.decodeRepeatedBytesField(value: &self.pinnedPeerCertificatePublicKeySha256) }()
+      case 15: try { try decoder.decodeSingularStringField(value: &self.masterKeyLog) }()
+      case 16: try { try decoder.decodeRepeatedStringField(value: &self.curvePreferences) }()
+      case 17: try { try decoder.decodeRepeatedStringField(value: &self.verifyPeerCertInNames) }()
+      default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every if/case branch local when no optimizations
-      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-      // https://github.com/apple/swift-protobuf/issues/1182
-      if _storage._allowInsecure != false {
-        try visitor.visitSingularBoolField(value: _storage._allowInsecure, fieldNumber: 1)
-      }
-      if !_storage._certificate.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._certificate, fieldNumber: 2)
-      }
-      if !_storage._serverName.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._serverName, fieldNumber: 3)
-      }
-      if !_storage._nextProtocol.isEmpty {
-        try visitor.visitRepeatedStringField(value: _storage._nextProtocol, fieldNumber: 4)
-      }
-      if _storage._enableSessionResumption != false {
-        try visitor.visitSingularBoolField(value: _storage._enableSessionResumption, fieldNumber: 5)
-      }
-      if _storage._disableSystemRoot != false {
-        try visitor.visitSingularBoolField(value: _storage._disableSystemRoot, fieldNumber: 6)
-      }
-      if !_storage._minVersion.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._minVersion, fieldNumber: 7)
-      }
-      if !_storage._maxVersion.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._maxVersion, fieldNumber: 8)
-      }
-      if !_storage._cipherSuites.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._cipherSuites, fieldNumber: 9)
-      }
-      if !_storage._fingerprint.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._fingerprint, fieldNumber: 11)
-      }
-      if _storage._rejectUnknownSni != false {
-        try visitor.visitSingularBoolField(value: _storage._rejectUnknownSni, fieldNumber: 12)
-      }
-      if !_storage._pinnedPeerCertificateChainSha256.isEmpty {
-        try visitor.visitRepeatedBytesField(value: _storage._pinnedPeerCertificateChainSha256, fieldNumber: 13)
-      }
-      if !_storage._pinnedPeerCertificatePublicKeySha256.isEmpty {
-        try visitor.visitRepeatedBytesField(value: _storage._pinnedPeerCertificatePublicKeySha256, fieldNumber: 14)
-      }
-      if !_storage._masterKeyLog.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._masterKeyLog, fieldNumber: 15)
-      }
-      if !_storage._curvePreferences.isEmpty {
-        try visitor.visitRepeatedStringField(value: _storage._curvePreferences, fieldNumber: 16)
-      }
-      if !_storage._verifyPeerCertInNames.isEmpty {
-        try visitor.visitRepeatedStringField(value: _storage._verifyPeerCertInNames, fieldNumber: 17)
-      }
-      if !_storage._echServerKeys.isEmpty {
-        try visitor.visitSingularBytesField(value: _storage._echServerKeys, fieldNumber: 18)
-      }
-      if !_storage._echConfigList.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._echConfigList, fieldNumber: 19)
-      }
-      if !_storage._echForceQuery.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._echForceQuery, fieldNumber: 20)
-      }
-      try { if let v = _storage._echSocketSettings {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 21)
-      } }()
+    if self.allowInsecure != false {
+      try visitor.visitSingularBoolField(value: self.allowInsecure, fieldNumber: 1)
+    }
+    if !self.certificate.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.certificate, fieldNumber: 2)
+    }
+    if !self.serverName.isEmpty {
+      try visitor.visitSingularStringField(value: self.serverName, fieldNumber: 3)
+    }
+    if !self.nextProtocol.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.nextProtocol, fieldNumber: 4)
+    }
+    if self.enableSessionResumption != false {
+      try visitor.visitSingularBoolField(value: self.enableSessionResumption, fieldNumber: 5)
+    }
+    if self.disableSystemRoot != false {
+      try visitor.visitSingularBoolField(value: self.disableSystemRoot, fieldNumber: 6)
+    }
+    if !self.minVersion.isEmpty {
+      try visitor.visitSingularStringField(value: self.minVersion, fieldNumber: 7)
+    }
+    if !self.maxVersion.isEmpty {
+      try visitor.visitSingularStringField(value: self.maxVersion, fieldNumber: 8)
+    }
+    if !self.cipherSuites.isEmpty {
+      try visitor.visitSingularStringField(value: self.cipherSuites, fieldNumber: 9)
+    }
+    if !self.fingerprint.isEmpty {
+      try visitor.visitSingularStringField(value: self.fingerprint, fieldNumber: 11)
+    }
+    if self.rejectUnknownSni != false {
+      try visitor.visitSingularBoolField(value: self.rejectUnknownSni, fieldNumber: 12)
+    }
+    if !self.pinnedPeerCertificateChainSha256.isEmpty {
+      try visitor.visitRepeatedBytesField(value: self.pinnedPeerCertificateChainSha256, fieldNumber: 13)
+    }
+    if !self.pinnedPeerCertificatePublicKeySha256.isEmpty {
+      try visitor.visitRepeatedBytesField(value: self.pinnedPeerCertificatePublicKeySha256, fieldNumber: 14)
+    }
+    if !self.masterKeyLog.isEmpty {
+      try visitor.visitSingularStringField(value: self.masterKeyLog, fieldNumber: 15)
+    }
+    if !self.curvePreferences.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.curvePreferences, fieldNumber: 16)
+    }
+    if !self.verifyPeerCertInNames.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.verifyPeerCertInNames, fieldNumber: 17)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_Transport_Internet_Tls_Config, rhs: Xray_Transport_Internet_Tls_Config) -> Bool {
-    if lhs._storage !== rhs._storage {
-      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
-        let _storage = _args.0
-        let rhs_storage = _args.1
-        if _storage._allowInsecure != rhs_storage._allowInsecure {return false}
-        if _storage._certificate != rhs_storage._certificate {return false}
-        if _storage._serverName != rhs_storage._serverName {return false}
-        if _storage._nextProtocol != rhs_storage._nextProtocol {return false}
-        if _storage._enableSessionResumption != rhs_storage._enableSessionResumption {return false}
-        if _storage._disableSystemRoot != rhs_storage._disableSystemRoot {return false}
-        if _storage._minVersion != rhs_storage._minVersion {return false}
-        if _storage._maxVersion != rhs_storage._maxVersion {return false}
-        if _storage._cipherSuites != rhs_storage._cipherSuites {return false}
-        if _storage._fingerprint != rhs_storage._fingerprint {return false}
-        if _storage._rejectUnknownSni != rhs_storage._rejectUnknownSni {return false}
-        if _storage._pinnedPeerCertificateChainSha256 != rhs_storage._pinnedPeerCertificateChainSha256 {return false}
-        if _storage._pinnedPeerCertificatePublicKeySha256 != rhs_storage._pinnedPeerCertificatePublicKeySha256 {return false}
-        if _storage._masterKeyLog != rhs_storage._masterKeyLog {return false}
-        if _storage._curvePreferences != rhs_storage._curvePreferences {return false}
-        if _storage._verifyPeerCertInNames != rhs_storage._verifyPeerCertInNames {return false}
-        if _storage._echServerKeys != rhs_storage._echServerKeys {return false}
-        if _storage._echConfigList != rhs_storage._echConfigList {return false}
-        if _storage._echForceQuery != rhs_storage._echForceQuery {return false}
-        if _storage._echSocketSettings != rhs_storage._echSocketSettings {return false}
-        return true
-      }
-      if !storagesAreEqual {return false}
-    }
+    if lhs.allowInsecure != rhs.allowInsecure {return false}
+    if lhs.certificate != rhs.certificate {return false}
+    if lhs.serverName != rhs.serverName {return false}
+    if lhs.nextProtocol != rhs.nextProtocol {return false}
+    if lhs.enableSessionResumption != rhs.enableSessionResumption {return false}
+    if lhs.disableSystemRoot != rhs.disableSystemRoot {return false}
+    if lhs.minVersion != rhs.minVersion {return false}
+    if lhs.maxVersion != rhs.maxVersion {return false}
+    if lhs.cipherSuites != rhs.cipherSuites {return false}
+    if lhs.fingerprint != rhs.fingerprint {return false}
+    if lhs.rejectUnknownSni != rhs.rejectUnknownSni {return false}
+    if lhs.pinnedPeerCertificateChainSha256 != rhs.pinnedPeerCertificateChainSha256 {return false}
+    if lhs.pinnedPeerCertificatePublicKeySha256 != rhs.pinnedPeerCertificatePublicKeySha256 {return false}
+    if lhs.masterKeyLog != rhs.masterKeyLog {return false}
+    if lhs.curvePreferences != rhs.curvePreferences {return false}
+    if lhs.verifyPeerCertInNames != rhs.verifyPeerCertInNames {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

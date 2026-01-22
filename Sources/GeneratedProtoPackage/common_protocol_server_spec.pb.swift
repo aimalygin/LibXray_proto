@@ -36,21 +36,13 @@ public struct Xray_Common_Protocol_ServerEndpoint: Sendable {
 
   public var port: UInt32 = 0
 
-  public var user: Xray_Common_Protocol_User {
-    get {return _user ?? Xray_Common_Protocol_User()}
-    set {_user = newValue}
-  }
-  /// Returns true if `user` has been explicitly set.
-  public var hasUser: Bool {return self._user != nil}
-  /// Clears the value of `user`. Subsequent reads from it will return its default value.
-  public mutating func clearUser() {self._user = nil}
+  public var user: [Xray_Common_Protocol_User] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _address: Xray_Common_Net_IPOrDomain? = nil
-  fileprivate var _user: Xray_Common_Protocol_User? = nil
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -73,7 +65,7 @@ extension Xray_Common_Protocol_ServerEndpoint: SwiftProtobuf.Message, SwiftProto
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._address) }()
       case 2: try { try decoder.decodeSingularUInt32Field(value: &self.port) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._user) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.user) }()
       default: break
       }
     }
@@ -90,16 +82,16 @@ extension Xray_Common_Protocol_ServerEndpoint: SwiftProtobuf.Message, SwiftProto
     if self.port != 0 {
       try visitor.visitSingularUInt32Field(value: self.port, fieldNumber: 2)
     }
-    try { if let v = self._user {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    } }()
+    if !self.user.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.user, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_Common_Protocol_ServerEndpoint, rhs: Xray_Common_Protocol_ServerEndpoint) -> Bool {
     if lhs._address != rhs._address {return false}
     if lhs.port != rhs.port {return false}
-    if lhs._user != rhs._user {return false}
+    if lhs.user != rhs.user {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

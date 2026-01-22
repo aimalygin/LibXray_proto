@@ -53,12 +53,6 @@ public struct Xray_App_Router_Command_RoutingContext: @unchecked Sendable {
 
   public var outboundTag: String = String()
 
-  public var localIps: [Data] = []
-
-  public var localPort: UInt32 = 0
-
-  public var vlessRoute: UInt32 = 0
-
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -100,35 +94,29 @@ public struct Xray_App_Router_Command_SubscribeRoutingStatsRequest: Sendable {
 /// fields are returned if left empty.
 /// * PublishResult broadcasts the routing result to routing statistics channel
 /// if set true.
-public struct Xray_App_Router_Command_TestRouteRequest: @unchecked Sendable {
+public struct Xray_App_Router_Command_TestRouteRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var routingContext: Xray_App_Router_Command_RoutingContext {
-    get {return _storage._routingContext ?? Xray_App_Router_Command_RoutingContext()}
-    set {_uniqueStorage()._routingContext = newValue}
+    get {return _routingContext ?? Xray_App_Router_Command_RoutingContext()}
+    set {_routingContext = newValue}
   }
   /// Returns true if `routingContext` has been explicitly set.
-  public var hasRoutingContext: Bool {return _storage._routingContext != nil}
+  public var hasRoutingContext: Bool {return self._routingContext != nil}
   /// Clears the value of `routingContext`. Subsequent reads from it will return its default value.
-  public mutating func clearRoutingContext() {_uniqueStorage()._routingContext = nil}
+  public mutating func clearRoutingContext() {self._routingContext = nil}
 
-  public var fieldSelectors: [String] {
-    get {return _storage._fieldSelectors}
-    set {_uniqueStorage()._fieldSelectors = newValue}
-  }
+  public var fieldSelectors: [String] = []
 
-  public var publishResult: Bool {
-    get {return _storage._publishResult}
-    set {_uniqueStorage()._publishResult = newValue}
-  }
+  public var publishResult: Bool = false
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
-  fileprivate var _storage = _StorageClass.defaultInstance
+  fileprivate var _routingContext: Xray_App_Router_Command_RoutingContext? = nil
 }
 
 public struct Xray_App_Router_Command_PrincipleTargetInfo: Sendable {
@@ -327,9 +315,6 @@ extension Xray_App_Router_Command_RoutingContext: SwiftProtobuf.Message, SwiftPr
     10: .same(proto: "Attributes"),
     11: .same(proto: "OutboundGroupTags"),
     12: .same(proto: "OutboundTag"),
-    13: .same(proto: "LocalIPs"),
-    14: .same(proto: "LocalPort"),
-    15: .same(proto: "VlessRoute"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -350,9 +335,6 @@ extension Xray_App_Router_Command_RoutingContext: SwiftProtobuf.Message, SwiftPr
       case 10: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &self.attributes) }()
       case 11: try { try decoder.decodeRepeatedStringField(value: &self.outboundGroupTags) }()
       case 12: try { try decoder.decodeSingularStringField(value: &self.outboundTag) }()
-      case 13: try { try decoder.decodeRepeatedBytesField(value: &self.localIps) }()
-      case 14: try { try decoder.decodeSingularUInt32Field(value: &self.localPort) }()
-      case 15: try { try decoder.decodeSingularUInt32Field(value: &self.vlessRoute) }()
       default: break
       }
     }
@@ -395,15 +377,6 @@ extension Xray_App_Router_Command_RoutingContext: SwiftProtobuf.Message, SwiftPr
     if !self.outboundTag.isEmpty {
       try visitor.visitSingularStringField(value: self.outboundTag, fieldNumber: 12)
     }
-    if !self.localIps.isEmpty {
-      try visitor.visitRepeatedBytesField(value: self.localIps, fieldNumber: 13)
-    }
-    if self.localPort != 0 {
-      try visitor.visitSingularUInt32Field(value: self.localPort, fieldNumber: 14)
-    }
-    if self.vlessRoute != 0 {
-      try visitor.visitSingularUInt32Field(value: self.vlessRoute, fieldNumber: 15)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -420,9 +393,6 @@ extension Xray_App_Router_Command_RoutingContext: SwiftProtobuf.Message, SwiftPr
     if lhs.attributes != rhs.attributes {return false}
     if lhs.outboundGroupTags != rhs.outboundGroupTags {return false}
     if lhs.outboundTag != rhs.outboundTag {return false}
-    if lhs.localIps != rhs.localIps {return false}
-    if lhs.localPort != rhs.localPort {return false}
-    if lhs.vlessRoute != rhs.vlessRoute {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -468,85 +438,41 @@ extension Xray_App_Router_Command_TestRouteRequest: SwiftProtobuf.Message, Swift
     3: .same(proto: "PublishResult"),
   ]
 
-  fileprivate class _StorageClass {
-    var _routingContext: Xray_App_Router_Command_RoutingContext? = nil
-    var _fieldSelectors: [String] = []
-    var _publishResult: Bool = false
-
-    #if swift(>=5.10)
-      // This property is used as the initial default value for new instances of the type.
-      // The type itself is protecting the reference to its storage via CoW semantics.
-      // This will force a copy to be made of this reference when the first mutation occurs;
-      // hence, it is safe to mark this as `nonisolated(unsafe)`.
-      static nonisolated(unsafe) let defaultInstance = _StorageClass()
-    #else
-      static let defaultInstance = _StorageClass()
-    #endif
-
-    private init() {}
-
-    init(copying source: _StorageClass) {
-      _routingContext = source._routingContext
-      _fieldSelectors = source._fieldSelectors
-      _publishResult = source._publishResult
-    }
-  }
-
-  fileprivate mutating func _uniqueStorage() -> _StorageClass {
-    if !isKnownUniquelyReferenced(&_storage) {
-      _storage = _StorageClass(copying: _storage)
-    }
-    return _storage
-  }
-
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    _ = _uniqueStorage()
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      while let fieldNumber = try decoder.nextFieldNumber() {
-        // The use of inline closures is to circumvent an issue where the compiler
-        // allocates stack space for every case branch when no optimizations are
-        // enabled. https://github.com/apple/swift-protobuf/issues/1034
-        switch fieldNumber {
-        case 1: try { try decoder.decodeSingularMessageField(value: &_storage._routingContext) }()
-        case 2: try { try decoder.decodeRepeatedStringField(value: &_storage._fieldSelectors) }()
-        case 3: try { try decoder.decodeSingularBoolField(value: &_storage._publishResult) }()
-        default: break
-        }
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._routingContext) }()
+      case 2: try { try decoder.decodeRepeatedStringField(value: &self.fieldSelectors) }()
+      case 3: try { try decoder.decodeSingularBoolField(value: &self.publishResult) }()
+      default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every if/case branch local when no optimizations
-      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-      // https://github.com/apple/swift-protobuf/issues/1182
-      try { if let v = _storage._routingContext {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-      } }()
-      if !_storage._fieldSelectors.isEmpty {
-        try visitor.visitRepeatedStringField(value: _storage._fieldSelectors, fieldNumber: 2)
-      }
-      if _storage._publishResult != false {
-        try visitor.visitSingularBoolField(value: _storage._publishResult, fieldNumber: 3)
-      }
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._routingContext {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    if !self.fieldSelectors.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.fieldSelectors, fieldNumber: 2)
+    }
+    if self.publishResult != false {
+      try visitor.visitSingularBoolField(value: self.publishResult, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_App_Router_Command_TestRouteRequest, rhs: Xray_App_Router_Command_TestRouteRequest) -> Bool {
-    if lhs._storage !== rhs._storage {
-      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
-        let _storage = _args.0
-        let rhs_storage = _args.1
-        if _storage._routingContext != rhs_storage._routingContext {return false}
-        if _storage._fieldSelectors != rhs_storage._fieldSelectors {return false}
-        if _storage._publishResult != rhs_storage._publishResult {return false}
-        return true
-      }
-      if !storagesAreEqual {return false}
-    }
+    if lhs._routingContext != rhs._routingContext {return false}
+    if lhs.fieldSelectors != rhs.fieldSelectors {return false}
+    if lhs.publishResult != rhs.publishResult {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

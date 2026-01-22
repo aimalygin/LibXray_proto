@@ -139,30 +139,6 @@ public struct Xray_App_Proxyman_Command_AlterInboundResponse: Sendable {
   public init() {}
 }
 
-public struct Xray_App_Proxyman_Command_ListInboundsRequest: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var isOnlyTags: Bool = false
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-public struct Xray_App_Proxyman_Command_ListInboundsResponse: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var inbounds: [Xray_Core_InboundHandlerConfig] = []
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
 public struct Xray_App_Proxyman_Command_GetInboundUserRequest: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -281,28 +257,6 @@ public struct Xray_App_Proxyman_Command_AlterOutboundResponse: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-public struct Xray_App_Proxyman_Command_ListOutboundsRequest: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-public struct Xray_App_Proxyman_Command_ListOutboundsResponse: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var outbounds: [Xray_Core_OutboundHandlerConfig] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -553,70 +507,6 @@ extension Xray_App_Proxyman_Command_AlterInboundResponse: SwiftProtobuf.Message,
   }
 
   public static func ==(lhs: Xray_App_Proxyman_Command_AlterInboundResponse, rhs: Xray_App_Proxyman_Command_AlterInboundResponse) -> Bool {
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Xray_App_Proxyman_Command_ListInboundsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".ListInboundsRequest"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "isOnlyTags"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularBoolField(value: &self.isOnlyTags) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.isOnlyTags != false {
-      try visitor.visitSingularBoolField(value: self.isOnlyTags, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Xray_App_Proxyman_Command_ListInboundsRequest, rhs: Xray_App_Proxyman_Command_ListInboundsRequest) -> Bool {
-    if lhs.isOnlyTags != rhs.isOnlyTags {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Xray_App_Proxyman_Command_ListInboundsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".ListInboundsResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "inbounds"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.inbounds) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.inbounds.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.inbounds, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Xray_App_Proxyman_Command_ListInboundsResponse, rhs: Xray_App_Proxyman_Command_ListInboundsResponse) -> Bool {
-    if lhs.inbounds != rhs.inbounds {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -886,57 +776,6 @@ extension Xray_App_Proxyman_Command_AlterOutboundResponse: SwiftProtobuf.Message
   }
 
   public static func ==(lhs: Xray_App_Proxyman_Command_AlterOutboundResponse, rhs: Xray_App_Proxyman_Command_AlterOutboundResponse) -> Bool {
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Xray_App_Proxyman_Command_ListOutboundsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".ListOutboundsRequest"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    // Load everything into unknown fields
-    while try decoder.nextFieldNumber() != nil {}
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Xray_App_Proxyman_Command_ListOutboundsRequest, rhs: Xray_App_Proxyman_Command_ListOutboundsRequest) -> Bool {
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Xray_App_Proxyman_Command_ListOutboundsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".ListOutboundsResponse"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "outbounds"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.outbounds) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.outbounds.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.outbounds, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Xray_App_Proxyman_Command_ListOutboundsResponse, rhs: Xray_App_Proxyman_Command_ListOutboundsResponse) -> Bool {
-    if lhs.outbounds != rhs.outbounds {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

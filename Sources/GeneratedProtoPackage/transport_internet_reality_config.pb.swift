@@ -76,29 +76,6 @@ public struct Xray_Transport_Internet_Reality_Config: @unchecked Sendable {
     set {_uniqueStorage()._shortIds = newValue}
   }
 
-  public var mldsa65Seed: Data {
-    get {return _storage._mldsa65Seed}
-    set {_uniqueStorage()._mldsa65Seed = newValue}
-  }
-
-  public var limitFallbackUpload: Xray_Transport_Internet_Reality_LimitFallback {
-    get {return _storage._limitFallbackUpload ?? Xray_Transport_Internet_Reality_LimitFallback()}
-    set {_uniqueStorage()._limitFallbackUpload = newValue}
-  }
-  /// Returns true if `limitFallbackUpload` has been explicitly set.
-  public var hasLimitFallbackUpload: Bool {return _storage._limitFallbackUpload != nil}
-  /// Clears the value of `limitFallbackUpload`. Subsequent reads from it will return its default value.
-  public mutating func clearLimitFallbackUpload() {_uniqueStorage()._limitFallbackUpload = nil}
-
-  public var limitFallbackDownload: Xray_Transport_Internet_Reality_LimitFallback {
-    get {return _storage._limitFallbackDownload ?? Xray_Transport_Internet_Reality_LimitFallback()}
-    set {_uniqueStorage()._limitFallbackDownload = newValue}
-  }
-  /// Returns true if `limitFallbackDownload` has been explicitly set.
-  public var hasLimitFallbackDownload: Bool {return _storage._limitFallbackDownload != nil}
-  /// Clears the value of `limitFallbackDownload`. Subsequent reads from it will return its default value.
-  public mutating func clearLimitFallbackDownload() {_uniqueStorage()._limitFallbackDownload = nil}
-
   public var fingerprint: String {
     get {return _storage._fingerprint}
     set {_uniqueStorage()._fingerprint = newValue}
@@ -117,11 +94,6 @@ public struct Xray_Transport_Internet_Reality_Config: @unchecked Sendable {
   public var shortID: Data {
     get {return _storage._shortID}
     set {_uniqueStorage()._shortID = newValue}
-  }
-
-  public var mldsa65Verify: Data {
-    get {return _storage._mldsa65Verify}
-    set {_uniqueStorage()._mldsa65Verify = newValue}
   }
 
   public var spiderX: String {
@@ -146,22 +118,6 @@ public struct Xray_Transport_Internet_Reality_Config: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public struct Xray_Transport_Internet_Reality_LimitFallback: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var afterBytes: UInt64 = 0
-
-  public var bytesPerSec: UInt64 = 0
-
-  public var burstBytesPerSec: UInt64 = 0
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "xray.transport.internet.reality"
@@ -179,17 +135,13 @@ extension Xray_Transport_Internet_Reality_Config: SwiftProtobuf.Message, SwiftPr
     8: .standard(proto: "max_client_ver"),
     9: .standard(proto: "max_time_diff"),
     10: .standard(proto: "short_ids"),
-    11: .standard(proto: "mldsa65_seed"),
-    12: .standard(proto: "limit_fallback_upload"),
-    13: .standard(proto: "limit_fallback_download"),
     21: .same(proto: "Fingerprint"),
     22: .standard(proto: "server_name"),
     23: .standard(proto: "public_key"),
     24: .standard(proto: "short_id"),
-    25: .standard(proto: "mldsa65_verify"),
-    26: .standard(proto: "spider_x"),
-    27: .standard(proto: "spider_y"),
-    31: .standard(proto: "master_key_log"),
+    25: .standard(proto: "spider_x"),
+    26: .standard(proto: "spider_y"),
+    27: .standard(proto: "master_key_log"),
   ]
 
   fileprivate class _StorageClass {
@@ -203,14 +155,10 @@ extension Xray_Transport_Internet_Reality_Config: SwiftProtobuf.Message, SwiftPr
     var _maxClientVer: Data = Data()
     var _maxTimeDiff: UInt64 = 0
     var _shortIds: [Data] = []
-    var _mldsa65Seed: Data = Data()
-    var _limitFallbackUpload: Xray_Transport_Internet_Reality_LimitFallback? = nil
-    var _limitFallbackDownload: Xray_Transport_Internet_Reality_LimitFallback? = nil
     var _fingerprint: String = String()
     var _serverName: String = String()
     var _publicKey: Data = Data()
     var _shortID: Data = Data()
-    var _mldsa65Verify: Data = Data()
     var _spiderX: String = String()
     var _spiderY: [Int64] = []
     var _masterKeyLog: String = String()
@@ -238,14 +186,10 @@ extension Xray_Transport_Internet_Reality_Config: SwiftProtobuf.Message, SwiftPr
       _maxClientVer = source._maxClientVer
       _maxTimeDiff = source._maxTimeDiff
       _shortIds = source._shortIds
-      _mldsa65Seed = source._mldsa65Seed
-      _limitFallbackUpload = source._limitFallbackUpload
-      _limitFallbackDownload = source._limitFallbackDownload
       _fingerprint = source._fingerprint
       _serverName = source._serverName
       _publicKey = source._publicKey
       _shortID = source._shortID
-      _mldsa65Verify = source._mldsa65Verify
       _spiderX = source._spiderX
       _spiderY = source._spiderY
       _masterKeyLog = source._masterKeyLog
@@ -277,17 +221,13 @@ extension Xray_Transport_Internet_Reality_Config: SwiftProtobuf.Message, SwiftPr
         case 8: try { try decoder.decodeSingularBytesField(value: &_storage._maxClientVer) }()
         case 9: try { try decoder.decodeSingularUInt64Field(value: &_storage._maxTimeDiff) }()
         case 10: try { try decoder.decodeRepeatedBytesField(value: &_storage._shortIds) }()
-        case 11: try { try decoder.decodeSingularBytesField(value: &_storage._mldsa65Seed) }()
-        case 12: try { try decoder.decodeSingularMessageField(value: &_storage._limitFallbackUpload) }()
-        case 13: try { try decoder.decodeSingularMessageField(value: &_storage._limitFallbackDownload) }()
         case 21: try { try decoder.decodeSingularStringField(value: &_storage._fingerprint) }()
         case 22: try { try decoder.decodeSingularStringField(value: &_storage._serverName) }()
         case 23: try { try decoder.decodeSingularBytesField(value: &_storage._publicKey) }()
         case 24: try { try decoder.decodeSingularBytesField(value: &_storage._shortID) }()
-        case 25: try { try decoder.decodeSingularBytesField(value: &_storage._mldsa65Verify) }()
-        case 26: try { try decoder.decodeSingularStringField(value: &_storage._spiderX) }()
-        case 27: try { try decoder.decodeRepeatedInt64Field(value: &_storage._spiderY) }()
-        case 31: try { try decoder.decodeSingularStringField(value: &_storage._masterKeyLog) }()
+        case 25: try { try decoder.decodeSingularStringField(value: &_storage._spiderX) }()
+        case 26: try { try decoder.decodeRepeatedInt64Field(value: &_storage._spiderY) }()
+        case 27: try { try decoder.decodeSingularStringField(value: &_storage._masterKeyLog) }()
         default: break
         }
       }
@@ -296,10 +236,6 @@ extension Xray_Transport_Internet_Reality_Config: SwiftProtobuf.Message, SwiftPr
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every if/case branch local when no optimizations
-      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-      // https://github.com/apple/swift-protobuf/issues/1182
       if _storage._show != false {
         try visitor.visitSingularBoolField(value: _storage._show, fieldNumber: 1)
       }
@@ -330,15 +266,6 @@ extension Xray_Transport_Internet_Reality_Config: SwiftProtobuf.Message, SwiftPr
       if !_storage._shortIds.isEmpty {
         try visitor.visitRepeatedBytesField(value: _storage._shortIds, fieldNumber: 10)
       }
-      if !_storage._mldsa65Seed.isEmpty {
-        try visitor.visitSingularBytesField(value: _storage._mldsa65Seed, fieldNumber: 11)
-      }
-      try { if let v = _storage._limitFallbackUpload {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
-      } }()
-      try { if let v = _storage._limitFallbackDownload {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
-      } }()
       if !_storage._fingerprint.isEmpty {
         try visitor.visitSingularStringField(value: _storage._fingerprint, fieldNumber: 21)
       }
@@ -351,17 +278,14 @@ extension Xray_Transport_Internet_Reality_Config: SwiftProtobuf.Message, SwiftPr
       if !_storage._shortID.isEmpty {
         try visitor.visitSingularBytesField(value: _storage._shortID, fieldNumber: 24)
       }
-      if !_storage._mldsa65Verify.isEmpty {
-        try visitor.visitSingularBytesField(value: _storage._mldsa65Verify, fieldNumber: 25)
-      }
       if !_storage._spiderX.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._spiderX, fieldNumber: 26)
+        try visitor.visitSingularStringField(value: _storage._spiderX, fieldNumber: 25)
       }
       if !_storage._spiderY.isEmpty {
-        try visitor.visitPackedInt64Field(value: _storage._spiderY, fieldNumber: 27)
+        try visitor.visitPackedInt64Field(value: _storage._spiderY, fieldNumber: 26)
       }
       if !_storage._masterKeyLog.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._masterKeyLog, fieldNumber: 31)
+        try visitor.visitSingularStringField(value: _storage._masterKeyLog, fieldNumber: 27)
       }
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -382,14 +306,10 @@ extension Xray_Transport_Internet_Reality_Config: SwiftProtobuf.Message, SwiftPr
         if _storage._maxClientVer != rhs_storage._maxClientVer {return false}
         if _storage._maxTimeDiff != rhs_storage._maxTimeDiff {return false}
         if _storage._shortIds != rhs_storage._shortIds {return false}
-        if _storage._mldsa65Seed != rhs_storage._mldsa65Seed {return false}
-        if _storage._limitFallbackUpload != rhs_storage._limitFallbackUpload {return false}
-        if _storage._limitFallbackDownload != rhs_storage._limitFallbackDownload {return false}
         if _storage._fingerprint != rhs_storage._fingerprint {return false}
         if _storage._serverName != rhs_storage._serverName {return false}
         if _storage._publicKey != rhs_storage._publicKey {return false}
         if _storage._shortID != rhs_storage._shortID {return false}
-        if _storage._mldsa65Verify != rhs_storage._mldsa65Verify {return false}
         if _storage._spiderX != rhs_storage._spiderX {return false}
         if _storage._spiderY != rhs_storage._spiderY {return false}
         if _storage._masterKeyLog != rhs_storage._masterKeyLog {return false}
@@ -397,50 +317,6 @@ extension Xray_Transport_Internet_Reality_Config: SwiftProtobuf.Message, SwiftPr
       }
       if !storagesAreEqual {return false}
     }
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Xray_Transport_Internet_Reality_LimitFallback: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".LimitFallback"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "after_bytes"),
-    2: .standard(proto: "bytes_per_sec"),
-    3: .standard(proto: "burst_bytes_per_sec"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularUInt64Field(value: &self.afterBytes) }()
-      case 2: try { try decoder.decodeSingularUInt64Field(value: &self.bytesPerSec) }()
-      case 3: try { try decoder.decodeSingularUInt64Field(value: &self.burstBytesPerSec) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.afterBytes != 0 {
-      try visitor.visitSingularUInt64Field(value: self.afterBytes, fieldNumber: 1)
-    }
-    if self.bytesPerSec != 0 {
-      try visitor.visitSingularUInt64Field(value: self.bytesPerSec, fieldNumber: 2)
-    }
-    if self.burstBytesPerSec != 0 {
-      try visitor.visitSingularUInt64Field(value: self.burstBytesPerSec, fieldNumber: 3)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Xray_Transport_Internet_Reality_LimitFallback, rhs: Xray_Transport_Internet_Reality_LimitFallback) -> Bool {
-    if lhs.afterBytes != rhs.afterBytes {return false}
-    if lhs.bytesPerSec != rhs.bytesPerSec {return false}
-    if lhs.burstBytesPerSec != rhs.burstBytesPerSec {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

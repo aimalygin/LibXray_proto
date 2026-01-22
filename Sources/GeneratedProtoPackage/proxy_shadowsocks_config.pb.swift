@@ -105,20 +105,11 @@ public struct Xray_Proxy_Shadowsocks_ClientConfig: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var server: Xray_Common_Protocol_ServerEndpoint {
-    get {return _server ?? Xray_Common_Protocol_ServerEndpoint()}
-    set {_server = newValue}
-  }
-  /// Returns true if `server` has been explicitly set.
-  public var hasServer: Bool {return self._server != nil}
-  /// Clears the value of `server`. Subsequent reads from it will return its default value.
-  public mutating func clearServer() {self._server = nil}
+  public var server: [Xray_Common_Protocol_ServerEndpoint] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
-
-  fileprivate var _server: Xray_Common_Protocol_ServerEndpoint? = nil
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -230,25 +221,21 @@ extension Xray_Proxy_Shadowsocks_ClientConfig: SwiftProtobuf.Message, SwiftProto
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._server) }()
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.server) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._server {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
+    if !self.server.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.server, fieldNumber: 1)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_Proxy_Shadowsocks_ClientConfig, rhs: Xray_Proxy_Shadowsocks_ClientConfig) -> Bool {
-    if lhs._server != rhs._server {return false}
+    if lhs.server != rhs.server {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

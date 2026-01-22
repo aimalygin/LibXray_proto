@@ -68,7 +68,6 @@ public enum Xray_App_Dns_QueryStrategy: SwiftProtobuf.Enum, Swift.CaseIterable {
   case useIp // = 0
   case useIp4 // = 1
   case useIp6 // = 2
-  case useSys // = 3
   case UNRECOGNIZED(Int)
 
   public init() {
@@ -80,7 +79,6 @@ public enum Xray_App_Dns_QueryStrategy: SwiftProtobuf.Enum, Swift.CaseIterable {
     case 0: self = .useIp
     case 1: self = .useIp4
     case 2: self = .useIp6
-    case 3: self = .useSys
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -90,7 +88,6 @@ public enum Xray_App_Dns_QueryStrategy: SwiftProtobuf.Enum, Swift.CaseIterable {
     case .useIp: return 0
     case .useIp4: return 1
     case .useIp6: return 2
-    case .useSys: return 3
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -100,7 +97,6 @@ public enum Xray_App_Dns_QueryStrategy: SwiftProtobuf.Enum, Swift.CaseIterable {
     .useIp,
     .useIp4,
     .useIp6,
-    .useSys,
   ]
 
 }
@@ -111,105 +107,31 @@ public struct Xray_App_Dns_NameServer: @unchecked Sendable {
   // methods supported on all messages.
 
   public var address: Xray_Common_Net_Endpoint {
-    get {return _storage._address ?? Xray_Common_Net_Endpoint()}
-    set {_uniqueStorage()._address = newValue}
+    get {return _address ?? Xray_Common_Net_Endpoint()}
+    set {_address = newValue}
   }
   /// Returns true if `address` has been explicitly set.
-  public var hasAddress: Bool {return _storage._address != nil}
+  public var hasAddress: Bool {return self._address != nil}
   /// Clears the value of `address`. Subsequent reads from it will return its default value.
-  public mutating func clearAddress() {_uniqueStorage()._address = nil}
+  public mutating func clearAddress() {self._address = nil}
 
-  public var clientIp: Data {
-    get {return _storage._clientIp}
-    set {_uniqueStorage()._clientIp = newValue}
-  }
+  public var clientIp: Data = Data()
 
-  public var skipFallback: Bool {
-    get {return _storage._skipFallback}
-    set {_uniqueStorage()._skipFallback = newValue}
-  }
+  public var skipFallback: Bool = false
 
-  public var prioritizedDomain: [Xray_App_Dns_NameServer.PriorityDomain] {
-    get {return _storage._prioritizedDomain}
-    set {_uniqueStorage()._prioritizedDomain = newValue}
-  }
+  public var prioritizedDomain: [Xray_App_Dns_NameServer.PriorityDomain] = []
 
-  public var expectedGeoip: [Xray_App_Router_GeoIP] {
-    get {return _storage._expectedGeoip}
-    set {_uniqueStorage()._expectedGeoip = newValue}
-  }
+  public var geoip: [Xray_App_Router_GeoIP] = []
 
-  public var originalRules: [Xray_App_Dns_NameServer.OriginalRule] {
-    get {return _storage._originalRules}
-    set {_uniqueStorage()._originalRules = newValue}
-  }
+  public var originalRules: [Xray_App_Dns_NameServer.OriginalRule] = []
 
-  public var queryStrategy: Xray_App_Dns_QueryStrategy {
-    get {return _storage._queryStrategy}
-    set {_uniqueStorage()._queryStrategy = newValue}
-  }
+  public var queryStrategy: Xray_App_Dns_QueryStrategy = .useIp
 
-  public var actPrior: Bool {
-    get {return _storage._actPrior}
-    set {_uniqueStorage()._actPrior = newValue}
-  }
+  public var allowUnexpectedIps: Bool = false
 
-  public var tag: String {
-    get {return _storage._tag}
-    set {_uniqueStorage()._tag = newValue}
-  }
+  public var tag: String = String()
 
-  public var timeoutMs: UInt64 {
-    get {return _storage._timeoutMs}
-    set {_uniqueStorage()._timeoutMs = newValue}
-  }
-
-  public var disableCache: Bool {
-    get {return _storage._disableCache ?? false}
-    set {_uniqueStorage()._disableCache = newValue}
-  }
-  /// Returns true if `disableCache` has been explicitly set.
-  public var hasDisableCache: Bool {return _storage._disableCache != nil}
-  /// Clears the value of `disableCache`. Subsequent reads from it will return its default value.
-  public mutating func clearDisableCache() {_uniqueStorage()._disableCache = nil}
-
-  public var serveStale: Bool {
-    get {return _storage._serveStale ?? false}
-    set {_uniqueStorage()._serveStale = newValue}
-  }
-  /// Returns true if `serveStale` has been explicitly set.
-  public var hasServeStale: Bool {return _storage._serveStale != nil}
-  /// Clears the value of `serveStale`. Subsequent reads from it will return its default value.
-  public mutating func clearServeStale() {_uniqueStorage()._serveStale = nil}
-
-  public var serveExpiredTtl: UInt32 {
-    get {return _storage._serveExpiredTtl ?? 0}
-    set {_uniqueStorage()._serveExpiredTtl = newValue}
-  }
-  /// Returns true if `serveExpiredTtl` has been explicitly set.
-  public var hasServeExpiredTtl: Bool {return _storage._serveExpiredTtl != nil}
-  /// Clears the value of `serveExpiredTtl`. Subsequent reads from it will return its default value.
-  public mutating func clearServeExpiredTtl() {_uniqueStorage()._serveExpiredTtl = nil}
-
-  public var finalQuery: Bool {
-    get {return _storage._finalQuery}
-    set {_uniqueStorage()._finalQuery = newValue}
-  }
-
-  public var unexpectedGeoip: [Xray_App_Router_GeoIP] {
-    get {return _storage._unexpectedGeoip}
-    set {_uniqueStorage()._unexpectedGeoip = newValue}
-  }
-
-  public var actUnprior: Bool {
-    get {return _storage._actUnprior}
-    set {_uniqueStorage()._actUnprior = newValue}
-  }
-
-  public var policyID: UInt32 {
-    get {return _storage._policyID}
-    set {_uniqueStorage()._policyID = newValue}
-  }
+  public var timeoutMs: UInt64 = 0
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -243,7 +165,7 @@ public struct Xray_App_Dns_NameServer: @unchecked Sendable {
 
   public init() {}
 
-  fileprivate var _storage = _StorageClass.defaultInstance
+  fileprivate var _address: Xray_Common_Net_Endpoint? = nil
 }
 
 public struct Xray_App_Dns_Config: @unchecked Sendable {
@@ -267,17 +189,11 @@ public struct Xray_App_Dns_Config: @unchecked Sendable {
   /// DisableCache disables DNS cache
   public var disableCache: Bool = false
 
-  public var serveStale: Bool = false
-
-  public var serveExpiredTtl: UInt32 = 0
-
   public var queryStrategy: Xray_App_Dns_QueryStrategy = .useIp
 
   public var disableFallback: Bool = false
 
   public var disableFallbackIfMatch: Bool = false
-
-  public var enableParallelQuery: Bool = false
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -322,7 +238,6 @@ extension Xray_App_Dns_QueryStrategy: SwiftProtobuf._ProtoNameProviding {
     0: .same(proto: "USE_IP"),
     1: .same(proto: "USE_IP4"),
     2: .same(proto: "USE_IP6"),
-    3: .same(proto: "USE_SYS"),
   ]
 }
 
@@ -333,198 +248,84 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
     5: .standard(proto: "client_ip"),
     6: .same(proto: "skipFallback"),
     2: .standard(proto: "prioritized_domain"),
-    3: .standard(proto: "expected_geoip"),
+    3: .same(proto: "geoip"),
     4: .standard(proto: "original_rules"),
     7: .standard(proto: "query_strategy"),
-    8: .same(proto: "actPrior"),
+    8: .same(proto: "allowUnexpectedIPs"),
     9: .same(proto: "tag"),
     10: .same(proto: "timeoutMs"),
-    11: .same(proto: "disableCache"),
-    15: .same(proto: "serveStale"),
-    16: .same(proto: "serveExpiredTTL"),
-    12: .same(proto: "finalQuery"),
-    13: .standard(proto: "unexpected_geoip"),
-    14: .same(proto: "actUnprior"),
-    17: .same(proto: "policyID"),
   ]
 
-  fileprivate class _StorageClass {
-    var _address: Xray_Common_Net_Endpoint? = nil
-    var _clientIp: Data = Data()
-    var _skipFallback: Bool = false
-    var _prioritizedDomain: [Xray_App_Dns_NameServer.PriorityDomain] = []
-    var _expectedGeoip: [Xray_App_Router_GeoIP] = []
-    var _originalRules: [Xray_App_Dns_NameServer.OriginalRule] = []
-    var _queryStrategy: Xray_App_Dns_QueryStrategy = .useIp
-    var _actPrior: Bool = false
-    var _tag: String = String()
-    var _timeoutMs: UInt64 = 0
-    var _disableCache: Bool? = nil
-    var _serveStale: Bool? = nil
-    var _serveExpiredTtl: UInt32? = nil
-    var _finalQuery: Bool = false
-    var _unexpectedGeoip: [Xray_App_Router_GeoIP] = []
-    var _actUnprior: Bool = false
-    var _policyID: UInt32 = 0
-
-    #if swift(>=5.10)
-      // This property is used as the initial default value for new instances of the type.
-      // The type itself is protecting the reference to its storage via CoW semantics.
-      // This will force a copy to be made of this reference when the first mutation occurs;
-      // hence, it is safe to mark this as `nonisolated(unsafe)`.
-      static nonisolated(unsafe) let defaultInstance = _StorageClass()
-    #else
-      static let defaultInstance = _StorageClass()
-    #endif
-
-    private init() {}
-
-    init(copying source: _StorageClass) {
-      _address = source._address
-      _clientIp = source._clientIp
-      _skipFallback = source._skipFallback
-      _prioritizedDomain = source._prioritizedDomain
-      _expectedGeoip = source._expectedGeoip
-      _originalRules = source._originalRules
-      _queryStrategy = source._queryStrategy
-      _actPrior = source._actPrior
-      _tag = source._tag
-      _timeoutMs = source._timeoutMs
-      _disableCache = source._disableCache
-      _serveStale = source._serveStale
-      _serveExpiredTtl = source._serveExpiredTtl
-      _finalQuery = source._finalQuery
-      _unexpectedGeoip = source._unexpectedGeoip
-      _actUnprior = source._actUnprior
-      _policyID = source._policyID
-    }
-  }
-
-  fileprivate mutating func _uniqueStorage() -> _StorageClass {
-    if !isKnownUniquelyReferenced(&_storage) {
-      _storage = _StorageClass(copying: _storage)
-    }
-    return _storage
-  }
-
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    _ = _uniqueStorage()
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      while let fieldNumber = try decoder.nextFieldNumber() {
-        // The use of inline closures is to circumvent an issue where the compiler
-        // allocates stack space for every case branch when no optimizations are
-        // enabled. https://github.com/apple/swift-protobuf/issues/1034
-        switch fieldNumber {
-        case 1: try { try decoder.decodeSingularMessageField(value: &_storage._address) }()
-        case 2: try { try decoder.decodeRepeatedMessageField(value: &_storage._prioritizedDomain) }()
-        case 3: try { try decoder.decodeRepeatedMessageField(value: &_storage._expectedGeoip) }()
-        case 4: try { try decoder.decodeRepeatedMessageField(value: &_storage._originalRules) }()
-        case 5: try { try decoder.decodeSingularBytesField(value: &_storage._clientIp) }()
-        case 6: try { try decoder.decodeSingularBoolField(value: &_storage._skipFallback) }()
-        case 7: try { try decoder.decodeSingularEnumField(value: &_storage._queryStrategy) }()
-        case 8: try { try decoder.decodeSingularBoolField(value: &_storage._actPrior) }()
-        case 9: try { try decoder.decodeSingularStringField(value: &_storage._tag) }()
-        case 10: try { try decoder.decodeSingularUInt64Field(value: &_storage._timeoutMs) }()
-        case 11: try { try decoder.decodeSingularBoolField(value: &_storage._disableCache) }()
-        case 12: try { try decoder.decodeSingularBoolField(value: &_storage._finalQuery) }()
-        case 13: try { try decoder.decodeRepeatedMessageField(value: &_storage._unexpectedGeoip) }()
-        case 14: try { try decoder.decodeSingularBoolField(value: &_storage._actUnprior) }()
-        case 15: try { try decoder.decodeSingularBoolField(value: &_storage._serveStale) }()
-        case 16: try { try decoder.decodeSingularUInt32Field(value: &_storage._serveExpiredTtl) }()
-        case 17: try { try decoder.decodeSingularUInt32Field(value: &_storage._policyID) }()
-        default: break
-        }
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._address) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.prioritizedDomain) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.geoip) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.originalRules) }()
+      case 5: try { try decoder.decodeSingularBytesField(value: &self.clientIp) }()
+      case 6: try { try decoder.decodeSingularBoolField(value: &self.skipFallback) }()
+      case 7: try { try decoder.decodeSingularEnumField(value: &self.queryStrategy) }()
+      case 8: try { try decoder.decodeSingularBoolField(value: &self.allowUnexpectedIps) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.tag) }()
+      case 10: try { try decoder.decodeSingularUInt64Field(value: &self.timeoutMs) }()
+      default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every if/case branch local when no optimizations
-      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-      // https://github.com/apple/swift-protobuf/issues/1182
-      try { if let v = _storage._address {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-      } }()
-      if !_storage._prioritizedDomain.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._prioritizedDomain, fieldNumber: 2)
-      }
-      if !_storage._expectedGeoip.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._expectedGeoip, fieldNumber: 3)
-      }
-      if !_storage._originalRules.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._originalRules, fieldNumber: 4)
-      }
-      if !_storage._clientIp.isEmpty {
-        try visitor.visitSingularBytesField(value: _storage._clientIp, fieldNumber: 5)
-      }
-      if _storage._skipFallback != false {
-        try visitor.visitSingularBoolField(value: _storage._skipFallback, fieldNumber: 6)
-      }
-      if _storage._queryStrategy != .useIp {
-        try visitor.visitSingularEnumField(value: _storage._queryStrategy, fieldNumber: 7)
-      }
-      if _storage._actPrior != false {
-        try visitor.visitSingularBoolField(value: _storage._actPrior, fieldNumber: 8)
-      }
-      if !_storage._tag.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._tag, fieldNumber: 9)
-      }
-      if _storage._timeoutMs != 0 {
-        try visitor.visitSingularUInt64Field(value: _storage._timeoutMs, fieldNumber: 10)
-      }
-      try { if let v = _storage._disableCache {
-        try visitor.visitSingularBoolField(value: v, fieldNumber: 11)
-      } }()
-      if _storage._finalQuery != false {
-        try visitor.visitSingularBoolField(value: _storage._finalQuery, fieldNumber: 12)
-      }
-      if !_storage._unexpectedGeoip.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._unexpectedGeoip, fieldNumber: 13)
-      }
-      if _storage._actUnprior != false {
-        try visitor.visitSingularBoolField(value: _storage._actUnprior, fieldNumber: 14)
-      }
-      try { if let v = _storage._serveStale {
-        try visitor.visitSingularBoolField(value: v, fieldNumber: 15)
-      } }()
-      try { if let v = _storage._serveExpiredTtl {
-        try visitor.visitSingularUInt32Field(value: v, fieldNumber: 16)
-      } }()
-      if _storage._policyID != 0 {
-        try visitor.visitSingularUInt32Field(value: _storage._policyID, fieldNumber: 17)
-      }
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._address {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
+    if !self.prioritizedDomain.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.prioritizedDomain, fieldNumber: 2)
+    }
+    if !self.geoip.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.geoip, fieldNumber: 3)
+    }
+    if !self.originalRules.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.originalRules, fieldNumber: 4)
+    }
+    if !self.clientIp.isEmpty {
+      try visitor.visitSingularBytesField(value: self.clientIp, fieldNumber: 5)
+    }
+    if self.skipFallback != false {
+      try visitor.visitSingularBoolField(value: self.skipFallback, fieldNumber: 6)
+    }
+    if self.queryStrategy != .useIp {
+      try visitor.visitSingularEnumField(value: self.queryStrategy, fieldNumber: 7)
+    }
+    if self.allowUnexpectedIps != false {
+      try visitor.visitSingularBoolField(value: self.allowUnexpectedIps, fieldNumber: 8)
+    }
+    if !self.tag.isEmpty {
+      try visitor.visitSingularStringField(value: self.tag, fieldNumber: 9)
+    }
+    if self.timeoutMs != 0 {
+      try visitor.visitSingularUInt64Field(value: self.timeoutMs, fieldNumber: 10)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_App_Dns_NameServer, rhs: Xray_App_Dns_NameServer) -> Bool {
-    if lhs._storage !== rhs._storage {
-      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
-        let _storage = _args.0
-        let rhs_storage = _args.1
-        if _storage._address != rhs_storage._address {return false}
-        if _storage._clientIp != rhs_storage._clientIp {return false}
-        if _storage._skipFallback != rhs_storage._skipFallback {return false}
-        if _storage._prioritizedDomain != rhs_storage._prioritizedDomain {return false}
-        if _storage._expectedGeoip != rhs_storage._expectedGeoip {return false}
-        if _storage._originalRules != rhs_storage._originalRules {return false}
-        if _storage._queryStrategy != rhs_storage._queryStrategy {return false}
-        if _storage._actPrior != rhs_storage._actPrior {return false}
-        if _storage._tag != rhs_storage._tag {return false}
-        if _storage._timeoutMs != rhs_storage._timeoutMs {return false}
-        if _storage._disableCache != rhs_storage._disableCache {return false}
-        if _storage._serveStale != rhs_storage._serveStale {return false}
-        if _storage._serveExpiredTtl != rhs_storage._serveExpiredTtl {return false}
-        if _storage._finalQuery != rhs_storage._finalQuery {return false}
-        if _storage._unexpectedGeoip != rhs_storage._unexpectedGeoip {return false}
-        if _storage._actUnprior != rhs_storage._actUnprior {return false}
-        if _storage._policyID != rhs_storage._policyID {return false}
-        return true
-      }
-      if !storagesAreEqual {return false}
-    }
+    if lhs._address != rhs._address {return false}
+    if lhs.clientIp != rhs.clientIp {return false}
+    if lhs.skipFallback != rhs.skipFallback {return false}
+    if lhs.prioritizedDomain != rhs.prioritizedDomain {return false}
+    if lhs.geoip != rhs.geoip {return false}
+    if lhs.originalRules != rhs.originalRules {return false}
+    if lhs.queryStrategy != rhs.queryStrategy {return false}
+    if lhs.allowUnexpectedIps != rhs.allowUnexpectedIps {return false}
+    if lhs.tag != rhs.tag {return false}
+    if lhs.timeoutMs != rhs.timeoutMs {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -614,12 +415,9 @@ extension Xray_App_Dns_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     4: .standard(proto: "static_hosts"),
     6: .same(proto: "tag"),
     8: .same(proto: "disableCache"),
-    12: .same(proto: "serveStale"),
-    13: .same(proto: "serveExpiredTTL"),
     9: .standard(proto: "query_strategy"),
     10: .same(proto: "disableFallback"),
     11: .same(proto: "disableFallbackIfMatch"),
-    14: .same(proto: "enableParallelQuery"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -636,9 +434,6 @@ extension Xray_App_Dns_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       case 9: try { try decoder.decodeSingularEnumField(value: &self.queryStrategy) }()
       case 10: try { try decoder.decodeSingularBoolField(value: &self.disableFallback) }()
       case 11: try { try decoder.decodeSingularBoolField(value: &self.disableFallbackIfMatch) }()
-      case 12: try { try decoder.decodeSingularBoolField(value: &self.serveStale) }()
-      case 13: try { try decoder.decodeSingularUInt32Field(value: &self.serveExpiredTtl) }()
-      case 14: try { try decoder.decodeSingularBoolField(value: &self.enableParallelQuery) }()
       default: break
       }
     }
@@ -669,15 +464,6 @@ extension Xray_App_Dns_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     if self.disableFallbackIfMatch != false {
       try visitor.visitSingularBoolField(value: self.disableFallbackIfMatch, fieldNumber: 11)
     }
-    if self.serveStale != false {
-      try visitor.visitSingularBoolField(value: self.serveStale, fieldNumber: 12)
-    }
-    if self.serveExpiredTtl != 0 {
-      try visitor.visitSingularUInt32Field(value: self.serveExpiredTtl, fieldNumber: 13)
-    }
-    if self.enableParallelQuery != false {
-      try visitor.visitSingularBoolField(value: self.enableParallelQuery, fieldNumber: 14)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -687,12 +473,9 @@ extension Xray_App_Dns_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     if lhs.staticHosts != rhs.staticHosts {return false}
     if lhs.tag != rhs.tag {return false}
     if lhs.disableCache != rhs.disableCache {return false}
-    if lhs.serveStale != rhs.serveStale {return false}
-    if lhs.serveExpiredTtl != rhs.serveExpiredTtl {return false}
     if lhs.queryStrategy != rhs.queryStrategy {return false}
     if lhs.disableFallback != rhs.disableFallback {return false}
     if lhs.disableFallbackIfMatch != rhs.disableFallbackIfMatch {return false}
-    if lhs.enableParallelQuery != rhs.enableParallelQuery {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
