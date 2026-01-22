@@ -20,6 +20,18 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+public struct Xray_Proxy_Vless_Reverse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var tag: String = String()
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 public struct Xray_Proxy_Vless_Account: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -31,17 +43,69 @@ public struct Xray_Proxy_Vless_Account: Sendable {
   /// Flow settings. May be "xtls-rprx-vision".
   public var flow: String = String()
 
-  /// Encryption settings. Only applies to client side, and only accepts "none" for now.
   public var encryption: String = String()
+
+  public var xorMode: UInt32 = 0
+
+  public var seconds: UInt32 = 0
+
+  public var padding: String = String()
+
+  public var reverse: Xray_Proxy_Vless_Reverse {
+    get {return _reverse ?? Xray_Proxy_Vless_Reverse()}
+    set {_reverse = newValue}
+  }
+  /// Returns true if `reverse` has been explicitly set.
+  public var hasReverse: Bool {return self._reverse != nil}
+  /// Clears the value of `reverse`. Subsequent reads from it will return its default value.
+  public mutating func clearReverse() {self._reverse = nil}
+
+  public var testpre: UInt32 = 0
+
+  public var testseed: [UInt32] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
+
+  fileprivate var _reverse: Xray_Proxy_Vless_Reverse? = nil
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "xray.proxy.vless"
+
+extension Xray_Proxy_Vless_Reverse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".Reverse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "tag"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.tag) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.tag.isEmpty {
+      try visitor.visitSingularStringField(value: self.tag, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Xray_Proxy_Vless_Reverse, rhs: Xray_Proxy_Vless_Reverse) -> Bool {
+    if lhs.tag != rhs.tag {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
 
 extension Xray_Proxy_Vless_Account: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Account"
@@ -49,6 +113,12 @@ extension Xray_Proxy_Vless_Account: SwiftProtobuf.Message, SwiftProtobuf._Messag
     1: .same(proto: "id"),
     2: .same(proto: "flow"),
     3: .same(proto: "encryption"),
+    4: .same(proto: "xorMode"),
+    5: .same(proto: "seconds"),
+    6: .same(proto: "padding"),
+    7: .same(proto: "reverse"),
+    8: .same(proto: "testpre"),
+    9: .same(proto: "testseed"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -60,12 +130,22 @@ extension Xray_Proxy_Vless_Account: SwiftProtobuf.Message, SwiftProtobuf._Messag
       case 1: try { try decoder.decodeSingularStringField(value: &self.id) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.flow) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.encryption) }()
+      case 4: try { try decoder.decodeSingularUInt32Field(value: &self.xorMode) }()
+      case 5: try { try decoder.decodeSingularUInt32Field(value: &self.seconds) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.padding) }()
+      case 7: try { try decoder.decodeSingularMessageField(value: &self._reverse) }()
+      case 8: try { try decoder.decodeSingularUInt32Field(value: &self.testpre) }()
+      case 9: try { try decoder.decodeRepeatedUInt32Field(value: &self.testseed) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.id.isEmpty {
       try visitor.visitSingularStringField(value: self.id, fieldNumber: 1)
     }
@@ -75,6 +155,24 @@ extension Xray_Proxy_Vless_Account: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if !self.encryption.isEmpty {
       try visitor.visitSingularStringField(value: self.encryption, fieldNumber: 3)
     }
+    if self.xorMode != 0 {
+      try visitor.visitSingularUInt32Field(value: self.xorMode, fieldNumber: 4)
+    }
+    if self.seconds != 0 {
+      try visitor.visitSingularUInt32Field(value: self.seconds, fieldNumber: 5)
+    }
+    if !self.padding.isEmpty {
+      try visitor.visitSingularStringField(value: self.padding, fieldNumber: 6)
+    }
+    try { if let v = self._reverse {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 7)
+    } }()
+    if self.testpre != 0 {
+      try visitor.visitSingularUInt32Field(value: self.testpre, fieldNumber: 8)
+    }
+    if !self.testseed.isEmpty {
+      try visitor.visitPackedUInt32Field(value: self.testseed, fieldNumber: 9)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -82,6 +180,12 @@ extension Xray_Proxy_Vless_Account: SwiftProtobuf.Message, SwiftProtobuf._Messag
     if lhs.id != rhs.id {return false}
     if lhs.flow != rhs.flow {return false}
     if lhs.encryption != rhs.encryption {return false}
+    if lhs.xorMode != rhs.xorMode {return false}
+    if lhs.seconds != rhs.seconds {return false}
+    if lhs.padding != rhs.padding {return false}
+    if lhs._reverse != rhs._reverse {return false}
+    if lhs.testpre != rhs.testpre {return false}
+    if lhs.testseed != rhs.testseed {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

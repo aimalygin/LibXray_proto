@@ -375,6 +375,11 @@ public struct Xray_Transport_Internet_SocketConfig: @unchecked Sendable {
   /// Clears the value of `happyEyeballs`. Subsequent reads from it will return its default value.
   public mutating func clearHappyEyeballs() {_uniqueStorage()._happyEyeballs = nil}
 
+  public var trustedXForwardedFor: [String] {
+    get {return _storage._trustedXForwardedFor}
+    set {_uniqueStorage()._trustedXForwardedFor = newValue}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum TProxyMode: SwiftProtobuf.Enum, Swift.CaseIterable {
@@ -715,6 +720,7 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
     20: .same(proto: "customSockopt"),
     21: .standard(proto: "address_port_strategy"),
     22: .standard(proto: "happy_eyeballs"),
+    23: .standard(proto: "trusted_x_forwarded_for"),
   ]
 
   fileprivate class _StorageClass {
@@ -740,6 +746,7 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
     var _customSockopt: [Xray_Transport_Internet_CustomSockopt] = []
     var _addressPortStrategy: Xray_Transport_Internet_AddressPortStrategy = .none
     var _happyEyeballs: Xray_Transport_Internet_HappyEyeballsConfig? = nil
+    var _trustedXForwardedFor: [String] = []
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -776,6 +783,7 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
       _customSockopt = source._customSockopt
       _addressPortStrategy = source._addressPortStrategy
       _happyEyeballs = source._happyEyeballs
+      _trustedXForwardedFor = source._trustedXForwardedFor
     }
   }
 
@@ -816,6 +824,7 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
         case 20: try { try decoder.decodeRepeatedMessageField(value: &_storage._customSockopt) }()
         case 21: try { try decoder.decodeSingularEnumField(value: &_storage._addressPortStrategy) }()
         case 22: try { try decoder.decodeSingularMessageField(value: &_storage._happyEyeballs) }()
+        case 23: try { try decoder.decodeRepeatedStringField(value: &_storage._trustedXForwardedFor) }()
         default: break
         }
       }
@@ -894,6 +903,9 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
       try { if let v = _storage._happyEyeballs {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 22)
       } }()
+      if !_storage._trustedXForwardedFor.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._trustedXForwardedFor, fieldNumber: 23)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -925,6 +937,7 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
         if _storage._customSockopt != rhs_storage._customSockopt {return false}
         if _storage._addressPortStrategy != rhs_storage._addressPortStrategy {return false}
         if _storage._happyEyeballs != rhs_storage._happyEyeballs {return false}
+        if _storage._trustedXForwardedFor != rhs_storage._trustedXForwardedFor {return false}
         return true
       }
       if !storagesAreEqual {return false}

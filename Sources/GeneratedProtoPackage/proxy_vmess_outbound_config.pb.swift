@@ -25,11 +25,20 @@ public struct Xray_Proxy_Vmess_Outbound_Config: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var receiver: [Xray_Common_Protocol_ServerEndpoint] = []
+  public var receiver: Xray_Common_Protocol_ServerEndpoint {
+    get {return _receiver ?? Xray_Common_Protocol_ServerEndpoint()}
+    set {_receiver = newValue}
+  }
+  /// Returns true if `receiver` has been explicitly set.
+  public var hasReceiver: Bool {return self._receiver != nil}
+  /// Clears the value of `receiver`. Subsequent reads from it will return its default value.
+  public mutating func clearReceiver() {self._receiver = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
+
+  fileprivate var _receiver: Xray_Common_Protocol_ServerEndpoint? = nil
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -48,21 +57,25 @@ extension Xray_Proxy_Vmess_Outbound_Config: SwiftProtobuf.Message, SwiftProtobuf
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.receiver) }()
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._receiver) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.receiver.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.receiver, fieldNumber: 1)
-    }
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._receiver {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_Proxy_Vmess_Outbound_Config, rhs: Xray_Proxy_Vmess_Outbound_Config) -> Bool {
-    if lhs.receiver != rhs.receiver {return false}
+    if lhs._receiver != rhs._receiver {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
