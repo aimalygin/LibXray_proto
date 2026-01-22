@@ -65,6 +65,9 @@ public struct Xray_Core_App_Observatory_Burst_HealthPingConfig: Sendable {
   /// ping timeout, int64 values of time.Duration
   public var timeout: Int64 = 0
 
+  /// http method to make request
+  public var httpMethod: String = String()
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -124,6 +127,7 @@ extension Xray_Core_App_Observatory_Burst_HealthPingConfig: SwiftProtobuf.Messag
     3: .same(proto: "interval"),
     4: .same(proto: "samplingCount"),
     5: .same(proto: "timeout"),
+    6: .same(proto: "httpMethod"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -137,6 +141,7 @@ extension Xray_Core_App_Observatory_Burst_HealthPingConfig: SwiftProtobuf.Messag
       case 3: try { try decoder.decodeSingularInt64Field(value: &self.interval) }()
       case 4: try { try decoder.decodeSingularInt32Field(value: &self.samplingCount) }()
       case 5: try { try decoder.decodeSingularInt64Field(value: &self.timeout) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.httpMethod) }()
       default: break
       }
     }
@@ -158,6 +163,9 @@ extension Xray_Core_App_Observatory_Burst_HealthPingConfig: SwiftProtobuf.Messag
     if self.timeout != 0 {
       try visitor.visitSingularInt64Field(value: self.timeout, fieldNumber: 5)
     }
+    if !self.httpMethod.isEmpty {
+      try visitor.visitSingularStringField(value: self.httpMethod, fieldNumber: 6)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -167,6 +175,7 @@ extension Xray_Core_App_Observatory_Burst_HealthPingConfig: SwiftProtobuf.Messag
     if lhs.interval != rhs.interval {return false}
     if lhs.samplingCount != rhs.samplingCount {return false}
     if lhs.timeout != rhs.timeout {return false}
+    if lhs.httpMethod != rhs.httpMethod {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

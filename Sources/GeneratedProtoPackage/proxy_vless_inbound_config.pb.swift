@@ -49,11 +49,17 @@ public struct Xray_Proxy_Vless_Inbound_Config: Sendable {
 
   public var clients: [Xray_Common_Protocol_User] = []
 
-  /// Decryption settings. Only applies to server side, and only accepts "none"
-  /// for now.
+  public var fallbacks: [Xray_Proxy_Vless_Inbound_Fallback] = []
+
   public var decryption: String = String()
 
-  public var fallbacks: [Xray_Proxy_Vless_Inbound_Fallback] = []
+  public var xorMode: UInt32 = 0
+
+  public var secondsFrom: Int64 = 0
+
+  public var secondsTo: Int64 = 0
+
+  public var padding: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -130,8 +136,12 @@ extension Xray_Proxy_Vless_Inbound_Config: SwiftProtobuf.Message, SwiftProtobuf.
   public static let protoMessageName: String = _protobuf_package + ".Config"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "clients"),
-    2: .same(proto: "decryption"),
-    3: .same(proto: "fallbacks"),
+    2: .same(proto: "fallbacks"),
+    3: .same(proto: "decryption"),
+    4: .same(proto: "xorMode"),
+    5: .standard(proto: "seconds_from"),
+    6: .standard(proto: "seconds_to"),
+    7: .same(proto: "padding"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -141,8 +151,12 @@ extension Xray_Proxy_Vless_Inbound_Config: SwiftProtobuf.Message, SwiftProtobuf.
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.clients) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.decryption) }()
-      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.fallbacks) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.fallbacks) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.decryption) }()
+      case 4: try { try decoder.decodeSingularUInt32Field(value: &self.xorMode) }()
+      case 5: try { try decoder.decodeSingularInt64Field(value: &self.secondsFrom) }()
+      case 6: try { try decoder.decodeSingularInt64Field(value: &self.secondsTo) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.padding) }()
       default: break
       }
     }
@@ -152,19 +166,35 @@ extension Xray_Proxy_Vless_Inbound_Config: SwiftProtobuf.Message, SwiftProtobuf.
     if !self.clients.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.clients, fieldNumber: 1)
     }
-    if !self.decryption.isEmpty {
-      try visitor.visitSingularStringField(value: self.decryption, fieldNumber: 2)
-    }
     if !self.fallbacks.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.fallbacks, fieldNumber: 3)
+      try visitor.visitRepeatedMessageField(value: self.fallbacks, fieldNumber: 2)
+    }
+    if !self.decryption.isEmpty {
+      try visitor.visitSingularStringField(value: self.decryption, fieldNumber: 3)
+    }
+    if self.xorMode != 0 {
+      try visitor.visitSingularUInt32Field(value: self.xorMode, fieldNumber: 4)
+    }
+    if self.secondsFrom != 0 {
+      try visitor.visitSingularInt64Field(value: self.secondsFrom, fieldNumber: 5)
+    }
+    if self.secondsTo != 0 {
+      try visitor.visitSingularInt64Field(value: self.secondsTo, fieldNumber: 6)
+    }
+    if !self.padding.isEmpty {
+      try visitor.visitSingularStringField(value: self.padding, fieldNumber: 7)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_Proxy_Vless_Inbound_Config, rhs: Xray_Proxy_Vless_Inbound_Config) -> Bool {
     if lhs.clients != rhs.clients {return false}
-    if lhs.decryption != rhs.decryption {return false}
     if lhs.fallbacks != rhs.fallbacks {return false}
+    if lhs.decryption != rhs.decryption {return false}
+    if lhs.xorMode != rhs.xorMode {return false}
+    if lhs.secondsFrom != rhs.secondsFrom {return false}
+    if lhs.secondsTo != rhs.secondsTo {return false}
+    if lhs.padding != rhs.padding {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

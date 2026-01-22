@@ -60,22 +60,11 @@ public struct Xray_Proxy_Vmess_Inbound_Config: Sendable {
   /// Clears the value of ``default``. Subsequent reads from it will return its default value.
   public mutating func clearDefault() {self._default = nil}
 
-  /// 4 is for legacy setting
-  public var detour: Xray_Proxy_Vmess_Inbound_DetourConfig {
-    get {return _detour ?? Xray_Proxy_Vmess_Inbound_DetourConfig()}
-    set {_detour = newValue}
-  }
-  /// Returns true if `detour` has been explicitly set.
-  public var hasDetour: Bool {return self._detour != nil}
-  /// Clears the value of `detour`. Subsequent reads from it will return its default value.
-  public mutating func clearDetour() {self._detour = nil}
-
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _default: Xray_Proxy_Vmess_Inbound_DefaultConfig? = nil
-  fileprivate var _detour: Xray_Proxy_Vmess_Inbound_DetourConfig? = nil
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -151,7 +140,6 @@ extension Xray_Proxy_Vmess_Inbound_Config: SwiftProtobuf.Message, SwiftProtobuf.
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "user"),
     2: .same(proto: "default"),
-    3: .same(proto: "detour"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -162,7 +150,6 @@ extension Xray_Proxy_Vmess_Inbound_Config: SwiftProtobuf.Message, SwiftProtobuf.
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.user) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._default) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._detour) }()
       default: break
       }
     }
@@ -179,16 +166,12 @@ extension Xray_Proxy_Vmess_Inbound_Config: SwiftProtobuf.Message, SwiftProtobuf.
     try { if let v = self._default {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
-    try { if let v = self._detour {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_Proxy_Vmess_Inbound_Config, rhs: Xray_Proxy_Vmess_Inbound_Config) -> Bool {
     if lhs.user != rhs.user {return false}
     if lhs._default != rhs._default {return false}
-    if lhs._detour != rhs._detour {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

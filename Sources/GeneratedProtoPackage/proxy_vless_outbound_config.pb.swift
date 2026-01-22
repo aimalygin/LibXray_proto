@@ -25,11 +25,20 @@ public struct Xray_Proxy_Vless_Outbound_Config: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var vnext: [Xray_Common_Protocol_ServerEndpoint] = []
+  public var vnext: Xray_Common_Protocol_ServerEndpoint {
+    get {return _vnext ?? Xray_Common_Protocol_ServerEndpoint()}
+    set {_vnext = newValue}
+  }
+  /// Returns true if `vnext` has been explicitly set.
+  public var hasVnext: Bool {return self._vnext != nil}
+  /// Clears the value of `vnext`. Subsequent reads from it will return its default value.
+  public mutating func clearVnext() {self._vnext = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
+
+  fileprivate var _vnext: Xray_Common_Protocol_ServerEndpoint? = nil
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -48,21 +57,25 @@ extension Xray_Proxy_Vless_Outbound_Config: SwiftProtobuf.Message, SwiftProtobuf
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.vnext) }()
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._vnext) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.vnext.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.vnext, fieldNumber: 1)
-    }
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._vnext {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_Proxy_Vless_Outbound_Config, rhs: Xray_Proxy_Vless_Outbound_Config) -> Bool {
-    if lhs.vnext != rhs.vnext {return false}
+    if lhs._vnext != rhs._vnext {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -31,6 +31,11 @@ public protocol Xray_App_Proxyman_Command_HandlerServiceClientProtocol: GRPCClie
     callOptions: CallOptions?
   ) -> UnaryCall<Xray_App_Proxyman_Command_AlterInboundRequest, Xray_App_Proxyman_Command_AlterInboundResponse>
 
+  func listInbounds(
+    _ request: Xray_App_Proxyman_Command_ListInboundsRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Xray_App_Proxyman_Command_ListInboundsRequest, Xray_App_Proxyman_Command_ListInboundsResponse>
+
   func getInboundUsers(
     _ request: Xray_App_Proxyman_Command_GetInboundUserRequest,
     callOptions: CallOptions?
@@ -55,6 +60,11 @@ public protocol Xray_App_Proxyman_Command_HandlerServiceClientProtocol: GRPCClie
     _ request: Xray_App_Proxyman_Command_AlterOutboundRequest,
     callOptions: CallOptions?
   ) -> UnaryCall<Xray_App_Proxyman_Command_AlterOutboundRequest, Xray_App_Proxyman_Command_AlterOutboundResponse>
+
+  func listOutbounds(
+    _ request: Xray_App_Proxyman_Command_ListOutboundsRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Xray_App_Proxyman_Command_ListOutboundsRequest, Xray_App_Proxyman_Command_ListOutboundsResponse>
 }
 
 extension Xray_App_Proxyman_Command_HandlerServiceClientProtocol {
@@ -113,6 +123,24 @@ extension Xray_App_Proxyman_Command_HandlerServiceClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeAlterInboundInterceptors() ?? []
+    )
+  }
+
+  /// Unary call to ListInbounds
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to ListInbounds.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func listInbounds(
+    _ request: Xray_App_Proxyman_Command_ListInboundsRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Xray_App_Proxyman_Command_ListInboundsRequest, Xray_App_Proxyman_Command_ListInboundsResponse> {
+    return self.makeUnaryCall(
+      path: Xray_App_Proxyman_Command_HandlerServiceClientMetadata.Methods.listInbounds.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeListInboundsInterceptors() ?? []
     )
   }
 
@@ -205,6 +233,24 @@ extension Xray_App_Proxyman_Command_HandlerServiceClientProtocol {
       interceptors: self.interceptors?.makeAlterOutboundInterceptors() ?? []
     )
   }
+
+  /// Unary call to ListOutbounds
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to ListOutbounds.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func listOutbounds(
+    _ request: Xray_App_Proxyman_Command_ListOutboundsRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Xray_App_Proxyman_Command_ListOutboundsRequest, Xray_App_Proxyman_Command_ListOutboundsResponse> {
+    return self.makeUnaryCall(
+      path: Xray_App_Proxyman_Command_HandlerServiceClientMetadata.Methods.listOutbounds.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeListOutboundsInterceptors() ?? []
+    )
+  }
 }
 
 @available(*, deprecated)
@@ -284,6 +330,11 @@ public protocol Xray_App_Proxyman_Command_HandlerServiceAsyncClientProtocol: GRP
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Xray_App_Proxyman_Command_AlterInboundRequest, Xray_App_Proxyman_Command_AlterInboundResponse>
 
+  func makeListInboundsCall(
+    _ request: Xray_App_Proxyman_Command_ListInboundsRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Xray_App_Proxyman_Command_ListInboundsRequest, Xray_App_Proxyman_Command_ListInboundsResponse>
+
   func makeGetInboundUsersCall(
     _ request: Xray_App_Proxyman_Command_GetInboundUserRequest,
     callOptions: CallOptions?
@@ -308,6 +359,11 @@ public protocol Xray_App_Proxyman_Command_HandlerServiceAsyncClientProtocol: GRP
     _ request: Xray_App_Proxyman_Command_AlterOutboundRequest,
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Xray_App_Proxyman_Command_AlterOutboundRequest, Xray_App_Proxyman_Command_AlterOutboundResponse>
+
+  func makeListOutboundsCall(
+    _ request: Xray_App_Proxyman_Command_ListOutboundsRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Xray_App_Proxyman_Command_ListOutboundsRequest, Xray_App_Proxyman_Command_ListOutboundsResponse>
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -353,6 +409,18 @@ extension Xray_App_Proxyman_Command_HandlerServiceAsyncClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeAlterInboundInterceptors() ?? []
+    )
+  }
+
+  public func makeListInboundsCall(
+    _ request: Xray_App_Proxyman_Command_ListInboundsRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Xray_App_Proxyman_Command_ListInboundsRequest, Xray_App_Proxyman_Command_ListInboundsResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Xray_App_Proxyman_Command_HandlerServiceClientMetadata.Methods.listInbounds.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeListInboundsInterceptors() ?? []
     )
   }
 
@@ -415,6 +483,18 @@ extension Xray_App_Proxyman_Command_HandlerServiceAsyncClientProtocol {
       interceptors: self.interceptors?.makeAlterOutboundInterceptors() ?? []
     )
   }
+
+  public func makeListOutboundsCall(
+    _ request: Xray_App_Proxyman_Command_ListOutboundsRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Xray_App_Proxyman_Command_ListOutboundsRequest, Xray_App_Proxyman_Command_ListOutboundsResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Xray_App_Proxyman_Command_HandlerServiceClientMetadata.Methods.listOutbounds.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeListOutboundsInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -452,6 +532,18 @@ extension Xray_App_Proxyman_Command_HandlerServiceAsyncClientProtocol {
       request: request,
       callOptions: callOptions ?? self.defaultCallOptions,
       interceptors: self.interceptors?.makeAlterInboundInterceptors() ?? []
+    )
+  }
+
+  public func listInbounds(
+    _ request: Xray_App_Proxyman_Command_ListInboundsRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Xray_App_Proxyman_Command_ListInboundsResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Xray_App_Proxyman_Command_HandlerServiceClientMetadata.Methods.listInbounds.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeListInboundsInterceptors() ?? []
     )
   }
 
@@ -514,6 +606,18 @@ extension Xray_App_Proxyman_Command_HandlerServiceAsyncClientProtocol {
       interceptors: self.interceptors?.makeAlterOutboundInterceptors() ?? []
     )
   }
+
+  public func listOutbounds(
+    _ request: Xray_App_Proxyman_Command_ListOutboundsRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Xray_App_Proxyman_Command_ListOutboundsResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Xray_App_Proxyman_Command_HandlerServiceClientMetadata.Methods.listOutbounds.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeListOutboundsInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -544,6 +648,9 @@ public protocol Xray_App_Proxyman_Command_HandlerServiceClientInterceptorFactory
   /// - Returns: Interceptors to use when invoking 'alterInbound'.
   func makeAlterInboundInterceptors() -> [ClientInterceptor<Xray_App_Proxyman_Command_AlterInboundRequest, Xray_App_Proxyman_Command_AlterInboundResponse>]
 
+  /// - Returns: Interceptors to use when invoking 'listInbounds'.
+  func makeListInboundsInterceptors() -> [ClientInterceptor<Xray_App_Proxyman_Command_ListInboundsRequest, Xray_App_Proxyman_Command_ListInboundsResponse>]
+
   /// - Returns: Interceptors to use when invoking 'getInboundUsers'.
   func makeGetInboundUsersInterceptors() -> [ClientInterceptor<Xray_App_Proxyman_Command_GetInboundUserRequest, Xray_App_Proxyman_Command_GetInboundUserResponse>]
 
@@ -558,6 +665,9 @@ public protocol Xray_App_Proxyman_Command_HandlerServiceClientInterceptorFactory
 
   /// - Returns: Interceptors to use when invoking 'alterOutbound'.
   func makeAlterOutboundInterceptors() -> [ClientInterceptor<Xray_App_Proxyman_Command_AlterOutboundRequest, Xray_App_Proxyman_Command_AlterOutboundResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'listOutbounds'.
+  func makeListOutboundsInterceptors() -> [ClientInterceptor<Xray_App_Proxyman_Command_ListOutboundsRequest, Xray_App_Proxyman_Command_ListOutboundsResponse>]
 }
 
 public enum Xray_App_Proxyman_Command_HandlerServiceClientMetadata {
@@ -568,11 +678,13 @@ public enum Xray_App_Proxyman_Command_HandlerServiceClientMetadata {
       Xray_App_Proxyman_Command_HandlerServiceClientMetadata.Methods.addInbound,
       Xray_App_Proxyman_Command_HandlerServiceClientMetadata.Methods.removeInbound,
       Xray_App_Proxyman_Command_HandlerServiceClientMetadata.Methods.alterInbound,
+      Xray_App_Proxyman_Command_HandlerServiceClientMetadata.Methods.listInbounds,
       Xray_App_Proxyman_Command_HandlerServiceClientMetadata.Methods.getInboundUsers,
       Xray_App_Proxyman_Command_HandlerServiceClientMetadata.Methods.getInboundUsersCount,
       Xray_App_Proxyman_Command_HandlerServiceClientMetadata.Methods.addOutbound,
       Xray_App_Proxyman_Command_HandlerServiceClientMetadata.Methods.removeOutbound,
       Xray_App_Proxyman_Command_HandlerServiceClientMetadata.Methods.alterOutbound,
+      Xray_App_Proxyman_Command_HandlerServiceClientMetadata.Methods.listOutbounds,
     ]
   )
 
@@ -592,6 +704,12 @@ public enum Xray_App_Proxyman_Command_HandlerServiceClientMetadata {
     public static let alterInbound = GRPCMethodDescriptor(
       name: "AlterInbound",
       path: "/xray.app.proxyman.command.HandlerService/AlterInbound",
+      type: GRPCCallType.unary
+    )
+
+    public static let listInbounds = GRPCMethodDescriptor(
+      name: "ListInbounds",
+      path: "/xray.app.proxyman.command.HandlerService/ListInbounds",
       type: GRPCCallType.unary
     )
 
@@ -624,6 +742,12 @@ public enum Xray_App_Proxyman_Command_HandlerServiceClientMetadata {
       path: "/xray.app.proxyman.command.HandlerService/AlterOutbound",
       type: GRPCCallType.unary
     )
+
+    public static let listOutbounds = GRPCMethodDescriptor(
+      name: "ListOutbounds",
+      path: "/xray.app.proxyman.command.HandlerService/ListOutbounds",
+      type: GRPCCallType.unary
+    )
   }
 }
 
@@ -637,6 +761,8 @@ public protocol Xray_App_Proxyman_Command_HandlerServiceProvider: CallHandlerPro
 
   func alterInbound(request: Xray_App_Proxyman_Command_AlterInboundRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Xray_App_Proxyman_Command_AlterInboundResponse>
 
+  func listInbounds(request: Xray_App_Proxyman_Command_ListInboundsRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Xray_App_Proxyman_Command_ListInboundsResponse>
+
   func getInboundUsers(request: Xray_App_Proxyman_Command_GetInboundUserRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Xray_App_Proxyman_Command_GetInboundUserResponse>
 
   func getInboundUsersCount(request: Xray_App_Proxyman_Command_GetInboundUserRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Xray_App_Proxyman_Command_GetInboundUsersCountResponse>
@@ -646,6 +772,8 @@ public protocol Xray_App_Proxyman_Command_HandlerServiceProvider: CallHandlerPro
   func removeOutbound(request: Xray_App_Proxyman_Command_RemoveOutboundRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Xray_App_Proxyman_Command_RemoveOutboundResponse>
 
   func alterOutbound(request: Xray_App_Proxyman_Command_AlterOutboundRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Xray_App_Proxyman_Command_AlterOutboundResponse>
+
+  func listOutbounds(request: Xray_App_Proxyman_Command_ListOutboundsRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Xray_App_Proxyman_Command_ListOutboundsResponse>
 }
 
 extension Xray_App_Proxyman_Command_HandlerServiceProvider {
@@ -685,6 +813,15 @@ extension Xray_App_Proxyman_Command_HandlerServiceProvider {
         responseSerializer: ProtobufSerializer<Xray_App_Proxyman_Command_AlterInboundResponse>(),
         interceptors: self.interceptors?.makeAlterInboundInterceptors() ?? [],
         userFunction: self.alterInbound(request:context:)
+      )
+
+    case "ListInbounds":
+      return UnaryServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Xray_App_Proxyman_Command_ListInboundsRequest>(),
+        responseSerializer: ProtobufSerializer<Xray_App_Proxyman_Command_ListInboundsResponse>(),
+        interceptors: self.interceptors?.makeListInboundsInterceptors() ?? [],
+        userFunction: self.listInbounds(request:context:)
       )
 
     case "GetInboundUsers":
@@ -732,6 +869,15 @@ extension Xray_App_Proxyman_Command_HandlerServiceProvider {
         userFunction: self.alterOutbound(request:context:)
       )
 
+    case "ListOutbounds":
+      return UnaryServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Xray_App_Proxyman_Command_ListOutboundsRequest>(),
+        responseSerializer: ProtobufSerializer<Xray_App_Proxyman_Command_ListOutboundsResponse>(),
+        interceptors: self.interceptors?.makeListOutboundsInterceptors() ?? [],
+        userFunction: self.listOutbounds(request:context:)
+      )
+
     default:
       return nil
     }
@@ -759,6 +905,11 @@ public protocol Xray_App_Proxyman_Command_HandlerServiceAsyncProvider: CallHandl
     context: GRPCAsyncServerCallContext
   ) async throws -> Xray_App_Proxyman_Command_AlterInboundResponse
 
+  func listInbounds(
+    request: Xray_App_Proxyman_Command_ListInboundsRequest,
+    context: GRPCAsyncServerCallContext
+  ) async throws -> Xray_App_Proxyman_Command_ListInboundsResponse
+
   func getInboundUsers(
     request: Xray_App_Proxyman_Command_GetInboundUserRequest,
     context: GRPCAsyncServerCallContext
@@ -783,6 +934,11 @@ public protocol Xray_App_Proxyman_Command_HandlerServiceAsyncProvider: CallHandl
     request: Xray_App_Proxyman_Command_AlterOutboundRequest,
     context: GRPCAsyncServerCallContext
   ) async throws -> Xray_App_Proxyman_Command_AlterOutboundResponse
+
+  func listOutbounds(
+    request: Xray_App_Proxyman_Command_ListOutboundsRequest,
+    context: GRPCAsyncServerCallContext
+  ) async throws -> Xray_App_Proxyman_Command_ListOutboundsResponse
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -831,6 +987,15 @@ extension Xray_App_Proxyman_Command_HandlerServiceAsyncProvider {
         wrapping: { try await self.alterInbound(request: $0, context: $1) }
       )
 
+    case "ListInbounds":
+      return GRPCAsyncServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Xray_App_Proxyman_Command_ListInboundsRequest>(),
+        responseSerializer: ProtobufSerializer<Xray_App_Proxyman_Command_ListInboundsResponse>(),
+        interceptors: self.interceptors?.makeListInboundsInterceptors() ?? [],
+        wrapping: { try await self.listInbounds(request: $0, context: $1) }
+      )
+
     case "GetInboundUsers":
       return GRPCAsyncServerHandler(
         context: context,
@@ -876,6 +1041,15 @@ extension Xray_App_Proxyman_Command_HandlerServiceAsyncProvider {
         wrapping: { try await self.alterOutbound(request: $0, context: $1) }
       )
 
+    case "ListOutbounds":
+      return GRPCAsyncServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Xray_App_Proxyman_Command_ListOutboundsRequest>(),
+        responseSerializer: ProtobufSerializer<Xray_App_Proxyman_Command_ListOutboundsResponse>(),
+        interceptors: self.interceptors?.makeListOutboundsInterceptors() ?? [],
+        wrapping: { try await self.listOutbounds(request: $0, context: $1) }
+      )
+
     default:
       return nil
     }
@@ -896,6 +1070,10 @@ public protocol Xray_App_Proxyman_Command_HandlerServiceServerInterceptorFactory
   ///   Defaults to calling `self.makeInterceptors()`.
   func makeAlterInboundInterceptors() -> [ServerInterceptor<Xray_App_Proxyman_Command_AlterInboundRequest, Xray_App_Proxyman_Command_AlterInboundResponse>]
 
+  /// - Returns: Interceptors to use when handling 'listInbounds'.
+  ///   Defaults to calling `self.makeInterceptors()`.
+  func makeListInboundsInterceptors() -> [ServerInterceptor<Xray_App_Proxyman_Command_ListInboundsRequest, Xray_App_Proxyman_Command_ListInboundsResponse>]
+
   /// - Returns: Interceptors to use when handling 'getInboundUsers'.
   ///   Defaults to calling `self.makeInterceptors()`.
   func makeGetInboundUsersInterceptors() -> [ServerInterceptor<Xray_App_Proxyman_Command_GetInboundUserRequest, Xray_App_Proxyman_Command_GetInboundUserResponse>]
@@ -915,6 +1093,10 @@ public protocol Xray_App_Proxyman_Command_HandlerServiceServerInterceptorFactory
   /// - Returns: Interceptors to use when handling 'alterOutbound'.
   ///   Defaults to calling `self.makeInterceptors()`.
   func makeAlterOutboundInterceptors() -> [ServerInterceptor<Xray_App_Proxyman_Command_AlterOutboundRequest, Xray_App_Proxyman_Command_AlterOutboundResponse>]
+
+  /// - Returns: Interceptors to use when handling 'listOutbounds'.
+  ///   Defaults to calling `self.makeInterceptors()`.
+  func makeListOutboundsInterceptors() -> [ServerInterceptor<Xray_App_Proxyman_Command_ListOutboundsRequest, Xray_App_Proxyman_Command_ListOutboundsResponse>]
 }
 
 public enum Xray_App_Proxyman_Command_HandlerServiceServerMetadata {
@@ -925,11 +1107,13 @@ public enum Xray_App_Proxyman_Command_HandlerServiceServerMetadata {
       Xray_App_Proxyman_Command_HandlerServiceServerMetadata.Methods.addInbound,
       Xray_App_Proxyman_Command_HandlerServiceServerMetadata.Methods.removeInbound,
       Xray_App_Proxyman_Command_HandlerServiceServerMetadata.Methods.alterInbound,
+      Xray_App_Proxyman_Command_HandlerServiceServerMetadata.Methods.listInbounds,
       Xray_App_Proxyman_Command_HandlerServiceServerMetadata.Methods.getInboundUsers,
       Xray_App_Proxyman_Command_HandlerServiceServerMetadata.Methods.getInboundUsersCount,
       Xray_App_Proxyman_Command_HandlerServiceServerMetadata.Methods.addOutbound,
       Xray_App_Proxyman_Command_HandlerServiceServerMetadata.Methods.removeOutbound,
       Xray_App_Proxyman_Command_HandlerServiceServerMetadata.Methods.alterOutbound,
+      Xray_App_Proxyman_Command_HandlerServiceServerMetadata.Methods.listOutbounds,
     ]
   )
 
@@ -949,6 +1133,12 @@ public enum Xray_App_Proxyman_Command_HandlerServiceServerMetadata {
     public static let alterInbound = GRPCMethodDescriptor(
       name: "AlterInbound",
       path: "/xray.app.proxyman.command.HandlerService/AlterInbound",
+      type: GRPCCallType.unary
+    )
+
+    public static let listInbounds = GRPCMethodDescriptor(
+      name: "ListInbounds",
+      path: "/xray.app.proxyman.command.HandlerService/ListInbounds",
       type: GRPCCallType.unary
     )
 
@@ -979,6 +1169,12 @@ public enum Xray_App_Proxyman_Command_HandlerServiceServerMetadata {
     public static let alterOutbound = GRPCMethodDescriptor(
       name: "AlterOutbound",
       path: "/xray.app.proxyman.command.HandlerService/AlterOutbound",
+      type: GRPCCallType.unary
+    )
+
+    public static let listOutbounds = GRPCMethodDescriptor(
+      name: "ListOutbounds",
+      path: "/xray.app.proxyman.command.HandlerService/ListOutbounds",
       type: GRPCCallType.unary
     )
   }

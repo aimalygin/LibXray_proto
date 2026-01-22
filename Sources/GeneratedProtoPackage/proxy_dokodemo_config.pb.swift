@@ -36,6 +36,8 @@ public struct Xray_Proxy_Dokodemo_Config: Sendable {
 
   public var port: UInt32 = 0
 
+  public var portMap: Dictionary<String,String> = [:]
+
   /// List of networks that the Dokodemo accepts.
   public var networks: [Xray_Common_Net_Network] = []
 
@@ -59,6 +61,7 @@ extension Xray_Proxy_Dokodemo_Config: SwiftProtobuf.Message, SwiftProtobuf._Mess
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "address"),
     2: .same(proto: "port"),
+    3: .standard(proto: "port_map"),
     7: .same(proto: "networks"),
     5: .standard(proto: "follow_redirect"),
     6: .standard(proto: "user_level"),
@@ -72,6 +75,7 @@ extension Xray_Proxy_Dokodemo_Config: SwiftProtobuf.Message, SwiftProtobuf._Mess
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._address) }()
       case 2: try { try decoder.decodeSingularUInt32Field(value: &self.port) }()
+      case 3: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &self.portMap) }()
       case 5: try { try decoder.decodeSingularBoolField(value: &self.followRedirect) }()
       case 6: try { try decoder.decodeSingularUInt32Field(value: &self.userLevel) }()
       case 7: try { try decoder.decodeRepeatedEnumField(value: &self.networks) }()
@@ -91,6 +95,9 @@ extension Xray_Proxy_Dokodemo_Config: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if self.port != 0 {
       try visitor.visitSingularUInt32Field(value: self.port, fieldNumber: 2)
     }
+    if !self.portMap.isEmpty {
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: self.portMap, fieldNumber: 3)
+    }
     if self.followRedirect != false {
       try visitor.visitSingularBoolField(value: self.followRedirect, fieldNumber: 5)
     }
@@ -106,6 +113,7 @@ extension Xray_Proxy_Dokodemo_Config: SwiftProtobuf.Message, SwiftProtobuf._Mess
   public static func ==(lhs: Xray_Proxy_Dokodemo_Config, rhs: Xray_Proxy_Dokodemo_Config) -> Bool {
     if lhs._address != rhs._address {return false}
     if lhs.port != rhs.port {return false}
+    if lhs.portMap != rhs.portMap {return false}
     if lhs.networks != rhs.networks {return false}
     if lhs.followRedirect != rhs.followRedirect {return false}
     if lhs.userLevel != rhs.userLevel {return false}
