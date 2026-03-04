@@ -40,6 +40,11 @@ public protocol Xray_App_Stats_Command_StatsServiceClientProtocol: GRPCClient {
     _ request: Xray_App_Stats_Command_GetStatsRequest,
     callOptions: CallOptions?
   ) -> UnaryCall<Xray_App_Stats_Command_GetStatsRequest, Xray_App_Stats_Command_GetStatsOnlineIpListResponse>
+
+  func getAllOnlineUsers(
+    _ request: Xray_App_Stats_Command_GetAllOnlineUsersRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Xray_App_Stats_Command_GetAllOnlineUsersRequest, Xray_App_Stats_Command_GetAllOnlineUsersResponse>
 }
 
 extension Xray_App_Stats_Command_StatsServiceClientProtocol {
@@ -136,6 +141,24 @@ extension Xray_App_Stats_Command_StatsServiceClientProtocol {
       interceptors: self.interceptors?.makeGetStatsOnlineIpListInterceptors() ?? []
     )
   }
+
+  /// Unary call to GetAllOnlineUsers
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to GetAllOnlineUsers.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func getAllOnlineUsers(
+    _ request: Xray_App_Stats_Command_GetAllOnlineUsersRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Xray_App_Stats_Command_GetAllOnlineUsersRequest, Xray_App_Stats_Command_GetAllOnlineUsersResponse> {
+    return self.makeUnaryCall(
+      path: Xray_App_Stats_Command_StatsServiceClientMetadata.Methods.getAllOnlineUsers.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeGetAllOnlineUsersInterceptors() ?? []
+    )
+  }
 }
 
 @available(*, deprecated)
@@ -224,6 +247,11 @@ public protocol Xray_App_Stats_Command_StatsServiceAsyncClientProtocol: GRPCClie
     _ request: Xray_App_Stats_Command_GetStatsRequest,
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Xray_App_Stats_Command_GetStatsRequest, Xray_App_Stats_Command_GetStatsOnlineIpListResponse>
+
+  func makeGetAllOnlineUsersCall(
+    _ request: Xray_App_Stats_Command_GetAllOnlineUsersRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Xray_App_Stats_Command_GetAllOnlineUsersRequest, Xray_App_Stats_Command_GetAllOnlineUsersResponse>
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -295,6 +323,18 @@ extension Xray_App_Stats_Command_StatsServiceAsyncClientProtocol {
       interceptors: self.interceptors?.makeGetStatsOnlineIpListInterceptors() ?? []
     )
   }
+
+  public func makeGetAllOnlineUsersCall(
+    _ request: Xray_App_Stats_Command_GetAllOnlineUsersRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Xray_App_Stats_Command_GetAllOnlineUsersRequest, Xray_App_Stats_Command_GetAllOnlineUsersResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Xray_App_Stats_Command_StatsServiceClientMetadata.Methods.getAllOnlineUsers.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeGetAllOnlineUsersInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -358,6 +398,18 @@ extension Xray_App_Stats_Command_StatsServiceAsyncClientProtocol {
       interceptors: self.interceptors?.makeGetStatsOnlineIpListInterceptors() ?? []
     )
   }
+
+  public func getAllOnlineUsers(
+    _ request: Xray_App_Stats_Command_GetAllOnlineUsersRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Xray_App_Stats_Command_GetAllOnlineUsersResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Xray_App_Stats_Command_StatsServiceClientMetadata.Methods.getAllOnlineUsers.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeGetAllOnlineUsersInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -393,6 +445,9 @@ public protocol Xray_App_Stats_Command_StatsServiceClientInterceptorFactoryProto
 
   /// - Returns: Interceptors to use when invoking 'getStatsOnlineIpList'.
   func makeGetStatsOnlineIpListInterceptors() -> [ClientInterceptor<Xray_App_Stats_Command_GetStatsRequest, Xray_App_Stats_Command_GetStatsOnlineIpListResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'getAllOnlineUsers'.
+  func makeGetAllOnlineUsersInterceptors() -> [ClientInterceptor<Xray_App_Stats_Command_GetAllOnlineUsersRequest, Xray_App_Stats_Command_GetAllOnlineUsersResponse>]
 }
 
 public enum Xray_App_Stats_Command_StatsServiceClientMetadata {
@@ -405,6 +460,7 @@ public enum Xray_App_Stats_Command_StatsServiceClientMetadata {
       Xray_App_Stats_Command_StatsServiceClientMetadata.Methods.queryStats,
       Xray_App_Stats_Command_StatsServiceClientMetadata.Methods.getSysStats,
       Xray_App_Stats_Command_StatsServiceClientMetadata.Methods.getStatsOnlineIpList,
+      Xray_App_Stats_Command_StatsServiceClientMetadata.Methods.getAllOnlineUsers,
     ]
   )
 
@@ -438,6 +494,12 @@ public enum Xray_App_Stats_Command_StatsServiceClientMetadata {
       path: "/xray.app.stats.command.StatsService/GetStatsOnlineIpList",
       type: GRPCCallType.unary
     )
+
+    public static let getAllOnlineUsers = GRPCMethodDescriptor(
+      name: "GetAllOnlineUsers",
+      path: "/xray.app.stats.command.StatsService/GetAllOnlineUsers",
+      type: GRPCCallType.unary
+    )
   }
 }
 
@@ -454,6 +516,8 @@ public protocol Xray_App_Stats_Command_StatsServiceProvider: CallHandlerProvider
   func getSysStats(request: Xray_App_Stats_Command_SysStatsRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Xray_App_Stats_Command_SysStatsResponse>
 
   func getStatsOnlineIpList(request: Xray_App_Stats_Command_GetStatsRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Xray_App_Stats_Command_GetStatsOnlineIpListResponse>
+
+  func getAllOnlineUsers(request: Xray_App_Stats_Command_GetAllOnlineUsersRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Xray_App_Stats_Command_GetAllOnlineUsersResponse>
 }
 
 extension Xray_App_Stats_Command_StatsServiceProvider {
@@ -513,6 +577,15 @@ extension Xray_App_Stats_Command_StatsServiceProvider {
         userFunction: self.getStatsOnlineIpList(request:context:)
       )
 
+    case "GetAllOnlineUsers":
+      return UnaryServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Xray_App_Stats_Command_GetAllOnlineUsersRequest>(),
+        responseSerializer: ProtobufSerializer<Xray_App_Stats_Command_GetAllOnlineUsersResponse>(),
+        interceptors: self.interceptors?.makeGetAllOnlineUsersInterceptors() ?? [],
+        userFunction: self.getAllOnlineUsers(request:context:)
+      )
+
     default:
       return nil
     }
@@ -549,6 +622,11 @@ public protocol Xray_App_Stats_Command_StatsServiceAsyncProvider: CallHandlerPro
     request: Xray_App_Stats_Command_GetStatsRequest,
     context: GRPCAsyncServerCallContext
   ) async throws -> Xray_App_Stats_Command_GetStatsOnlineIpListResponse
+
+  func getAllOnlineUsers(
+    request: Xray_App_Stats_Command_GetAllOnlineUsersRequest,
+    context: GRPCAsyncServerCallContext
+  ) async throws -> Xray_App_Stats_Command_GetAllOnlineUsersResponse
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -615,6 +693,15 @@ extension Xray_App_Stats_Command_StatsServiceAsyncProvider {
         wrapping: { try await self.getStatsOnlineIpList(request: $0, context: $1) }
       )
 
+    case "GetAllOnlineUsers":
+      return GRPCAsyncServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Xray_App_Stats_Command_GetAllOnlineUsersRequest>(),
+        responseSerializer: ProtobufSerializer<Xray_App_Stats_Command_GetAllOnlineUsersResponse>(),
+        interceptors: self.interceptors?.makeGetAllOnlineUsersInterceptors() ?? [],
+        wrapping: { try await self.getAllOnlineUsers(request: $0, context: $1) }
+      )
+
     default:
       return nil
     }
@@ -642,6 +729,10 @@ public protocol Xray_App_Stats_Command_StatsServiceServerInterceptorFactoryProto
   /// - Returns: Interceptors to use when handling 'getStatsOnlineIpList'.
   ///   Defaults to calling `self.makeInterceptors()`.
   func makeGetStatsOnlineIpListInterceptors() -> [ServerInterceptor<Xray_App_Stats_Command_GetStatsRequest, Xray_App_Stats_Command_GetStatsOnlineIpListResponse>]
+
+  /// - Returns: Interceptors to use when handling 'getAllOnlineUsers'.
+  ///   Defaults to calling `self.makeInterceptors()`.
+  func makeGetAllOnlineUsersInterceptors() -> [ServerInterceptor<Xray_App_Stats_Command_GetAllOnlineUsersRequest, Xray_App_Stats_Command_GetAllOnlineUsersResponse>]
 }
 
 public enum Xray_App_Stats_Command_StatsServiceServerMetadata {
@@ -654,6 +745,7 @@ public enum Xray_App_Stats_Command_StatsServiceServerMetadata {
       Xray_App_Stats_Command_StatsServiceServerMetadata.Methods.queryStats,
       Xray_App_Stats_Command_StatsServiceServerMetadata.Methods.getSysStats,
       Xray_App_Stats_Command_StatsServiceServerMetadata.Methods.getStatsOnlineIpList,
+      Xray_App_Stats_Command_StatsServiceServerMetadata.Methods.getAllOnlineUsers,
     ]
   )
 
@@ -685,6 +777,12 @@ public enum Xray_App_Stats_Command_StatsServiceServerMetadata {
     public static let getStatsOnlineIpList = GRPCMethodDescriptor(
       name: "GetStatsOnlineIpList",
       path: "/xray.app.stats.command.StatsService/GetStatsOnlineIpList",
+      type: GRPCCallType.unary
+    )
+
+    public static let getAllOnlineUsers = GRPCMethodDescriptor(
+      name: "GetAllOnlineUsers",
+      path: "/xray.app.stats.command.StatsService/GetAllOnlineUsers",
       type: GRPCCallType.unary
     )
   }

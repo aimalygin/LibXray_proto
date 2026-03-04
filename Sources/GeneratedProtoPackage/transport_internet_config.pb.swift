@@ -197,6 +197,10 @@ public struct Xray_Transport_Internet_StreamConfig: Sendable {
   /// Transport security settings. They can be either TLS or REALITY.
   public var securitySettings: [Xray_Common_Serial_TypedMessage] = []
 
+  public var udpmasks: [Xray_Common_Serial_TypedMessage] = []
+
+  public var tcpmasks: [Xray_Common_Serial_TypedMessage] = []
+
   public var socketSettings: Xray_Transport_Internet_SocketConfig {
     get {return _socketSettings ?? Xray_Transport_Internet_SocketConfig()}
     set {_socketSettings = newValue}
@@ -532,6 +536,8 @@ extension Xray_Transport_Internet_StreamConfig: SwiftProtobuf.Message, SwiftProt
     2: .standard(proto: "transport_settings"),
     3: .standard(proto: "security_type"),
     4: .standard(proto: "security_settings"),
+    10: .same(proto: "udpmasks"),
+    11: .same(proto: "tcpmasks"),
     6: .standard(proto: "socket_settings"),
   ]
 
@@ -548,6 +554,8 @@ extension Xray_Transport_Internet_StreamConfig: SwiftProtobuf.Message, SwiftProt
       case 6: try { try decoder.decodeSingularMessageField(value: &self._socketSettings) }()
       case 8: try { try decoder.decodeSingularMessageField(value: &self._address) }()
       case 9: try { try decoder.decodeSingularUInt32Field(value: &self.port) }()
+      case 10: try { try decoder.decodeRepeatedMessageField(value: &self.udpmasks) }()
+      case 11: try { try decoder.decodeRepeatedMessageField(value: &self.tcpmasks) }()
       default: break
       }
     }
@@ -579,6 +587,12 @@ extension Xray_Transport_Internet_StreamConfig: SwiftProtobuf.Message, SwiftProt
     if self.port != 0 {
       try visitor.visitSingularUInt32Field(value: self.port, fieldNumber: 9)
     }
+    if !self.udpmasks.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.udpmasks, fieldNumber: 10)
+    }
+    if !self.tcpmasks.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.tcpmasks, fieldNumber: 11)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -589,6 +603,8 @@ extension Xray_Transport_Internet_StreamConfig: SwiftProtobuf.Message, SwiftProt
     if lhs.transportSettings != rhs.transportSettings {return false}
     if lhs.securityType != rhs.securityType {return false}
     if lhs.securitySettings != rhs.securitySettings {return false}
+    if lhs.udpmasks != rhs.udpmasks {return false}
+    if lhs.tcpmasks != rhs.tcpmasks {return false}
     if lhs._socketSettings != rhs._socketSettings {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

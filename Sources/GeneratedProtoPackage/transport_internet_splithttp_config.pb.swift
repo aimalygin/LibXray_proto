@@ -191,6 +191,71 @@ public struct Xray_Transport_Internet_Splithttp_Config: @unchecked Sendable {
   /// Clears the value of `downloadSettings`. Subsequent reads from it will return its default value.
   public mutating func clearDownloadSettings() {_uniqueStorage()._downloadSettings = nil}
 
+  public var xPaddingObfsMode: Bool {
+    get {return _storage._xPaddingObfsMode}
+    set {_uniqueStorage()._xPaddingObfsMode = newValue}
+  }
+
+  public var xPaddingKey: String {
+    get {return _storage._xPaddingKey}
+    set {_uniqueStorage()._xPaddingKey = newValue}
+  }
+
+  public var xPaddingHeader: String {
+    get {return _storage._xPaddingHeader}
+    set {_uniqueStorage()._xPaddingHeader = newValue}
+  }
+
+  public var xPaddingPlacement: String {
+    get {return _storage._xPaddingPlacement}
+    set {_uniqueStorage()._xPaddingPlacement = newValue}
+  }
+
+  public var xPaddingMethod: String {
+    get {return _storage._xPaddingMethod}
+    set {_uniqueStorage()._xPaddingMethod = newValue}
+  }
+
+  public var uplinkHttpmethod: String {
+    get {return _storage._uplinkHttpmethod}
+    set {_uniqueStorage()._uplinkHttpmethod = newValue}
+  }
+
+  public var sessionPlacement: String {
+    get {return _storage._sessionPlacement}
+    set {_uniqueStorage()._sessionPlacement = newValue}
+  }
+
+  public var sessionKey: String {
+    get {return _storage._sessionKey}
+    set {_uniqueStorage()._sessionKey = newValue}
+  }
+
+  public var seqPlacement: String {
+    get {return _storage._seqPlacement}
+    set {_uniqueStorage()._seqPlacement = newValue}
+  }
+
+  public var seqKey: String {
+    get {return _storage._seqKey}
+    set {_uniqueStorage()._seqKey = newValue}
+  }
+
+  public var uplinkDataPlacement: String {
+    get {return _storage._uplinkDataPlacement}
+    set {_uniqueStorage()._uplinkDataPlacement = newValue}
+  }
+
+  public var uplinkDataKey: String {
+    get {return _storage._uplinkDataKey}
+    set {_uniqueStorage()._uplinkDataKey = newValue}
+  }
+
+  public var uplinkChunkSize: UInt32 {
+    get {return _storage._uplinkChunkSize}
+    set {_uniqueStorage()._uplinkChunkSize = newValue}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -322,6 +387,19 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
     11: .same(proto: "scStreamUpServerSecs"),
     12: .same(proto: "xmux"),
     13: .same(proto: "downloadSettings"),
+    14: .same(proto: "xPaddingObfsMode"),
+    15: .same(proto: "xPaddingKey"),
+    16: .same(proto: "xPaddingHeader"),
+    17: .same(proto: "xPaddingPlacement"),
+    18: .same(proto: "xPaddingMethod"),
+    19: .same(proto: "uplinkHTTPMethod"),
+    20: .same(proto: "sessionPlacement"),
+    21: .same(proto: "sessionKey"),
+    22: .same(proto: "seqPlacement"),
+    23: .same(proto: "seqKey"),
+    24: .same(proto: "uplinkDataPlacement"),
+    25: .same(proto: "uplinkDataKey"),
+    26: .same(proto: "uplinkChunkSize"),
   ]
 
   fileprivate class _StorageClass {
@@ -338,6 +416,19 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
     var _scStreamUpServerSecs: Xray_Transport_Internet_Splithttp_RangeConfig? = nil
     var _xmux: Xray_Transport_Internet_Splithttp_XmuxConfig? = nil
     var _downloadSettings: Xray_Transport_Internet_StreamConfig? = nil
+    var _xPaddingObfsMode: Bool = false
+    var _xPaddingKey: String = String()
+    var _xPaddingHeader: String = String()
+    var _xPaddingPlacement: String = String()
+    var _xPaddingMethod: String = String()
+    var _uplinkHttpmethod: String = String()
+    var _sessionPlacement: String = String()
+    var _sessionKey: String = String()
+    var _seqPlacement: String = String()
+    var _seqKey: String = String()
+    var _uplinkDataPlacement: String = String()
+    var _uplinkDataKey: String = String()
+    var _uplinkChunkSize: UInt32 = 0
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -365,6 +456,19 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
       _scStreamUpServerSecs = source._scStreamUpServerSecs
       _xmux = source._xmux
       _downloadSettings = source._downloadSettings
+      _xPaddingObfsMode = source._xPaddingObfsMode
+      _xPaddingKey = source._xPaddingKey
+      _xPaddingHeader = source._xPaddingHeader
+      _xPaddingPlacement = source._xPaddingPlacement
+      _xPaddingMethod = source._xPaddingMethod
+      _uplinkHttpmethod = source._uplinkHttpmethod
+      _sessionPlacement = source._sessionPlacement
+      _sessionKey = source._sessionKey
+      _seqPlacement = source._seqPlacement
+      _seqKey = source._seqKey
+      _uplinkDataPlacement = source._uplinkDataPlacement
+      _uplinkDataKey = source._uplinkDataKey
+      _uplinkChunkSize = source._uplinkChunkSize
     }
   }
 
@@ -396,6 +500,19 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
         case 11: try { try decoder.decodeSingularMessageField(value: &_storage._scStreamUpServerSecs) }()
         case 12: try { try decoder.decodeSingularMessageField(value: &_storage._xmux) }()
         case 13: try { try decoder.decodeSingularMessageField(value: &_storage._downloadSettings) }()
+        case 14: try { try decoder.decodeSingularBoolField(value: &_storage._xPaddingObfsMode) }()
+        case 15: try { try decoder.decodeSingularStringField(value: &_storage._xPaddingKey) }()
+        case 16: try { try decoder.decodeSingularStringField(value: &_storage._xPaddingHeader) }()
+        case 17: try { try decoder.decodeSingularStringField(value: &_storage._xPaddingPlacement) }()
+        case 18: try { try decoder.decodeSingularStringField(value: &_storage._xPaddingMethod) }()
+        case 19: try { try decoder.decodeSingularStringField(value: &_storage._uplinkHttpmethod) }()
+        case 20: try { try decoder.decodeSingularStringField(value: &_storage._sessionPlacement) }()
+        case 21: try { try decoder.decodeSingularStringField(value: &_storage._sessionKey) }()
+        case 22: try { try decoder.decodeSingularStringField(value: &_storage._seqPlacement) }()
+        case 23: try { try decoder.decodeSingularStringField(value: &_storage._seqKey) }()
+        case 24: try { try decoder.decodeSingularStringField(value: &_storage._uplinkDataPlacement) }()
+        case 25: try { try decoder.decodeSingularStringField(value: &_storage._uplinkDataKey) }()
+        case 26: try { try decoder.decodeSingularUInt32Field(value: &_storage._uplinkChunkSize) }()
         default: break
         }
       }
@@ -447,6 +564,45 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
       try { if let v = _storage._downloadSettings {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
       } }()
+      if _storage._xPaddingObfsMode != false {
+        try visitor.visitSingularBoolField(value: _storage._xPaddingObfsMode, fieldNumber: 14)
+      }
+      if !_storage._xPaddingKey.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._xPaddingKey, fieldNumber: 15)
+      }
+      if !_storage._xPaddingHeader.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._xPaddingHeader, fieldNumber: 16)
+      }
+      if !_storage._xPaddingPlacement.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._xPaddingPlacement, fieldNumber: 17)
+      }
+      if !_storage._xPaddingMethod.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._xPaddingMethod, fieldNumber: 18)
+      }
+      if !_storage._uplinkHttpmethod.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._uplinkHttpmethod, fieldNumber: 19)
+      }
+      if !_storage._sessionPlacement.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._sessionPlacement, fieldNumber: 20)
+      }
+      if !_storage._sessionKey.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._sessionKey, fieldNumber: 21)
+      }
+      if !_storage._seqPlacement.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._seqPlacement, fieldNumber: 22)
+      }
+      if !_storage._seqKey.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._seqKey, fieldNumber: 23)
+      }
+      if !_storage._uplinkDataPlacement.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._uplinkDataPlacement, fieldNumber: 24)
+      }
+      if !_storage._uplinkDataKey.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._uplinkDataKey, fieldNumber: 25)
+      }
+      if _storage._uplinkChunkSize != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._uplinkChunkSize, fieldNumber: 26)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -469,6 +625,19 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
         if _storage._scStreamUpServerSecs != rhs_storage._scStreamUpServerSecs {return false}
         if _storage._xmux != rhs_storage._xmux {return false}
         if _storage._downloadSettings != rhs_storage._downloadSettings {return false}
+        if _storage._xPaddingObfsMode != rhs_storage._xPaddingObfsMode {return false}
+        if _storage._xPaddingKey != rhs_storage._xPaddingKey {return false}
+        if _storage._xPaddingHeader != rhs_storage._xPaddingHeader {return false}
+        if _storage._xPaddingPlacement != rhs_storage._xPaddingPlacement {return false}
+        if _storage._xPaddingMethod != rhs_storage._xPaddingMethod {return false}
+        if _storage._uplinkHttpmethod != rhs_storage._uplinkHttpmethod {return false}
+        if _storage._sessionPlacement != rhs_storage._sessionPlacement {return false}
+        if _storage._sessionKey != rhs_storage._sessionKey {return false}
+        if _storage._seqPlacement != rhs_storage._seqPlacement {return false}
+        if _storage._seqKey != rhs_storage._seqKey {return false}
+        if _storage._uplinkDataPlacement != rhs_storage._uplinkDataPlacement {return false}
+        if _storage._uplinkDataKey != rhs_storage._uplinkDataKey {return false}
+        if _storage._uplinkChunkSize != rhs_storage._uplinkChunkSize {return false}
         return true
       }
       if !storagesAreEqual {return false}

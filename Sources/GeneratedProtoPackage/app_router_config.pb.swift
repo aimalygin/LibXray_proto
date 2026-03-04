@@ -290,6 +290,8 @@ public struct Xray_App_Router_RoutingRule: Sendable {
   /// Clears the value of `vlessRouteList`. Subsequent reads from it will return its default value.
   public mutating func clearVlessRouteList() {self._vlessRouteList = nil}
 
+  public var process: [String] = []
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OneOf_TargetTag: Equatable, Sendable {
@@ -764,6 +766,7 @@ extension Xray_App_Router_RoutingRule: SwiftProtobuf.Message, SwiftProtobuf._Mes
     17: .standard(proto: "local_geoip"),
     18: .standard(proto: "local_port_list"),
     20: .standard(proto: "vless_route_list"),
+    21: .same(proto: "process"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -802,6 +805,7 @@ extension Xray_App_Router_RoutingRule: SwiftProtobuf.Message, SwiftProtobuf._Mes
       case 18: try { try decoder.decodeSingularMessageField(value: &self._localPortList) }()
       case 19: try { try decoder.decodeSingularStringField(value: &self.ruleTag) }()
       case 20: try { try decoder.decodeSingularMessageField(value: &self._vlessRouteList) }()
+      case 21: try { try decoder.decodeRepeatedStringField(value: &self.process) }()
       default: break
       }
     }
@@ -860,6 +864,9 @@ extension Xray_App_Router_RoutingRule: SwiftProtobuf.Message, SwiftProtobuf._Mes
     try { if let v = self._vlessRouteList {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 20)
     } }()
+    if !self.process.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.process, fieldNumber: 21)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -879,6 +886,7 @@ extension Xray_App_Router_RoutingRule: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if lhs.localGeoip != rhs.localGeoip {return false}
     if lhs._localPortList != rhs._localPortList {return false}
     if lhs._vlessRouteList != rhs._vlessRouteList {return false}
+    if lhs.process != rhs.process {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

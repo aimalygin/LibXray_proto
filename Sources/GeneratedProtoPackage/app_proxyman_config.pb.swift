@@ -56,59 +56,59 @@ public struct Xray_App_Proxyman_SniffingConfig: Sendable {
   public init() {}
 }
 
-public struct Xray_App_Proxyman_ReceiverConfig: Sendable {
+public struct Xray_App_Proxyman_ReceiverConfig: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// PortList specifies the ports which the Receiver should listen on.
   public var portList: Xray_Common_Net_PortList {
-    get {return _portList ?? Xray_Common_Net_PortList()}
-    set {_portList = newValue}
+    get {return _storage._portList ?? Xray_Common_Net_PortList()}
+    set {_uniqueStorage()._portList = newValue}
   }
   /// Returns true if `portList` has been explicitly set.
-  public var hasPortList: Bool {return self._portList != nil}
+  public var hasPortList: Bool {return _storage._portList != nil}
   /// Clears the value of `portList`. Subsequent reads from it will return its default value.
-  public mutating func clearPortList() {self._portList = nil}
+  public mutating func clearPortList() {_uniqueStorage()._portList = nil}
 
   /// Listen specifies the IP address that the Receiver should listen on.
   public var listen: Xray_Common_Net_IPOrDomain {
-    get {return _listen ?? Xray_Common_Net_IPOrDomain()}
-    set {_listen = newValue}
+    get {return _storage._listen ?? Xray_Common_Net_IPOrDomain()}
+    set {_uniqueStorage()._listen = newValue}
   }
   /// Returns true if `listen` has been explicitly set.
-  public var hasListen: Bool {return self._listen != nil}
+  public var hasListen: Bool {return _storage._listen != nil}
   /// Clears the value of `listen`. Subsequent reads from it will return its default value.
-  public mutating func clearListen() {self._listen = nil}
+  public mutating func clearListen() {_uniqueStorage()._listen = nil}
 
   public var streamSettings: Xray_Transport_Internet_StreamConfig {
-    get {return _streamSettings ?? Xray_Transport_Internet_StreamConfig()}
-    set {_streamSettings = newValue}
+    get {return _storage._streamSettings ?? Xray_Transport_Internet_StreamConfig()}
+    set {_uniqueStorage()._streamSettings = newValue}
   }
   /// Returns true if `streamSettings` has been explicitly set.
-  public var hasStreamSettings: Bool {return self._streamSettings != nil}
+  public var hasStreamSettings: Bool {return _storage._streamSettings != nil}
   /// Clears the value of `streamSettings`. Subsequent reads from it will return its default value.
-  public mutating func clearStreamSettings() {self._streamSettings = nil}
+  public mutating func clearStreamSettings() {_uniqueStorage()._streamSettings = nil}
 
-  public var receiveOriginalDestination: Bool = false
+  public var receiveOriginalDestination: Bool {
+    get {return _storage._receiveOriginalDestination}
+    set {_uniqueStorage()._receiveOriginalDestination = newValue}
+  }
 
   public var sniffingSettings: Xray_App_Proxyman_SniffingConfig {
-    get {return _sniffingSettings ?? Xray_App_Proxyman_SniffingConfig()}
-    set {_sniffingSettings = newValue}
+    get {return _storage._sniffingSettings ?? Xray_App_Proxyman_SniffingConfig()}
+    set {_uniqueStorage()._sniffingSettings = newValue}
   }
   /// Returns true if `sniffingSettings` has been explicitly set.
-  public var hasSniffingSettings: Bool {return self._sniffingSettings != nil}
+  public var hasSniffingSettings: Bool {return _storage._sniffingSettings != nil}
   /// Clears the value of `sniffingSettings`. Subsequent reads from it will return its default value.
-  public mutating func clearSniffingSettings() {self._sniffingSettings = nil}
+  public mutating func clearSniffingSettings() {_uniqueStorage()._sniffingSettings = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
-  fileprivate var _portList: Xray_Common_Net_PortList? = nil
-  fileprivate var _listen: Xray_Common_Net_IPOrDomain? = nil
-  fileprivate var _streamSettings: Xray_Transport_Internet_StreamConfig? = nil
-  fileprivate var _sniffingSettings: Xray_App_Proxyman_SniffingConfig? = nil
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 public struct Xray_App_Proxyman_InboundHandlerConfig: Sendable {
@@ -154,60 +154,63 @@ public struct Xray_App_Proxyman_OutboundConfig: Sendable {
   public init() {}
 }
 
-public struct Xray_App_Proxyman_SenderConfig: Sendable {
+public struct Xray_App_Proxyman_SenderConfig: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   /// Send traffic through the given IP. Only IP is allowed.
   public var via: Xray_Common_Net_IPOrDomain {
-    get {return _via ?? Xray_Common_Net_IPOrDomain()}
-    set {_via = newValue}
+    get {return _storage._via ?? Xray_Common_Net_IPOrDomain()}
+    set {_uniqueStorage()._via = newValue}
   }
   /// Returns true if `via` has been explicitly set.
-  public var hasVia: Bool {return self._via != nil}
+  public var hasVia: Bool {return _storage._via != nil}
   /// Clears the value of `via`. Subsequent reads from it will return its default value.
-  public mutating func clearVia() {self._via = nil}
+  public mutating func clearVia() {_uniqueStorage()._via = nil}
 
   public var streamSettings: Xray_Transport_Internet_StreamConfig {
-    get {return _streamSettings ?? Xray_Transport_Internet_StreamConfig()}
-    set {_streamSettings = newValue}
+    get {return _storage._streamSettings ?? Xray_Transport_Internet_StreamConfig()}
+    set {_uniqueStorage()._streamSettings = newValue}
   }
   /// Returns true if `streamSettings` has been explicitly set.
-  public var hasStreamSettings: Bool {return self._streamSettings != nil}
+  public var hasStreamSettings: Bool {return _storage._streamSettings != nil}
   /// Clears the value of `streamSettings`. Subsequent reads from it will return its default value.
-  public mutating func clearStreamSettings() {self._streamSettings = nil}
+  public mutating func clearStreamSettings() {_uniqueStorage()._streamSettings = nil}
 
   public var proxySettings: Xray_Transport_Internet_ProxyConfig {
-    get {return _proxySettings ?? Xray_Transport_Internet_ProxyConfig()}
-    set {_proxySettings = newValue}
+    get {return _storage._proxySettings ?? Xray_Transport_Internet_ProxyConfig()}
+    set {_uniqueStorage()._proxySettings = newValue}
   }
   /// Returns true if `proxySettings` has been explicitly set.
-  public var hasProxySettings: Bool {return self._proxySettings != nil}
+  public var hasProxySettings: Bool {return _storage._proxySettings != nil}
   /// Clears the value of `proxySettings`. Subsequent reads from it will return its default value.
-  public mutating func clearProxySettings() {self._proxySettings = nil}
+  public mutating func clearProxySettings() {_uniqueStorage()._proxySettings = nil}
 
   public var multiplexSettings: Xray_App_Proxyman_MultiplexingConfig {
-    get {return _multiplexSettings ?? Xray_App_Proxyman_MultiplexingConfig()}
-    set {_multiplexSettings = newValue}
+    get {return _storage._multiplexSettings ?? Xray_App_Proxyman_MultiplexingConfig()}
+    set {_uniqueStorage()._multiplexSettings = newValue}
   }
   /// Returns true if `multiplexSettings` has been explicitly set.
-  public var hasMultiplexSettings: Bool {return self._multiplexSettings != nil}
+  public var hasMultiplexSettings: Bool {return _storage._multiplexSettings != nil}
   /// Clears the value of `multiplexSettings`. Subsequent reads from it will return its default value.
-  public mutating func clearMultiplexSettings() {self._multiplexSettings = nil}
+  public mutating func clearMultiplexSettings() {_uniqueStorage()._multiplexSettings = nil}
 
-  public var viaCidr: String = String()
+  public var viaCidr: String {
+    get {return _storage._viaCidr}
+    set {_uniqueStorage()._viaCidr = newValue}
+  }
 
-  public var targetStrategy: Xray_Transport_Internet_DomainStrategy = .asIs
+  public var targetStrategy: Xray_Transport_Internet_DomainStrategy {
+    get {return _storage._targetStrategy}
+    set {_uniqueStorage()._targetStrategy = newValue}
+  }
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
-  fileprivate var _via: Xray_Common_Net_IPOrDomain? = nil
-  fileprivate var _streamSettings: Xray_Transport_Internet_StreamConfig? = nil
-  fileprivate var _proxySettings: Xray_Transport_Internet_ProxyConfig? = nil
-  fileprivate var _multiplexSettings: Xray_App_Proxyman_MultiplexingConfig? = nil
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 public struct Xray_App_Proxyman_MultiplexingConfig: Sendable {
@@ -321,51 +324,99 @@ extension Xray_App_Proxyman_ReceiverConfig: SwiftProtobuf.Message, SwiftProtobuf
     6: .standard(proto: "sniffing_settings"),
   ]
 
+  fileprivate class _StorageClass {
+    var _portList: Xray_Common_Net_PortList? = nil
+    var _listen: Xray_Common_Net_IPOrDomain? = nil
+    var _streamSettings: Xray_Transport_Internet_StreamConfig? = nil
+    var _receiveOriginalDestination: Bool = false
+    var _sniffingSettings: Xray_App_Proxyman_SniffingConfig? = nil
+
+    #if swift(>=5.10)
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _portList = source._portList
+      _listen = source._listen
+      _streamSettings = source._streamSettings
+      _receiveOriginalDestination = source._receiveOriginalDestination
+      _sniffingSettings = source._sniffingSettings
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._portList) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._listen) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._streamSettings) }()
-      case 4: try { try decoder.decodeSingularBoolField(value: &self.receiveOriginalDestination) }()
-      case 6: try { try decoder.decodeSingularMessageField(value: &self._sniffingSettings) }()
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularMessageField(value: &_storage._portList) }()
+        case 2: try { try decoder.decodeSingularMessageField(value: &_storage._listen) }()
+        case 3: try { try decoder.decodeSingularMessageField(value: &_storage._streamSettings) }()
+        case 4: try { try decoder.decodeSingularBoolField(value: &_storage._receiveOriginalDestination) }()
+        case 6: try { try decoder.decodeSingularMessageField(value: &_storage._sniffingSettings) }()
+        default: break
+        }
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._portList {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    try { if let v = self._listen {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    } }()
-    try { if let v = self._streamSettings {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    } }()
-    if self.receiveOriginalDestination != false {
-      try visitor.visitSingularBoolField(value: self.receiveOriginalDestination, fieldNumber: 4)
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      try { if let v = _storage._portList {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      } }()
+      try { if let v = _storage._listen {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      } }()
+      try { if let v = _storage._streamSettings {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      } }()
+      if _storage._receiveOriginalDestination != false {
+        try visitor.visitSingularBoolField(value: _storage._receiveOriginalDestination, fieldNumber: 4)
+      }
+      try { if let v = _storage._sniffingSettings {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+      } }()
     }
-    try { if let v = self._sniffingSettings {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
-    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_App_Proxyman_ReceiverConfig, rhs: Xray_App_Proxyman_ReceiverConfig) -> Bool {
-    if lhs._portList != rhs._portList {return false}
-    if lhs._listen != rhs._listen {return false}
-    if lhs._streamSettings != rhs._streamSettings {return false}
-    if lhs.receiveOriginalDestination != rhs.receiveOriginalDestination {return false}
-    if lhs._sniffingSettings != rhs._sniffingSettings {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._portList != rhs_storage._portList {return false}
+        if _storage._listen != rhs_storage._listen {return false}
+        if _storage._streamSettings != rhs_storage._streamSettings {return false}
+        if _storage._receiveOriginalDestination != rhs_storage._receiveOriginalDestination {return false}
+        if _storage._sniffingSettings != rhs_storage._sniffingSettings {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -449,56 +500,106 @@ extension Xray_App_Proxyman_SenderConfig: SwiftProtobuf.Message, SwiftProtobuf._
     6: .standard(proto: "target_strategy"),
   ]
 
+  fileprivate class _StorageClass {
+    var _via: Xray_Common_Net_IPOrDomain? = nil
+    var _streamSettings: Xray_Transport_Internet_StreamConfig? = nil
+    var _proxySettings: Xray_Transport_Internet_ProxyConfig? = nil
+    var _multiplexSettings: Xray_App_Proxyman_MultiplexingConfig? = nil
+    var _viaCidr: String = String()
+    var _targetStrategy: Xray_Transport_Internet_DomainStrategy = .asIs
+
+    #if swift(>=5.10)
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _via = source._via
+      _streamSettings = source._streamSettings
+      _proxySettings = source._proxySettings
+      _multiplexSettings = source._multiplexSettings
+      _viaCidr = source._viaCidr
+      _targetStrategy = source._targetStrategy
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._via) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._streamSettings) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._proxySettings) }()
-      case 4: try { try decoder.decodeSingularMessageField(value: &self._multiplexSettings) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.viaCidr) }()
-      case 6: try { try decoder.decodeSingularEnumField(value: &self.targetStrategy) }()
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularMessageField(value: &_storage._via) }()
+        case 2: try { try decoder.decodeSingularMessageField(value: &_storage._streamSettings) }()
+        case 3: try { try decoder.decodeSingularMessageField(value: &_storage._proxySettings) }()
+        case 4: try { try decoder.decodeSingularMessageField(value: &_storage._multiplexSettings) }()
+        case 5: try { try decoder.decodeSingularStringField(value: &_storage._viaCidr) }()
+        case 6: try { try decoder.decodeSingularEnumField(value: &_storage._targetStrategy) }()
+        default: break
+        }
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._via {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
-    try { if let v = self._streamSettings {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
-    } }()
-    try { if let v = self._proxySettings {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    } }()
-    try { if let v = self._multiplexSettings {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
-    } }()
-    if !self.viaCidr.isEmpty {
-      try visitor.visitSingularStringField(value: self.viaCidr, fieldNumber: 5)
-    }
-    if self.targetStrategy != .asIs {
-      try visitor.visitSingularEnumField(value: self.targetStrategy, fieldNumber: 6)
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      try { if let v = _storage._via {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
+      } }()
+      try { if let v = _storage._streamSettings {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      } }()
+      try { if let v = _storage._proxySettings {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+      } }()
+      try { if let v = _storage._multiplexSettings {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      } }()
+      if !_storage._viaCidr.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._viaCidr, fieldNumber: 5)
+      }
+      if _storage._targetStrategy != .asIs {
+        try visitor.visitSingularEnumField(value: _storage._targetStrategy, fieldNumber: 6)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_App_Proxyman_SenderConfig, rhs: Xray_App_Proxyman_SenderConfig) -> Bool {
-    if lhs._via != rhs._via {return false}
-    if lhs._streamSettings != rhs._streamSettings {return false}
-    if lhs._proxySettings != rhs._proxySettings {return false}
-    if lhs._multiplexSettings != rhs._multiplexSettings {return false}
-    if lhs.viaCidr != rhs.viaCidr {return false}
-    if lhs.targetStrategy != rhs.targetStrategy {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._via != rhs_storage._via {return false}
+        if _storage._streamSettings != rhs_storage._streamSettings {return false}
+        if _storage._proxySettings != rhs_storage._proxySettings {return false}
+        if _storage._multiplexSettings != rhs_storage._multiplexSettings {return false}
+        if _storage._viaCidr != rhs_storage._viaCidr {return false}
+        if _storage._targetStrategy != rhs_storage._targetStrategy {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

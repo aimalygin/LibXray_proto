@@ -46,6 +46,11 @@ public protocol Xray_App_Router_Command_RoutingServiceClientProtocol: GRPCClient
     _ request: Xray_App_Router_Command_RemoveRuleRequest,
     callOptions: CallOptions?
   ) -> UnaryCall<Xray_App_Router_Command_RemoveRuleRequest, Xray_App_Router_Command_RemoveRuleResponse>
+
+  func listRule(
+    _ request: Xray_App_Router_Command_ListRuleRequest,
+    callOptions: CallOptions?
+  ) -> UnaryCall<Xray_App_Router_Command_ListRuleRequest, Xray_App_Router_Command_ListRuleResponse>
 }
 
 extension Xray_App_Router_Command_RoutingServiceClientProtocol {
@@ -163,6 +168,24 @@ extension Xray_App_Router_Command_RoutingServiceClientProtocol {
       interceptors: self.interceptors?.makeRemoveRuleInterceptors() ?? []
     )
   }
+
+  /// Unary call to ListRule
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to ListRule.
+  ///   - callOptions: Call options.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func listRule(
+    _ request: Xray_App_Router_Command_ListRuleRequest,
+    callOptions: CallOptions? = nil
+  ) -> UnaryCall<Xray_App_Router_Command_ListRuleRequest, Xray_App_Router_Command_ListRuleResponse> {
+    return self.makeUnaryCall(
+      path: Xray_App_Router_Command_RoutingServiceClientMetadata.Methods.listRule.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeListRuleInterceptors() ?? []
+    )
+  }
 }
 
 @available(*, deprecated)
@@ -256,6 +279,11 @@ public protocol Xray_App_Router_Command_RoutingServiceAsyncClientProtocol: GRPCC
     _ request: Xray_App_Router_Command_RemoveRuleRequest,
     callOptions: CallOptions?
   ) -> GRPCAsyncUnaryCall<Xray_App_Router_Command_RemoveRuleRequest, Xray_App_Router_Command_RemoveRuleResponse>
+
+  func makeListRuleCall(
+    _ request: Xray_App_Router_Command_ListRuleRequest,
+    callOptions: CallOptions?
+  ) -> GRPCAsyncUnaryCall<Xray_App_Router_Command_ListRuleRequest, Xray_App_Router_Command_ListRuleResponse>
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -339,6 +367,18 @@ extension Xray_App_Router_Command_RoutingServiceAsyncClientProtocol {
       interceptors: self.interceptors?.makeRemoveRuleInterceptors() ?? []
     )
   }
+
+  public func makeListRuleCall(
+    _ request: Xray_App_Router_Command_ListRuleRequest,
+    callOptions: CallOptions? = nil
+  ) -> GRPCAsyncUnaryCall<Xray_App_Router_Command_ListRuleRequest, Xray_App_Router_Command_ListRuleResponse> {
+    return self.makeAsyncUnaryCall(
+      path: Xray_App_Router_Command_RoutingServiceClientMetadata.Methods.listRule.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeListRuleInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -414,6 +454,18 @@ extension Xray_App_Router_Command_RoutingServiceAsyncClientProtocol {
       interceptors: self.interceptors?.makeRemoveRuleInterceptors() ?? []
     )
   }
+
+  public func listRule(
+    _ request: Xray_App_Router_Command_ListRuleRequest,
+    callOptions: CallOptions? = nil
+  ) async throws -> Xray_App_Router_Command_ListRuleResponse {
+    return try await self.performAsyncUnaryCall(
+      path: Xray_App_Router_Command_RoutingServiceClientMetadata.Methods.listRule.path,
+      request: request,
+      callOptions: callOptions ?? self.defaultCallOptions,
+      interceptors: self.interceptors?.makeListRuleInterceptors() ?? []
+    )
+  }
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -452,6 +504,9 @@ public protocol Xray_App_Router_Command_RoutingServiceClientInterceptorFactoryPr
 
   /// - Returns: Interceptors to use when invoking 'removeRule'.
   func makeRemoveRuleInterceptors() -> [ClientInterceptor<Xray_App_Router_Command_RemoveRuleRequest, Xray_App_Router_Command_RemoveRuleResponse>]
+
+  /// - Returns: Interceptors to use when invoking 'listRule'.
+  func makeListRuleInterceptors() -> [ClientInterceptor<Xray_App_Router_Command_ListRuleRequest, Xray_App_Router_Command_ListRuleResponse>]
 }
 
 public enum Xray_App_Router_Command_RoutingServiceClientMetadata {
@@ -465,6 +520,7 @@ public enum Xray_App_Router_Command_RoutingServiceClientMetadata {
       Xray_App_Router_Command_RoutingServiceClientMetadata.Methods.overrideBalancerTarget,
       Xray_App_Router_Command_RoutingServiceClientMetadata.Methods.addRule,
       Xray_App_Router_Command_RoutingServiceClientMetadata.Methods.removeRule,
+      Xray_App_Router_Command_RoutingServiceClientMetadata.Methods.listRule,
     ]
   )
 
@@ -504,6 +560,12 @@ public enum Xray_App_Router_Command_RoutingServiceClientMetadata {
       path: "/xray.app.router.command.RoutingService/RemoveRule",
       type: GRPCCallType.unary
     )
+
+    public static let listRule = GRPCMethodDescriptor(
+      name: "ListRule",
+      path: "/xray.app.router.command.RoutingService/ListRule",
+      type: GRPCCallType.unary
+    )
   }
 }
 
@@ -522,6 +584,8 @@ public protocol Xray_App_Router_Command_RoutingServiceProvider: CallHandlerProvi
   func addRule(request: Xray_App_Router_Command_AddRuleRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Xray_App_Router_Command_AddRuleResponse>
 
   func removeRule(request: Xray_App_Router_Command_RemoveRuleRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Xray_App_Router_Command_RemoveRuleResponse>
+
+  func listRule(request: Xray_App_Router_Command_ListRuleRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Xray_App_Router_Command_ListRuleResponse>
 }
 
 extension Xray_App_Router_Command_RoutingServiceProvider {
@@ -590,6 +654,15 @@ extension Xray_App_Router_Command_RoutingServiceProvider {
         userFunction: self.removeRule(request:context:)
       )
 
+    case "ListRule":
+      return UnaryServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Xray_App_Router_Command_ListRuleRequest>(),
+        responseSerializer: ProtobufSerializer<Xray_App_Router_Command_ListRuleResponse>(),
+        interceptors: self.interceptors?.makeListRuleInterceptors() ?? [],
+        userFunction: self.listRule(request:context:)
+      )
+
     default:
       return nil
     }
@@ -632,6 +705,11 @@ public protocol Xray_App_Router_Command_RoutingServiceAsyncProvider: CallHandler
     request: Xray_App_Router_Command_RemoveRuleRequest,
     context: GRPCAsyncServerCallContext
   ) async throws -> Xray_App_Router_Command_RemoveRuleResponse
+
+  func listRule(
+    request: Xray_App_Router_Command_ListRuleRequest,
+    context: GRPCAsyncServerCallContext
+  ) async throws -> Xray_App_Router_Command_ListRuleResponse
 }
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
@@ -707,6 +785,15 @@ extension Xray_App_Router_Command_RoutingServiceAsyncProvider {
         wrapping: { try await self.removeRule(request: $0, context: $1) }
       )
 
+    case "ListRule":
+      return GRPCAsyncServerHandler(
+        context: context,
+        requestDeserializer: ProtobufDeserializer<Xray_App_Router_Command_ListRuleRequest>(),
+        responseSerializer: ProtobufSerializer<Xray_App_Router_Command_ListRuleResponse>(),
+        interceptors: self.interceptors?.makeListRuleInterceptors() ?? [],
+        wrapping: { try await self.listRule(request: $0, context: $1) }
+      )
+
     default:
       return nil
     }
@@ -738,6 +825,10 @@ public protocol Xray_App_Router_Command_RoutingServiceServerInterceptorFactoryPr
   /// - Returns: Interceptors to use when handling 'removeRule'.
   ///   Defaults to calling `self.makeInterceptors()`.
   func makeRemoveRuleInterceptors() -> [ServerInterceptor<Xray_App_Router_Command_RemoveRuleRequest, Xray_App_Router_Command_RemoveRuleResponse>]
+
+  /// - Returns: Interceptors to use when handling 'listRule'.
+  ///   Defaults to calling `self.makeInterceptors()`.
+  func makeListRuleInterceptors() -> [ServerInterceptor<Xray_App_Router_Command_ListRuleRequest, Xray_App_Router_Command_ListRuleResponse>]
 }
 
 public enum Xray_App_Router_Command_RoutingServiceServerMetadata {
@@ -751,6 +842,7 @@ public enum Xray_App_Router_Command_RoutingServiceServerMetadata {
       Xray_App_Router_Command_RoutingServiceServerMetadata.Methods.overrideBalancerTarget,
       Xray_App_Router_Command_RoutingServiceServerMetadata.Methods.addRule,
       Xray_App_Router_Command_RoutingServiceServerMetadata.Methods.removeRule,
+      Xray_App_Router_Command_RoutingServiceServerMetadata.Methods.listRule,
     ]
   )
 
@@ -788,6 +880,12 @@ public enum Xray_App_Router_Command_RoutingServiceServerMetadata {
     public static let removeRule = GRPCMethodDescriptor(
       name: "RemoveRule",
       path: "/xray.app.router.command.RoutingService/RemoveRule",
+      type: GRPCCallType.unary
+    )
+
+    public static let listRule = GRPCMethodDescriptor(
+      name: "ListRule",
+      path: "/xray.app.router.command.RoutingService/ListRule",
       type: GRPCCallType.unary
     )
   }
