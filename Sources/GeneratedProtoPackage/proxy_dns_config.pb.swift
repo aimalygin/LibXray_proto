@@ -20,46 +20,108 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+public enum Xray_Proxy_Dns_RuleAction: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case direct // = 0
+  case drop // = 1
+  case reject // = 2
+  case hijack // = 3
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .direct
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .direct
+    case 1: self = .drop
+    case 2: self = .reject
+    case 3: self = .hijack
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .direct: return 0
+    case .drop: return 1
+    case .reject: return 2
+    case .hijack: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Xray_Proxy_Dns_RuleAction] = [
+    .direct,
+    .drop,
+    .reject,
+    .hijack,
+  ]
+
+}
+
+public struct Xray_Proxy_Dns_DNSRuleConfig: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var action: Xray_Proxy_Dns_RuleAction = .direct
+
+  public var qtype: [Int32] = []
+
+  public var domain: [Xray_Common_Geodata_DomainRule] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 public struct Xray_Proxy_Dns_Config: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// Server is the DNS server address. If specified, this address overrides the
-  /// original one.
-  public var server: Xray_Common_Net_Endpoint {
-    get {return _server ?? Xray_Common_Net_Endpoint()}
-    set {_server = newValue}
-  }
-  /// Returns true if `server` has been explicitly set.
-  public var hasServer: Bool {return self._server != nil}
-  /// Clears the value of `server`. Subsequent reads from it will return its default value.
-  public mutating func clearServer() {self._server = nil}
-
   public var userLevel: UInt32 = 0
 
-  public var nonIpQuery: String = String()
+  public var rule: [Xray_Proxy_Dns_DNSRuleConfig] = []
 
-  public var blockTypes: [Int32] = []
+  public var rewriteServer: Xray_Common_Net_Endpoint {
+    get {return _rewriteServer ?? Xray_Common_Net_Endpoint()}
+    set {_rewriteServer = newValue}
+  }
+  /// Returns true if `rewriteServer` has been explicitly set.
+  public var hasRewriteServer: Bool {return self._rewriteServer != nil}
+  /// Clears the value of `rewriteServer`. Subsequent reads from it will return its default value.
+  public mutating func clearRewriteServer() {self._rewriteServer = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
-  fileprivate var _server: Xray_Common_Net_Endpoint? = nil
+  fileprivate var _rewriteServer: Xray_Common_Net_Endpoint? = nil
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "xray.proxy.dns"
 
-extension Xray_Proxy_Dns_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".Config"
+extension Xray_Proxy_Dns_RuleAction: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "server"),
-    2: .standard(proto: "user_level"),
-    3: .standard(proto: "non_IP_query"),
-    4: .standard(proto: "block_types"),
+    0: .same(proto: "Direct"),
+    1: .same(proto: "Drop"),
+    2: .same(proto: "Reject"),
+    3: .same(proto: "Hijack"),
+  ]
+}
+
+extension Xray_Proxy_Dns_DNSRuleConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DNSRuleConfig"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "action"),
+    2: .same(proto: "qtype"),
+    3: .same(proto: "domain"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -68,10 +130,53 @@ extension Xray_Proxy_Dns_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._server) }()
-      case 2: try { try decoder.decodeSingularUInt32Field(value: &self.userLevel) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.nonIpQuery) }()
-      case 4: try { try decoder.decodeRepeatedInt32Field(value: &self.blockTypes) }()
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.action) }()
+      case 2: try { try decoder.decodeRepeatedInt32Field(value: &self.qtype) }()
+      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.domain) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.action != .direct {
+      try visitor.visitSingularEnumField(value: self.action, fieldNumber: 1)
+    }
+    if !self.qtype.isEmpty {
+      try visitor.visitPackedInt32Field(value: self.qtype, fieldNumber: 2)
+    }
+    if !self.domain.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.domain, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Xray_Proxy_Dns_DNSRuleConfig, rhs: Xray_Proxy_Dns_DNSRuleConfig) -> Bool {
+    if lhs.action != rhs.action {return false}
+    if lhs.qtype != rhs.qtype {return false}
+    if lhs.domain != rhs.domain {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Xray_Proxy_Dns_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".Config"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "user_level"),
+    2: .same(proto: "rule"),
+    3: .standard(proto: "rewrite_server"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularUInt32Field(value: &self.userLevel) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.rule) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._rewriteServer) }()
       default: break
       }
     }
@@ -82,26 +187,22 @@ extension Xray_Proxy_Dns_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._server {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
-    } }()
     if self.userLevel != 0 {
-      try visitor.visitSingularUInt32Field(value: self.userLevel, fieldNumber: 2)
+      try visitor.visitSingularUInt32Field(value: self.userLevel, fieldNumber: 1)
     }
-    if !self.nonIpQuery.isEmpty {
-      try visitor.visitSingularStringField(value: self.nonIpQuery, fieldNumber: 3)
+    if !self.rule.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.rule, fieldNumber: 2)
     }
-    if !self.blockTypes.isEmpty {
-      try visitor.visitPackedInt32Field(value: self.blockTypes, fieldNumber: 4)
-    }
+    try { if let v = self._rewriteServer {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_Proxy_Dns_Config, rhs: Xray_Proxy_Dns_Config) -> Bool {
-    if lhs._server != rhs._server {return false}
     if lhs.userLevel != rhs.userLevel {return false}
-    if lhs.nonIpQuery != rhs.nonIpQuery {return false}
-    if lhs.blockTypes != rhs.blockTypes {return false}
+    if lhs.rule != rhs.rule {return false}
+    if lhs._rewriteServer != rhs._rewriteServer {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

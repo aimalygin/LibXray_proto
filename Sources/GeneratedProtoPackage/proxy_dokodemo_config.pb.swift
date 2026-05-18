@@ -25,21 +25,21 @@ public struct Xray_Proxy_Dokodemo_Config: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var address: Xray_Common_Net_IPOrDomain {
-    get {return _address ?? Xray_Common_Net_IPOrDomain()}
-    set {_address = newValue}
-  }
-  /// Returns true if `address` has been explicitly set.
-  public var hasAddress: Bool {return self._address != nil}
-  /// Clears the value of `address`. Subsequent reads from it will return its default value.
-  public mutating func clearAddress() {self._address = nil}
+  /// List of networks that the Dokodemo accepts.
+  public var allowedNetworks: [Xray_Common_Net_Network] = []
 
-  public var port: UInt32 = 0
+  public var rewriteAddress: Xray_Common_Net_IPOrDomain {
+    get {return _rewriteAddress ?? Xray_Common_Net_IPOrDomain()}
+    set {_rewriteAddress = newValue}
+  }
+  /// Returns true if `rewriteAddress` has been explicitly set.
+  public var hasRewriteAddress: Bool {return self._rewriteAddress != nil}
+  /// Clears the value of `rewriteAddress`. Subsequent reads from it will return its default value.
+  public mutating func clearRewriteAddress() {self._rewriteAddress = nil}
+
+  public var rewritePort: UInt32 = 0
 
   public var portMap: Dictionary<String,String> = [:]
-
-  /// List of networks that the Dokodemo accepts.
-  public var networks: [Xray_Common_Net_Network] = []
 
   public var followRedirect: Bool = false
 
@@ -49,7 +49,7 @@ public struct Xray_Proxy_Dokodemo_Config: Sendable {
 
   public init() {}
 
-  fileprivate var _address: Xray_Common_Net_IPOrDomain? = nil
+  fileprivate var _rewriteAddress: Xray_Common_Net_IPOrDomain? = nil
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -59,10 +59,10 @@ fileprivate let _protobuf_package = "xray.proxy.dokodemo"
 extension Xray_Proxy_Dokodemo_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Config"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "address"),
-    2: .same(proto: "port"),
+    7: .standard(proto: "allowed_networks"),
+    1: .standard(proto: "rewrite_address"),
+    2: .standard(proto: "rewrite_port"),
     3: .standard(proto: "port_map"),
-    7: .same(proto: "networks"),
     5: .standard(proto: "follow_redirect"),
     6: .standard(proto: "user_level"),
   ]
@@ -73,12 +73,12 @@ extension Xray_Proxy_Dokodemo_Config: SwiftProtobuf.Message, SwiftProtobuf._Mess
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularMessageField(value: &self._address) }()
-      case 2: try { try decoder.decodeSingularUInt32Field(value: &self.port) }()
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._rewriteAddress) }()
+      case 2: try { try decoder.decodeSingularUInt32Field(value: &self.rewritePort) }()
       case 3: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &self.portMap) }()
       case 5: try { try decoder.decodeSingularBoolField(value: &self.followRedirect) }()
       case 6: try { try decoder.decodeSingularUInt32Field(value: &self.userLevel) }()
-      case 7: try { try decoder.decodeRepeatedEnumField(value: &self.networks) }()
+      case 7: try { try decoder.decodeRepeatedEnumField(value: &self.allowedNetworks) }()
       default: break
       }
     }
@@ -89,11 +89,11 @@ extension Xray_Proxy_Dokodemo_Config: SwiftProtobuf.Message, SwiftProtobuf._Mess
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    try { if let v = self._address {
+    try { if let v = self._rewriteAddress {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
-    if self.port != 0 {
-      try visitor.visitSingularUInt32Field(value: self.port, fieldNumber: 2)
+    if self.rewritePort != 0 {
+      try visitor.visitSingularUInt32Field(value: self.rewritePort, fieldNumber: 2)
     }
     if !self.portMap.isEmpty {
       try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: self.portMap, fieldNumber: 3)
@@ -104,17 +104,17 @@ extension Xray_Proxy_Dokodemo_Config: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if self.userLevel != 0 {
       try visitor.visitSingularUInt32Field(value: self.userLevel, fieldNumber: 6)
     }
-    if !self.networks.isEmpty {
-      try visitor.visitPackedEnumField(value: self.networks, fieldNumber: 7)
+    if !self.allowedNetworks.isEmpty {
+      try visitor.visitPackedEnumField(value: self.allowedNetworks, fieldNumber: 7)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_Proxy_Dokodemo_Config, rhs: Xray_Proxy_Dokodemo_Config) -> Bool {
-    if lhs._address != rhs._address {return false}
-    if lhs.port != rhs.port {return false}
+    if lhs.allowedNetworks != rhs.allowedNetworks {return false}
+    if lhs._rewriteAddress != rhs._rewriteAddress {return false}
+    if lhs.rewritePort != rhs.rewritePort {return false}
     if lhs.portMap != rhs.portMap {return false}
-    if lhs.networks != rhs.networks {return false}
     if lhs.followRedirect != rhs.followRedirect {return false}
     if lhs.userLevel != rhs.userLevel {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}

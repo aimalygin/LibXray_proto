@@ -251,9 +251,18 @@ public struct Xray_Transport_Internet_Splithttp_Config: @unchecked Sendable {
     set {_uniqueStorage()._uplinkDataKey = newValue}
   }
 
-  public var uplinkChunkSize: UInt32 {
-    get {return _storage._uplinkChunkSize}
+  public var uplinkChunkSize: Xray_Transport_Internet_Splithttp_RangeConfig {
+    get {return _storage._uplinkChunkSize ?? Xray_Transport_Internet_Splithttp_RangeConfig()}
     set {_uniqueStorage()._uplinkChunkSize = newValue}
+  }
+  /// Returns true if `uplinkChunkSize` has been explicitly set.
+  public var hasUplinkChunkSize: Bool {return _storage._uplinkChunkSize != nil}
+  /// Clears the value of `uplinkChunkSize`. Subsequent reads from it will return its default value.
+  public mutating func clearUplinkChunkSize() {_uniqueStorage()._uplinkChunkSize = nil}
+
+  public var serverMaxHeaderBytes: Int32 {
+    get {return _storage._serverMaxHeaderBytes}
+    set {_uniqueStorage()._serverMaxHeaderBytes = newValue}
   }
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -400,6 +409,7 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
     24: .same(proto: "uplinkDataPlacement"),
     25: .same(proto: "uplinkDataKey"),
     26: .same(proto: "uplinkChunkSize"),
+    27: .same(proto: "serverMaxHeaderBytes"),
   ]
 
   fileprivate class _StorageClass {
@@ -428,7 +438,8 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
     var _seqKey: String = String()
     var _uplinkDataPlacement: String = String()
     var _uplinkDataKey: String = String()
-    var _uplinkChunkSize: UInt32 = 0
+    var _uplinkChunkSize: Xray_Transport_Internet_Splithttp_RangeConfig? = nil
+    var _serverMaxHeaderBytes: Int32 = 0
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -469,6 +480,7 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
       _uplinkDataPlacement = source._uplinkDataPlacement
       _uplinkDataKey = source._uplinkDataKey
       _uplinkChunkSize = source._uplinkChunkSize
+      _serverMaxHeaderBytes = source._serverMaxHeaderBytes
     }
   }
 
@@ -512,7 +524,8 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
         case 23: try { try decoder.decodeSingularStringField(value: &_storage._seqKey) }()
         case 24: try { try decoder.decodeSingularStringField(value: &_storage._uplinkDataPlacement) }()
         case 25: try { try decoder.decodeSingularStringField(value: &_storage._uplinkDataKey) }()
-        case 26: try { try decoder.decodeSingularUInt32Field(value: &_storage._uplinkChunkSize) }()
+        case 26: try { try decoder.decodeSingularMessageField(value: &_storage._uplinkChunkSize) }()
+        case 27: try { try decoder.decodeSingularInt32Field(value: &_storage._serverMaxHeaderBytes) }()
         default: break
         }
       }
@@ -600,8 +613,11 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
       if !_storage._uplinkDataKey.isEmpty {
         try visitor.visitSingularStringField(value: _storage._uplinkDataKey, fieldNumber: 25)
       }
-      if _storage._uplinkChunkSize != 0 {
-        try visitor.visitSingularUInt32Field(value: _storage._uplinkChunkSize, fieldNumber: 26)
+      try { if let v = _storage._uplinkChunkSize {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 26)
+      } }()
+      if _storage._serverMaxHeaderBytes != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._serverMaxHeaderBytes, fieldNumber: 27)
       }
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -638,6 +654,7 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
         if _storage._uplinkDataPlacement != rhs_storage._uplinkDataPlacement {return false}
         if _storage._uplinkDataKey != rhs_storage._uplinkDataKey {return false}
         if _storage._uplinkChunkSize != rhs_storage._uplinkChunkSize {return false}
+        if _storage._serverMaxHeaderBytes != rhs_storage._serverMaxHeaderBytes {return false}
         return true
       }
       if !storagesAreEqual {return false}

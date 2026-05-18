@@ -29,31 +29,23 @@ public struct Xray_Transport_Internet_Hysteria_Config: Sendable {
 
   public var auth: String = String()
 
-  public var congestion: String = String()
+  public var udpIdleTimeout: Int64 = 0
 
-  public var up: UInt64 = 0
+  public var masqType: String = String()
 
-  public var down: UInt64 = 0
+  public var masqFile: String = String()
 
-  public var ports: [UInt32] = []
+  public var masqURL: String = String()
 
-  public var intervalMin: Int64 = 0
+  public var masqURLRewriteHost: Bool = false
 
-  public var intervalMax: Int64 = 0
+  public var masqURLInsecure: Bool = false
 
-  public var initStreamReceiveWindow: UInt64 = 0
+  public var masqString: String = String()
 
-  public var maxStreamReceiveWindow: UInt64 = 0
+  public var masqStringHeaders: Dictionary<String,String> = [:]
 
-  public var initConnReceiveWindow: UInt64 = 0
-
-  public var maxConnReceiveWindow: UInt64 = 0
-
-  public var maxIdleTimeout: Int64 = 0
-
-  public var keepAlivePeriod: Int64 = 0
-
-  public var disablePathMtuDiscovery: Bool = false
+  public var masqStringStatusCode: Int32 = 0
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -69,19 +61,15 @@ extension Xray_Transport_Internet_Hysteria_Config: SwiftProtobuf.Message, SwiftP
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "version"),
     2: .same(proto: "auth"),
-    3: .same(proto: "congestion"),
-    4: .same(proto: "up"),
-    5: .same(proto: "down"),
-    6: .same(proto: "ports"),
-    7: .standard(proto: "interval_min"),
-    8: .standard(proto: "interval_max"),
-    9: .standard(proto: "init_stream_receive_window"),
-    10: .standard(proto: "max_stream_receive_window"),
-    11: .standard(proto: "init_conn_receive_window"),
-    12: .standard(proto: "max_conn_receive_window"),
-    13: .standard(proto: "max_idle_timeout"),
-    14: .standard(proto: "keep_alive_period"),
-    15: .standard(proto: "disable_path_mtu_discovery"),
+    3: .standard(proto: "udp_idle_timeout"),
+    4: .standard(proto: "masq_type"),
+    5: .standard(proto: "masq_file"),
+    6: .standard(proto: "masq_url"),
+    7: .standard(proto: "masq_url_rewrite_host"),
+    8: .standard(proto: "masq_url_insecure"),
+    9: .standard(proto: "masq_string"),
+    10: .standard(proto: "masq_string_headers"),
+    11: .standard(proto: "masq_string_status_code"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -92,19 +80,15 @@ extension Xray_Transport_Internet_Hysteria_Config: SwiftProtobuf.Message, SwiftP
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularInt32Field(value: &self.version) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.auth) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.congestion) }()
-      case 4: try { try decoder.decodeSingularUInt64Field(value: &self.up) }()
-      case 5: try { try decoder.decodeSingularUInt64Field(value: &self.down) }()
-      case 6: try { try decoder.decodeRepeatedUInt32Field(value: &self.ports) }()
-      case 7: try { try decoder.decodeSingularInt64Field(value: &self.intervalMin) }()
-      case 8: try { try decoder.decodeSingularInt64Field(value: &self.intervalMax) }()
-      case 9: try { try decoder.decodeSingularUInt64Field(value: &self.initStreamReceiveWindow) }()
-      case 10: try { try decoder.decodeSingularUInt64Field(value: &self.maxStreamReceiveWindow) }()
-      case 11: try { try decoder.decodeSingularUInt64Field(value: &self.initConnReceiveWindow) }()
-      case 12: try { try decoder.decodeSingularUInt64Field(value: &self.maxConnReceiveWindow) }()
-      case 13: try { try decoder.decodeSingularInt64Field(value: &self.maxIdleTimeout) }()
-      case 14: try { try decoder.decodeSingularInt64Field(value: &self.keepAlivePeriod) }()
-      case 15: try { try decoder.decodeSingularBoolField(value: &self.disablePathMtuDiscovery) }()
+      case 3: try { try decoder.decodeSingularInt64Field(value: &self.udpIdleTimeout) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.masqType) }()
+      case 5: try { try decoder.decodeSingularStringField(value: &self.masqFile) }()
+      case 6: try { try decoder.decodeSingularStringField(value: &self.masqURL) }()
+      case 7: try { try decoder.decodeSingularBoolField(value: &self.masqURLRewriteHost) }()
+      case 8: try { try decoder.decodeSingularBoolField(value: &self.masqURLInsecure) }()
+      case 9: try { try decoder.decodeSingularStringField(value: &self.masqString) }()
+      case 10: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &self.masqStringHeaders) }()
+      case 11: try { try decoder.decodeSingularInt32Field(value: &self.masqStringStatusCode) }()
       default: break
       }
     }
@@ -117,44 +101,32 @@ extension Xray_Transport_Internet_Hysteria_Config: SwiftProtobuf.Message, SwiftP
     if !self.auth.isEmpty {
       try visitor.visitSingularStringField(value: self.auth, fieldNumber: 2)
     }
-    if !self.congestion.isEmpty {
-      try visitor.visitSingularStringField(value: self.congestion, fieldNumber: 3)
+    if self.udpIdleTimeout != 0 {
+      try visitor.visitSingularInt64Field(value: self.udpIdleTimeout, fieldNumber: 3)
     }
-    if self.up != 0 {
-      try visitor.visitSingularUInt64Field(value: self.up, fieldNumber: 4)
+    if !self.masqType.isEmpty {
+      try visitor.visitSingularStringField(value: self.masqType, fieldNumber: 4)
     }
-    if self.down != 0 {
-      try visitor.visitSingularUInt64Field(value: self.down, fieldNumber: 5)
+    if !self.masqFile.isEmpty {
+      try visitor.visitSingularStringField(value: self.masqFile, fieldNumber: 5)
     }
-    if !self.ports.isEmpty {
-      try visitor.visitPackedUInt32Field(value: self.ports, fieldNumber: 6)
+    if !self.masqURL.isEmpty {
+      try visitor.visitSingularStringField(value: self.masqURL, fieldNumber: 6)
     }
-    if self.intervalMin != 0 {
-      try visitor.visitSingularInt64Field(value: self.intervalMin, fieldNumber: 7)
+    if self.masqURLRewriteHost != false {
+      try visitor.visitSingularBoolField(value: self.masqURLRewriteHost, fieldNumber: 7)
     }
-    if self.intervalMax != 0 {
-      try visitor.visitSingularInt64Field(value: self.intervalMax, fieldNumber: 8)
+    if self.masqURLInsecure != false {
+      try visitor.visitSingularBoolField(value: self.masqURLInsecure, fieldNumber: 8)
     }
-    if self.initStreamReceiveWindow != 0 {
-      try visitor.visitSingularUInt64Field(value: self.initStreamReceiveWindow, fieldNumber: 9)
+    if !self.masqString.isEmpty {
+      try visitor.visitSingularStringField(value: self.masqString, fieldNumber: 9)
     }
-    if self.maxStreamReceiveWindow != 0 {
-      try visitor.visitSingularUInt64Field(value: self.maxStreamReceiveWindow, fieldNumber: 10)
+    if !self.masqStringHeaders.isEmpty {
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: self.masqStringHeaders, fieldNumber: 10)
     }
-    if self.initConnReceiveWindow != 0 {
-      try visitor.visitSingularUInt64Field(value: self.initConnReceiveWindow, fieldNumber: 11)
-    }
-    if self.maxConnReceiveWindow != 0 {
-      try visitor.visitSingularUInt64Field(value: self.maxConnReceiveWindow, fieldNumber: 12)
-    }
-    if self.maxIdleTimeout != 0 {
-      try visitor.visitSingularInt64Field(value: self.maxIdleTimeout, fieldNumber: 13)
-    }
-    if self.keepAlivePeriod != 0 {
-      try visitor.visitSingularInt64Field(value: self.keepAlivePeriod, fieldNumber: 14)
-    }
-    if self.disablePathMtuDiscovery != false {
-      try visitor.visitSingularBoolField(value: self.disablePathMtuDiscovery, fieldNumber: 15)
+    if self.masqStringStatusCode != 0 {
+      try visitor.visitSingularInt32Field(value: self.masqStringStatusCode, fieldNumber: 11)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -162,19 +134,15 @@ extension Xray_Transport_Internet_Hysteria_Config: SwiftProtobuf.Message, SwiftP
   public static func ==(lhs: Xray_Transport_Internet_Hysteria_Config, rhs: Xray_Transport_Internet_Hysteria_Config) -> Bool {
     if lhs.version != rhs.version {return false}
     if lhs.auth != rhs.auth {return false}
-    if lhs.congestion != rhs.congestion {return false}
-    if lhs.up != rhs.up {return false}
-    if lhs.down != rhs.down {return false}
-    if lhs.ports != rhs.ports {return false}
-    if lhs.intervalMin != rhs.intervalMin {return false}
-    if lhs.intervalMax != rhs.intervalMax {return false}
-    if lhs.initStreamReceiveWindow != rhs.initStreamReceiveWindow {return false}
-    if lhs.maxStreamReceiveWindow != rhs.maxStreamReceiveWindow {return false}
-    if lhs.initConnReceiveWindow != rhs.initConnReceiveWindow {return false}
-    if lhs.maxConnReceiveWindow != rhs.maxConnReceiveWindow {return false}
-    if lhs.maxIdleTimeout != rhs.maxIdleTimeout {return false}
-    if lhs.keepAlivePeriod != rhs.keepAlivePeriod {return false}
-    if lhs.disablePathMtuDiscovery != rhs.disablePathMtuDiscovery {return false}
+    if lhs.udpIdleTimeout != rhs.udpIdleTimeout {return false}
+    if lhs.masqType != rhs.masqType {return false}
+    if lhs.masqFile != rhs.masqFile {return false}
+    if lhs.masqURL != rhs.masqURL {return false}
+    if lhs.masqURLRewriteHost != rhs.masqURLRewriteHost {return false}
+    if lhs.masqURLInsecure != rhs.masqURLInsecure {return false}
+    if lhs.masqString != rhs.masqString {return false}
+    if lhs.masqStringHeaders != rhs.masqStringHeaders {return false}
+    if lhs.masqStringStatusCode != rhs.masqStringStatusCode {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

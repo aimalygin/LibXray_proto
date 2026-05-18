@@ -173,6 +173,85 @@ public struct Xray_App_Stats_Command_GetAllOnlineUsersResponse: Sendable {
   public init() {}
 }
 
+public struct Xray_App_Stats_Command_OnlineIPEntry: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var ip: String = String()
+
+  public var lastSeen: Int64 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Xray_App_Stats_Command_TrafficUserStat: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var uplink: Int64 = 0
+
+  public var downlink: Int64 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Xray_App_Stats_Command_UserStat: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var email: String = String()
+
+  public var ips: [Xray_App_Stats_Command_OnlineIPEntry] = []
+
+  public var traffic: Xray_App_Stats_Command_TrafficUserStat {
+    get {return _traffic ?? Xray_App_Stats_Command_TrafficUserStat()}
+    set {_traffic = newValue}
+  }
+  /// Returns true if `traffic` has been explicitly set.
+  public var hasTraffic: Bool {return self._traffic != nil}
+  /// Clears the value of `traffic`. Subsequent reads from it will return its default value.
+  public mutating func clearTraffic() {self._traffic = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _traffic: Xray_App_Stats_Command_TrafficUserStat? = nil
+}
+
+public struct Xray_App_Stats_Command_GetUsersStatsRequest: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var includeTraffic: Bool = false
+
+  public var reset: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Xray_App_Stats_Command_GetUsersStatsResponse: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var users: [Xray_App_Stats_Command_UserStat] = []
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 public struct Xray_App_Stats_Command_Config: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -557,6 +636,200 @@ extension Xray_App_Stats_Command_GetAllOnlineUsersResponse: SwiftProtobuf.Messag
   }
 
   public static func ==(lhs: Xray_App_Stats_Command_GetAllOnlineUsersResponse, rhs: Xray_App_Stats_Command_GetAllOnlineUsersResponse) -> Bool {
+    if lhs.users != rhs.users {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Xray_App_Stats_Command_OnlineIPEntry: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".OnlineIPEntry"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "ip"),
+    2: .standard(proto: "last_seen"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.ip) }()
+      case 2: try { try decoder.decodeSingularInt64Field(value: &self.lastSeen) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.ip.isEmpty {
+      try visitor.visitSingularStringField(value: self.ip, fieldNumber: 1)
+    }
+    if self.lastSeen != 0 {
+      try visitor.visitSingularInt64Field(value: self.lastSeen, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Xray_App_Stats_Command_OnlineIPEntry, rhs: Xray_App_Stats_Command_OnlineIPEntry) -> Bool {
+    if lhs.ip != rhs.ip {return false}
+    if lhs.lastSeen != rhs.lastSeen {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Xray_App_Stats_Command_TrafficUserStat: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".TrafficUserStat"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "uplink"),
+    2: .same(proto: "downlink"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularInt64Field(value: &self.uplink) }()
+      case 2: try { try decoder.decodeSingularInt64Field(value: &self.downlink) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.uplink != 0 {
+      try visitor.visitSingularInt64Field(value: self.uplink, fieldNumber: 1)
+    }
+    if self.downlink != 0 {
+      try visitor.visitSingularInt64Field(value: self.downlink, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Xray_App_Stats_Command_TrafficUserStat, rhs: Xray_App_Stats_Command_TrafficUserStat) -> Bool {
+    if lhs.uplink != rhs.uplink {return false}
+    if lhs.downlink != rhs.downlink {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Xray_App_Stats_Command_UserStat: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".UserStat"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "email"),
+    2: .same(proto: "ips"),
+    3: .same(proto: "traffic"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.email) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.ips) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._traffic) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if !self.email.isEmpty {
+      try visitor.visitSingularStringField(value: self.email, fieldNumber: 1)
+    }
+    if !self.ips.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.ips, fieldNumber: 2)
+    }
+    try { if let v = self._traffic {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Xray_App_Stats_Command_UserStat, rhs: Xray_App_Stats_Command_UserStat) -> Bool {
+    if lhs.email != rhs.email {return false}
+    if lhs.ips != rhs.ips {return false}
+    if lhs._traffic != rhs._traffic {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Xray_App_Stats_Command_GetUsersStatsRequest: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetUsersStatsRequest"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "include_traffic"),
+    2: .same(proto: "reset"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularBoolField(value: &self.includeTraffic) }()
+      case 2: try { try decoder.decodeSingularBoolField(value: &self.reset) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.includeTraffic != false {
+      try visitor.visitSingularBoolField(value: self.includeTraffic, fieldNumber: 1)
+    }
+    if self.reset != false {
+      try visitor.visitSingularBoolField(value: self.reset, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Xray_App_Stats_Command_GetUsersStatsRequest, rhs: Xray_App_Stats_Command_GetUsersStatsRequest) -> Bool {
+    if lhs.includeTraffic != rhs.includeTraffic {return false}
+    if lhs.reset != rhs.reset {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Xray_App_Stats_Command_GetUsersStatsResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GetUsersStatsResponse"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "users"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.users) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.users.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.users, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Xray_App_Stats_Command_GetUsersStatsResponse, rhs: Xray_App_Stats_Command_GetUsersStatsResponse) -> Bool {
     if lhs.users != rhs.users {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

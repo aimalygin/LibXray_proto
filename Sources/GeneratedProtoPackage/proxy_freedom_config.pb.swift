@@ -21,6 +21,40 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+public enum Xray_Proxy_Freedom_RuleAction: SwiftProtobuf.Enum, Swift.CaseIterable {
+  public typealias RawValue = Int
+  case allow // = 0
+  case block // = 1
+  case UNRECOGNIZED(Int)
+
+  public init() {
+    self = .allow
+  }
+
+  public init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .allow
+    case 1: self = .block
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  public var rawValue: Int {
+    switch self {
+    case .allow: return 0
+    case .block: return 1
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  public static let allCases: [Xray_Proxy_Freedom_RuleAction] = [
+    .allow,
+    .block,
+  ]
+
+}
+
 public struct Xray_Proxy_Freedom_DestinationOverride: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -90,6 +124,57 @@ public struct Xray_Proxy_Freedom_Noise: @unchecked Sendable {
   public init() {}
 }
 
+public struct Xray_Proxy_Freedom_Range: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var min: UInt64 = 0
+
+  public var max: UInt64 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Xray_Proxy_Freedom_FinalRuleConfig: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var action: Xray_Proxy_Freedom_RuleAction = .allow
+
+  public var networks: [Xray_Common_Net_Network] = []
+
+  public var portList: Xray_Common_Net_PortList {
+    get {return _portList ?? Xray_Common_Net_PortList()}
+    set {_portList = newValue}
+  }
+  /// Returns true if `portList` has been explicitly set.
+  public var hasPortList: Bool {return self._portList != nil}
+  /// Clears the value of `portList`. Subsequent reads from it will return its default value.
+  public mutating func clearPortList() {self._portList = nil}
+
+  public var ip: [Xray_Common_Geodata_IPRule] = []
+
+  public var blockDelay: Xray_Proxy_Freedom_Range {
+    get {return _blockDelay ?? Xray_Proxy_Freedom_Range()}
+    set {_blockDelay = newValue}
+  }
+  /// Returns true if `blockDelay` has been explicitly set.
+  public var hasBlockDelay: Bool {return self._blockDelay != nil}
+  /// Clears the value of `blockDelay`. Subsequent reads from it will return its default value.
+  public mutating func clearBlockDelay() {self._blockDelay = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _portList: Xray_Common_Net_PortList? = nil
+  fileprivate var _blockDelay: Xray_Proxy_Freedom_Range? = nil
+}
+
 public struct Xray_Proxy_Freedom_Config: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -133,6 +218,11 @@ public struct Xray_Proxy_Freedom_Config: @unchecked Sendable {
     set {_uniqueStorage()._noises = newValue}
   }
 
+  public var finalRules: [Xray_Proxy_Freedom_FinalRuleConfig] {
+    get {return _storage._finalRules}
+    set {_uniqueStorage()._finalRules = newValue}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -143,6 +233,13 @@ public struct Xray_Proxy_Freedom_Config: @unchecked Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "xray.proxy.freedom"
+
+extension Xray_Proxy_Freedom_RuleAction: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "Allow"),
+    1: .same(proto: "Block"),
+  ]
+}
 
 extension Xray_Proxy_Freedom_DestinationOverride: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".DestinationOverride"
@@ -316,6 +413,104 @@ extension Xray_Proxy_Freedom_Noise: SwiftProtobuf.Message, SwiftProtobuf._Messag
   }
 }
 
+extension Xray_Proxy_Freedom_Range: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".Range"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "min"),
+    2: .same(proto: "max"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularUInt64Field(value: &self.min) }()
+      case 2: try { try decoder.decodeSingularUInt64Field(value: &self.max) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.min != 0 {
+      try visitor.visitSingularUInt64Field(value: self.min, fieldNumber: 1)
+    }
+    if self.max != 0 {
+      try visitor.visitSingularUInt64Field(value: self.max, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Xray_Proxy_Freedom_Range, rhs: Xray_Proxy_Freedom_Range) -> Bool {
+    if lhs.min != rhs.min {return false}
+    if lhs.max != rhs.max {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Xray_Proxy_Freedom_FinalRuleConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".FinalRuleConfig"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "action"),
+    2: .same(proto: "networks"),
+    3: .standard(proto: "port_list"),
+    4: .same(proto: "ip"),
+    5: .standard(proto: "block_delay"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.action) }()
+      case 2: try { try decoder.decodeRepeatedEnumField(value: &self.networks) }()
+      case 3: try { try decoder.decodeSingularMessageField(value: &self._portList) }()
+      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.ip) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._blockDelay) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    if self.action != .allow {
+      try visitor.visitSingularEnumField(value: self.action, fieldNumber: 1)
+    }
+    if !self.networks.isEmpty {
+      try visitor.visitPackedEnumField(value: self.networks, fieldNumber: 2)
+    }
+    try { if let v = self._portList {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
+    } }()
+    if !self.ip.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.ip, fieldNumber: 4)
+    }
+    try { if let v = self._blockDelay {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    } }()
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Xray_Proxy_Freedom_FinalRuleConfig, rhs: Xray_Proxy_Freedom_FinalRuleConfig) -> Bool {
+    if lhs.action != rhs.action {return false}
+    if lhs.networks != rhs.networks {return false}
+    if lhs._portList != rhs._portList {return false}
+    if lhs.ip != rhs.ip {return false}
+    if lhs._blockDelay != rhs._blockDelay {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Xray_Proxy_Freedom_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Config"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -325,6 +520,7 @@ extension Xray_Proxy_Freedom_Config: SwiftProtobuf.Message, SwiftProtobuf._Messa
     5: .same(proto: "fragment"),
     6: .standard(proto: "proxy_protocol"),
     7: .same(proto: "noises"),
+    8: .standard(proto: "final_rules"),
   ]
 
   fileprivate class _StorageClass {
@@ -334,6 +530,7 @@ extension Xray_Proxy_Freedom_Config: SwiftProtobuf.Message, SwiftProtobuf._Messa
     var _fragment: Xray_Proxy_Freedom_Fragment? = nil
     var _proxyProtocol: UInt32 = 0
     var _noises: [Xray_Proxy_Freedom_Noise] = []
+    var _finalRules: [Xray_Proxy_Freedom_FinalRuleConfig] = []
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -354,6 +551,7 @@ extension Xray_Proxy_Freedom_Config: SwiftProtobuf.Message, SwiftProtobuf._Messa
       _fragment = source._fragment
       _proxyProtocol = source._proxyProtocol
       _noises = source._noises
+      _finalRules = source._finalRules
     }
   }
 
@@ -378,6 +576,7 @@ extension Xray_Proxy_Freedom_Config: SwiftProtobuf.Message, SwiftProtobuf._Messa
         case 5: try { try decoder.decodeSingularMessageField(value: &_storage._fragment) }()
         case 6: try { try decoder.decodeSingularUInt32Field(value: &_storage._proxyProtocol) }()
         case 7: try { try decoder.decodeRepeatedMessageField(value: &_storage._noises) }()
+        case 8: try { try decoder.decodeRepeatedMessageField(value: &_storage._finalRules) }()
         default: break
         }
       }
@@ -408,6 +607,9 @@ extension Xray_Proxy_Freedom_Config: SwiftProtobuf.Message, SwiftProtobuf._Messa
       if !_storage._noises.isEmpty {
         try visitor.visitRepeatedMessageField(value: _storage._noises, fieldNumber: 7)
       }
+      if !_storage._finalRules.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._finalRules, fieldNumber: 8)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -423,6 +625,7 @@ extension Xray_Proxy_Freedom_Config: SwiftProtobuf.Message, SwiftProtobuf._Messa
         if _storage._fragment != rhs_storage._fragment {return false}
         if _storage._proxyProtocol != rhs_storage._proxyProtocol {return false}
         if _storage._noises != rhs_storage._noises {return false}
+        if _storage._finalRules != rhs_storage._finalRules {return false}
         return true
       }
       if !storagesAreEqual {return false}

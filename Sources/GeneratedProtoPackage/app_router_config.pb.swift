@@ -8,7 +8,6 @@
 // For information on using the generated types, please see the documentation:
 //   https://github.com/apple/swift-protobuf/
 
-import Foundation
 import SwiftProtobuf
 
 // If the compiler emits an error on this type, it is because this file
@@ -21,276 +20,141 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-/// Domain for routing decision.
-public struct Xray_App_Router_Domain: Sendable {
+public struct Xray_App_Router_RoutingRule: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  /// Domain matching type.
-  public var type: Xray_App_Router_Domain.TypeEnum = .plain
-
-  /// Domain value.
-  public var value: String = String()
-
-  /// Attributes of this domain. May be used for filtering.
-  public var attribute: [Xray_App_Router_Domain.Attribute] = []
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  /// Type of domain value.
-  public enum TypeEnum: SwiftProtobuf.Enum, Swift.CaseIterable {
-    public typealias RawValue = Int
-
-    /// The value is used as is.
-    case plain // = 0
-
-    /// The value is used as a regular expression.
-    case regex // = 1
-
-    /// The value is a root domain.
-    case domain // = 2
-
-    /// The value is a domain.
-    case full // = 3
-    case UNRECOGNIZED(Int)
-
-    public init() {
-      self = .plain
-    }
-
-    public init?(rawValue: Int) {
-      switch rawValue {
-      case 0: self = .plain
-      case 1: self = .regex
-      case 2: self = .domain
-      case 3: self = .full
-      default: self = .UNRECOGNIZED(rawValue)
-      }
-    }
-
-    public var rawValue: Int {
-      switch self {
-      case .plain: return 0
-      case .regex: return 1
-      case .domain: return 2
-      case .full: return 3
-      case .UNRECOGNIZED(let i): return i
-      }
-    }
-
-    // The compiler won't synthesize support with the UNRECOGNIZED case.
-    public static let allCases: [Xray_App_Router_Domain.TypeEnum] = [
-      .plain,
-      .regex,
-      .domain,
-      .full,
-    ]
-
+  public var targetTag: OneOf_TargetTag? {
+    get {return _storage._targetTag}
+    set {_uniqueStorage()._targetTag = newValue}
   }
-
-  public struct Attribute: Sendable {
-    // SwiftProtobuf.Message conformance is added in an extension below. See the
-    // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-    // methods supported on all messages.
-
-    public var key: String = String()
-
-    public var typedValue: Xray_App_Router_Domain.Attribute.OneOf_TypedValue? = nil
-
-    public var boolValue: Bool {
-      get {
-        if case .boolValue(let v)? = typedValue {return v}
-        return false
-      }
-      set {typedValue = .boolValue(newValue)}
-    }
-
-    public var intValue: Int64 {
-      get {
-        if case .intValue(let v)? = typedValue {return v}
-        return 0
-      }
-      set {typedValue = .intValue(newValue)}
-    }
-
-    public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-    public enum OneOf_TypedValue: Equatable, Sendable {
-      case boolValue(Bool)
-      case intValue(Int64)
-
-    }
-
-    public init() {}
-  }
-
-  public init() {}
-}
-
-/// IP for routing decision, in CIDR form.
-public struct Xray_App_Router_CIDR: @unchecked Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  /// IP address, should be either 4 or 16 bytes.
-  public var ip: Data = Data()
-
-  /// Number of leading ones in the network mask.
-  public var prefix: UInt32 = 0
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-public struct Xray_App_Router_GeoIP: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var countryCode: String = String()
-
-  public var cidr: [Xray_App_Router_CIDR] = []
-
-  public var reverseMatch: Bool = false
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-public struct Xray_App_Router_GeoIPList: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var entry: [Xray_App_Router_GeoIP] = []
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-public struct Xray_App_Router_GeoSite: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var countryCode: String = String()
-
-  public var domain: [Xray_App_Router_Domain] = []
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-public struct Xray_App_Router_GeoSiteList: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var entry: [Xray_App_Router_GeoSite] = []
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
-public struct Xray_App_Router_RoutingRule: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var targetTag: Xray_App_Router_RoutingRule.OneOf_TargetTag? = nil
 
   /// Tag of outbound that this rule is pointing to.
   public var tag: String {
     get {
-      if case .tag(let v)? = targetTag {return v}
+      if case .tag(let v)? = _storage._targetTag {return v}
       return String()
     }
-    set {targetTag = .tag(newValue)}
+    set {_uniqueStorage()._targetTag = .tag(newValue)}
   }
 
   /// Tag of routing balancer.
   public var balancingTag: String {
     get {
-      if case .balancingTag(let v)? = targetTag {return v}
+      if case .balancingTag(let v)? = _storage._targetTag {return v}
       return String()
     }
-    set {targetTag = .balancingTag(newValue)}
+    set {_uniqueStorage()._targetTag = .balancingTag(newValue)}
   }
 
-  public var ruleTag: String = String()
+  public var ruleTag: String {
+    get {return _storage._ruleTag}
+    set {_uniqueStorage()._ruleTag = newValue}
+  }
 
   /// List of domains for target domain matching.
-  public var domain: [Xray_App_Router_Domain] = []
+  public var domain: [Xray_Common_Geodata_DomainRule] {
+    get {return _storage._domain}
+    set {_uniqueStorage()._domain = newValue}
+  }
 
-  /// List of GeoIPs for target IP address matching. If this entry exists, the
-  /// cidr above will have no effect. GeoIP fields with the same country code are
-  /// supposed to contain exactly same content. They will be merged during
-  /// runtime. For customized GeoIPs, please leave country code empty.
-  public var geoip: [Xray_App_Router_GeoIP] = []
+  /// List of IPs for target IP address matching.
+  public var ip: [Xray_Common_Geodata_IPRule] {
+    get {return _storage._ip}
+    set {_uniqueStorage()._ip = newValue}
+  }
 
-  /// List of ports.
+  /// List of ports for target port matching.
   public var portList: Xray_Common_Net_PortList {
-    get {return _portList ?? Xray_Common_Net_PortList()}
-    set {_portList = newValue}
+    get {return _storage._portList ?? Xray_Common_Net_PortList()}
+    set {_uniqueStorage()._portList = newValue}
   }
   /// Returns true if `portList` has been explicitly set.
-  public var hasPortList: Bool {return self._portList != nil}
+  public var hasPortList: Bool {return _storage._portList != nil}
   /// Clears the value of `portList`. Subsequent reads from it will return its default value.
-  public mutating func clearPortList() {self._portList = nil}
+  public mutating func clearPortList() {_uniqueStorage()._portList = nil}
 
   /// List of networks for matching.
-  public var networks: [Xray_Common_Net_Network] = []
+  public var networks: [Xray_Common_Net_Network] {
+    get {return _storage._networks}
+    set {_uniqueStorage()._networks = newValue}
+  }
 
-  /// List of GeoIPs for source IP address matching. If this entry exists, the
-  /// source_cidr above will have no effect.
-  public var sourceGeoip: [Xray_App_Router_GeoIP] = []
+  /// List of IPs for source IP address matching.
+  public var sourceIp: [Xray_Common_Geodata_IPRule] {
+    get {return _storage._sourceIp}
+    set {_uniqueStorage()._sourceIp = newValue}
+  }
 
   /// List of ports for source port matching.
   public var sourcePortList: Xray_Common_Net_PortList {
-    get {return _sourcePortList ?? Xray_Common_Net_PortList()}
-    set {_sourcePortList = newValue}
+    get {return _storage._sourcePortList ?? Xray_Common_Net_PortList()}
+    set {_uniqueStorage()._sourcePortList = newValue}
   }
   /// Returns true if `sourcePortList` has been explicitly set.
-  public var hasSourcePortList: Bool {return self._sourcePortList != nil}
+  public var hasSourcePortList: Bool {return _storage._sourcePortList != nil}
   /// Clears the value of `sourcePortList`. Subsequent reads from it will return its default value.
-  public mutating func clearSourcePortList() {self._sourcePortList = nil}
+  public mutating func clearSourcePortList() {_uniqueStorage()._sourcePortList = nil}
 
-  public var userEmail: [String] = []
+  public var userEmail: [String] {
+    get {return _storage._userEmail}
+    set {_uniqueStorage()._userEmail = newValue}
+  }
 
-  public var inboundTag: [String] = []
+  public var inboundTag: [String] {
+    get {return _storage._inboundTag}
+    set {_uniqueStorage()._inboundTag = newValue}
+  }
 
-  public var `protocol`: [String] = []
+  public var `protocol`: [String] {
+    get {return _storage._protocol}
+    set {_uniqueStorage()._protocol = newValue}
+  }
 
-  public var attributes: Dictionary<String,String> = [:]
+  public var attributes: Dictionary<String,String> {
+    get {return _storage._attributes}
+    set {_uniqueStorage()._attributes = newValue}
+  }
 
-  public var localGeoip: [Xray_App_Router_GeoIP] = []
+  /// List of IPs for local IP address matching.
+  public var localIp: [Xray_Common_Geodata_IPRule] {
+    get {return _storage._localIp}
+    set {_uniqueStorage()._localIp = newValue}
+  }
 
+  /// List of ports for local port matching.
   public var localPortList: Xray_Common_Net_PortList {
-    get {return _localPortList ?? Xray_Common_Net_PortList()}
-    set {_localPortList = newValue}
+    get {return _storage._localPortList ?? Xray_Common_Net_PortList()}
+    set {_uniqueStorage()._localPortList = newValue}
   }
   /// Returns true if `localPortList` has been explicitly set.
-  public var hasLocalPortList: Bool {return self._localPortList != nil}
+  public var hasLocalPortList: Bool {return _storage._localPortList != nil}
   /// Clears the value of `localPortList`. Subsequent reads from it will return its default value.
-  public mutating func clearLocalPortList() {self._localPortList = nil}
+  public mutating func clearLocalPortList() {_uniqueStorage()._localPortList = nil}
 
   public var vlessRouteList: Xray_Common_Net_PortList {
-    get {return _vlessRouteList ?? Xray_Common_Net_PortList()}
-    set {_vlessRouteList = newValue}
+    get {return _storage._vlessRouteList ?? Xray_Common_Net_PortList()}
+    set {_uniqueStorage()._vlessRouteList = newValue}
   }
   /// Returns true if `vlessRouteList` has been explicitly set.
-  public var hasVlessRouteList: Bool {return self._vlessRouteList != nil}
+  public var hasVlessRouteList: Bool {return _storage._vlessRouteList != nil}
   /// Clears the value of `vlessRouteList`. Subsequent reads from it will return its default value.
-  public mutating func clearVlessRouteList() {self._vlessRouteList = nil}
+  public mutating func clearVlessRouteList() {_uniqueStorage()._vlessRouteList = nil}
 
-  public var process: [String] = []
+  public var process: [String] {
+    get {return _storage._process}
+    set {_uniqueStorage()._process = newValue}
+  }
+
+  public var webhook: Xray_App_Router_WebhookConfig {
+    get {return _storage._webhook ?? Xray_App_Router_WebhookConfig()}
+    set {_uniqueStorage()._webhook = newValue}
+  }
+  /// Returns true if `webhook` has been explicitly set.
+  public var hasWebhook: Bool {return _storage._webhook != nil}
+  /// Clears the value of `webhook`. Subsequent reads from it will return its default value.
+  public mutating func clearWebhook() {_uniqueStorage()._webhook = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -304,10 +168,23 @@ public struct Xray_App_Router_RoutingRule: Sendable {
 
   public init() {}
 
-  fileprivate var _portList: Xray_Common_Net_PortList? = nil
-  fileprivate var _sourcePortList: Xray_Common_Net_PortList? = nil
-  fileprivate var _localPortList: Xray_Common_Net_PortList? = nil
-  fileprivate var _vlessRouteList: Xray_Common_Net_PortList? = nil
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+public struct Xray_App_Router_WebhookConfig: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var url: String = String()
+
+  public var deduplication: UInt32 = 0
+
+  public var headers: Dictionary<String,String> = [:]
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
 }
 
 public struct Xray_App_Router_BalancingRule: Sendable {
@@ -444,309 +321,6 @@ public struct Xray_App_Router_Config: Sendable {
 
 fileprivate let _protobuf_package = "xray.app.router"
 
-extension Xray_App_Router_Domain: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".Domain"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "type"),
-    2: .same(proto: "value"),
-    3: .same(proto: "attribute"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularEnumField(value: &self.type) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.value) }()
-      case 3: try { try decoder.decodeRepeatedMessageField(value: &self.attribute) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.type != .plain {
-      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 1)
-    }
-    if !self.value.isEmpty {
-      try visitor.visitSingularStringField(value: self.value, fieldNumber: 2)
-    }
-    if !self.attribute.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.attribute, fieldNumber: 3)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Xray_App_Router_Domain, rhs: Xray_App_Router_Domain) -> Bool {
-    if lhs.type != rhs.type {return false}
-    if lhs.value != rhs.value {return false}
-    if lhs.attribute != rhs.attribute {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Xray_App_Router_Domain.TypeEnum: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "Plain"),
-    1: .same(proto: "Regex"),
-    2: .same(proto: "Domain"),
-    3: .same(proto: "Full"),
-  ]
-}
-
-extension Xray_App_Router_Domain.Attribute: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = Xray_App_Router_Domain.protoMessageName + ".Attribute"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "key"),
-    2: .standard(proto: "bool_value"),
-    3: .standard(proto: "int_value"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.key) }()
-      case 2: try {
-        var v: Bool?
-        try decoder.decodeSingularBoolField(value: &v)
-        if let v = v {
-          if self.typedValue != nil {try decoder.handleConflictingOneOf()}
-          self.typedValue = .boolValue(v)
-        }
-      }()
-      case 3: try {
-        var v: Int64?
-        try decoder.decodeSingularInt64Field(value: &v)
-        if let v = v {
-          if self.typedValue != nil {try decoder.handleConflictingOneOf()}
-          self.typedValue = .intValue(v)
-        }
-      }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.key.isEmpty {
-      try visitor.visitSingularStringField(value: self.key, fieldNumber: 1)
-    }
-    switch self.typedValue {
-    case .boolValue?: try {
-      guard case .boolValue(let v)? = self.typedValue else { preconditionFailure() }
-      try visitor.visitSingularBoolField(value: v, fieldNumber: 2)
-    }()
-    case .intValue?: try {
-      guard case .intValue(let v)? = self.typedValue else { preconditionFailure() }
-      try visitor.visitSingularInt64Field(value: v, fieldNumber: 3)
-    }()
-    case nil: break
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Xray_App_Router_Domain.Attribute, rhs: Xray_App_Router_Domain.Attribute) -> Bool {
-    if lhs.key != rhs.key {return false}
-    if lhs.typedValue != rhs.typedValue {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Xray_App_Router_CIDR: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".CIDR"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "ip"),
-    2: .same(proto: "prefix"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularBytesField(value: &self.ip) }()
-      case 2: try { try decoder.decodeSingularUInt32Field(value: &self.prefix) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.ip.isEmpty {
-      try visitor.visitSingularBytesField(value: self.ip, fieldNumber: 1)
-    }
-    if self.prefix != 0 {
-      try visitor.visitSingularUInt32Field(value: self.prefix, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Xray_App_Router_CIDR, rhs: Xray_App_Router_CIDR) -> Bool {
-    if lhs.ip != rhs.ip {return false}
-    if lhs.prefix != rhs.prefix {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Xray_App_Router_GeoIP: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".GeoIP"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "country_code"),
-    2: .same(proto: "cidr"),
-    3: .standard(proto: "reverse_match"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.countryCode) }()
-      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.cidr) }()
-      case 3: try { try decoder.decodeSingularBoolField(value: &self.reverseMatch) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.countryCode.isEmpty {
-      try visitor.visitSingularStringField(value: self.countryCode, fieldNumber: 1)
-    }
-    if !self.cidr.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.cidr, fieldNumber: 2)
-    }
-    if self.reverseMatch != false {
-      try visitor.visitSingularBoolField(value: self.reverseMatch, fieldNumber: 3)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Xray_App_Router_GeoIP, rhs: Xray_App_Router_GeoIP) -> Bool {
-    if lhs.countryCode != rhs.countryCode {return false}
-    if lhs.cidr != rhs.cidr {return false}
-    if lhs.reverseMatch != rhs.reverseMatch {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Xray_App_Router_GeoIPList: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".GeoIPList"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "entry"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.entry) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.entry.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.entry, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Xray_App_Router_GeoIPList, rhs: Xray_App_Router_GeoIPList) -> Bool {
-    if lhs.entry != rhs.entry {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Xray_App_Router_GeoSite: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".GeoSite"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "country_code"),
-    2: .same(proto: "domain"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.countryCode) }()
-      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.domain) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.countryCode.isEmpty {
-      try visitor.visitSingularStringField(value: self.countryCode, fieldNumber: 1)
-    }
-    if !self.domain.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.domain, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Xray_App_Router_GeoSite, rhs: Xray_App_Router_GeoSite) -> Bool {
-    if lhs.countryCode != rhs.countryCode {return false}
-    if lhs.domain != rhs.domain {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Xray_App_Router_GeoSiteList: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".GeoSiteList"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "entry"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.entry) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.entry.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.entry, fieldNumber: 1)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Xray_App_Router_GeoSiteList, rhs: Xray_App_Router_GeoSiteList) -> Bool {
-    if lhs.entry != rhs.entry {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
 extension Xray_App_Router_RoutingRule: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".RoutingRule"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -754,19 +328,228 @@ extension Xray_App_Router_RoutingRule: SwiftProtobuf.Message, SwiftProtobuf._Mes
     12: .standard(proto: "balancing_tag"),
     19: .standard(proto: "rule_tag"),
     2: .same(proto: "domain"),
-    10: .same(proto: "geoip"),
+    10: .same(proto: "ip"),
     14: .standard(proto: "port_list"),
     13: .same(proto: "networks"),
-    11: .standard(proto: "source_geoip"),
+    11: .standard(proto: "source_ip"),
     16: .standard(proto: "source_port_list"),
     7: .standard(proto: "user_email"),
     8: .standard(proto: "inbound_tag"),
     9: .same(proto: "protocol"),
     15: .same(proto: "attributes"),
-    17: .standard(proto: "local_geoip"),
+    17: .standard(proto: "local_ip"),
     18: .standard(proto: "local_port_list"),
     20: .standard(proto: "vless_route_list"),
     21: .same(proto: "process"),
+    22: .same(proto: "webhook"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _targetTag: Xray_App_Router_RoutingRule.OneOf_TargetTag?
+    var _ruleTag: String = String()
+    var _domain: [Xray_Common_Geodata_DomainRule] = []
+    var _ip: [Xray_Common_Geodata_IPRule] = []
+    var _portList: Xray_Common_Net_PortList? = nil
+    var _networks: [Xray_Common_Net_Network] = []
+    var _sourceIp: [Xray_Common_Geodata_IPRule] = []
+    var _sourcePortList: Xray_Common_Net_PortList? = nil
+    var _userEmail: [String] = []
+    var _inboundTag: [String] = []
+    var _protocol: [String] = []
+    var _attributes: Dictionary<String,String> = [:]
+    var _localIp: [Xray_Common_Geodata_IPRule] = []
+    var _localPortList: Xray_Common_Net_PortList? = nil
+    var _vlessRouteList: Xray_Common_Net_PortList? = nil
+    var _process: [String] = []
+    var _webhook: Xray_App_Router_WebhookConfig? = nil
+
+    #if swift(>=5.10)
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _targetTag = source._targetTag
+      _ruleTag = source._ruleTag
+      _domain = source._domain
+      _ip = source._ip
+      _portList = source._portList
+      _networks = source._networks
+      _sourceIp = source._sourceIp
+      _sourcePortList = source._sourcePortList
+      _userEmail = source._userEmail
+      _inboundTag = source._inboundTag
+      _protocol = source._protocol
+      _attributes = source._attributes
+      _localIp = source._localIp
+      _localPortList = source._localPortList
+      _vlessRouteList = source._vlessRouteList
+      _process = source._process
+      _webhook = source._webhook
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try {
+          var v: String?
+          try decoder.decodeSingularStringField(value: &v)
+          if let v = v {
+            if _storage._targetTag != nil {try decoder.handleConflictingOneOf()}
+            _storage._targetTag = .tag(v)
+          }
+        }()
+        case 2: try { try decoder.decodeRepeatedMessageField(value: &_storage._domain) }()
+        case 7: try { try decoder.decodeRepeatedStringField(value: &_storage._userEmail) }()
+        case 8: try { try decoder.decodeRepeatedStringField(value: &_storage._inboundTag) }()
+        case 9: try { try decoder.decodeRepeatedStringField(value: &_storage._protocol) }()
+        case 10: try { try decoder.decodeRepeatedMessageField(value: &_storage._ip) }()
+        case 11: try { try decoder.decodeRepeatedMessageField(value: &_storage._sourceIp) }()
+        case 12: try {
+          var v: String?
+          try decoder.decodeSingularStringField(value: &v)
+          if let v = v {
+            if _storage._targetTag != nil {try decoder.handleConflictingOneOf()}
+            _storage._targetTag = .balancingTag(v)
+          }
+        }()
+        case 13: try { try decoder.decodeRepeatedEnumField(value: &_storage._networks) }()
+        case 14: try { try decoder.decodeSingularMessageField(value: &_storage._portList) }()
+        case 15: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &_storage._attributes) }()
+        case 16: try { try decoder.decodeSingularMessageField(value: &_storage._sourcePortList) }()
+        case 17: try { try decoder.decodeRepeatedMessageField(value: &_storage._localIp) }()
+        case 18: try { try decoder.decodeSingularMessageField(value: &_storage._localPortList) }()
+        case 19: try { try decoder.decodeSingularStringField(value: &_storage._ruleTag) }()
+        case 20: try { try decoder.decodeSingularMessageField(value: &_storage._vlessRouteList) }()
+        case 21: try { try decoder.decodeRepeatedStringField(value: &_storage._process) }()
+        case 22: try { try decoder.decodeSingularMessageField(value: &_storage._webhook) }()
+        default: break
+        }
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      try { if case .tag(let v)? = _storage._targetTag {
+        try visitor.visitSingularStringField(value: v, fieldNumber: 1)
+      } }()
+      if !_storage._domain.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._domain, fieldNumber: 2)
+      }
+      if !_storage._userEmail.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._userEmail, fieldNumber: 7)
+      }
+      if !_storage._inboundTag.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._inboundTag, fieldNumber: 8)
+      }
+      if !_storage._protocol.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._protocol, fieldNumber: 9)
+      }
+      if !_storage._ip.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._ip, fieldNumber: 10)
+      }
+      if !_storage._sourceIp.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._sourceIp, fieldNumber: 11)
+      }
+      try { if case .balancingTag(let v)? = _storage._targetTag {
+        try visitor.visitSingularStringField(value: v, fieldNumber: 12)
+      } }()
+      if !_storage._networks.isEmpty {
+        try visitor.visitPackedEnumField(value: _storage._networks, fieldNumber: 13)
+      }
+      try { if let v = _storage._portList {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
+      } }()
+      if !_storage._attributes.isEmpty {
+        try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: _storage._attributes, fieldNumber: 15)
+      }
+      try { if let v = _storage._sourcePortList {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
+      } }()
+      if !_storage._localIp.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._localIp, fieldNumber: 17)
+      }
+      try { if let v = _storage._localPortList {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
+      } }()
+      if !_storage._ruleTag.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._ruleTag, fieldNumber: 19)
+      }
+      try { if let v = _storage._vlessRouteList {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 20)
+      } }()
+      if !_storage._process.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._process, fieldNumber: 21)
+      }
+      try { if let v = _storage._webhook {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 22)
+      } }()
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Xray_App_Router_RoutingRule, rhs: Xray_App_Router_RoutingRule) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._targetTag != rhs_storage._targetTag {return false}
+        if _storage._ruleTag != rhs_storage._ruleTag {return false}
+        if _storage._domain != rhs_storage._domain {return false}
+        if _storage._ip != rhs_storage._ip {return false}
+        if _storage._portList != rhs_storage._portList {return false}
+        if _storage._networks != rhs_storage._networks {return false}
+        if _storage._sourceIp != rhs_storage._sourceIp {return false}
+        if _storage._sourcePortList != rhs_storage._sourcePortList {return false}
+        if _storage._userEmail != rhs_storage._userEmail {return false}
+        if _storage._inboundTag != rhs_storage._inboundTag {return false}
+        if _storage._protocol != rhs_storage._protocol {return false}
+        if _storage._attributes != rhs_storage._attributes {return false}
+        if _storage._localIp != rhs_storage._localIp {return false}
+        if _storage._localPortList != rhs_storage._localPortList {return false}
+        if _storage._vlessRouteList != rhs_storage._vlessRouteList {return false}
+        if _storage._process != rhs_storage._process {return false}
+        if _storage._webhook != rhs_storage._webhook {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Xray_App_Router_WebhookConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".WebhookConfig"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "url"),
+    2: .same(proto: "deduplication"),
+    3: .same(proto: "headers"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -775,118 +558,31 @@ extension Xray_App_Router_RoutingRule: SwiftProtobuf.Message, SwiftProtobuf._Mes
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try {
-        var v: String?
-        try decoder.decodeSingularStringField(value: &v)
-        if let v = v {
-          if self.targetTag != nil {try decoder.handleConflictingOneOf()}
-          self.targetTag = .tag(v)
-        }
-      }()
-      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.domain) }()
-      case 7: try { try decoder.decodeRepeatedStringField(value: &self.userEmail) }()
-      case 8: try { try decoder.decodeRepeatedStringField(value: &self.inboundTag) }()
-      case 9: try { try decoder.decodeRepeatedStringField(value: &self.`protocol`) }()
-      case 10: try { try decoder.decodeRepeatedMessageField(value: &self.geoip) }()
-      case 11: try { try decoder.decodeRepeatedMessageField(value: &self.sourceGeoip) }()
-      case 12: try {
-        var v: String?
-        try decoder.decodeSingularStringField(value: &v)
-        if let v = v {
-          if self.targetTag != nil {try decoder.handleConflictingOneOf()}
-          self.targetTag = .balancingTag(v)
-        }
-      }()
-      case 13: try { try decoder.decodeRepeatedEnumField(value: &self.networks) }()
-      case 14: try { try decoder.decodeSingularMessageField(value: &self._portList) }()
-      case 15: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &self.attributes) }()
-      case 16: try { try decoder.decodeSingularMessageField(value: &self._sourcePortList) }()
-      case 17: try { try decoder.decodeRepeatedMessageField(value: &self.localGeoip) }()
-      case 18: try { try decoder.decodeSingularMessageField(value: &self._localPortList) }()
-      case 19: try { try decoder.decodeSingularStringField(value: &self.ruleTag) }()
-      case 20: try { try decoder.decodeSingularMessageField(value: &self._vlessRouteList) }()
-      case 21: try { try decoder.decodeRepeatedStringField(value: &self.process) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.url) }()
+      case 2: try { try decoder.decodeSingularUInt32Field(value: &self.deduplication) }()
+      case 3: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &self.headers) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
-    try { if case .tag(let v)? = self.targetTag {
-      try visitor.visitSingularStringField(value: v, fieldNumber: 1)
-    } }()
-    if !self.domain.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.domain, fieldNumber: 2)
+    if !self.url.isEmpty {
+      try visitor.visitSingularStringField(value: self.url, fieldNumber: 1)
     }
-    if !self.userEmail.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.userEmail, fieldNumber: 7)
+    if self.deduplication != 0 {
+      try visitor.visitSingularUInt32Field(value: self.deduplication, fieldNumber: 2)
     }
-    if !self.inboundTag.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.inboundTag, fieldNumber: 8)
-    }
-    if !self.`protocol`.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.`protocol`, fieldNumber: 9)
-    }
-    if !self.geoip.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.geoip, fieldNumber: 10)
-    }
-    if !self.sourceGeoip.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.sourceGeoip, fieldNumber: 11)
-    }
-    try { if case .balancingTag(let v)? = self.targetTag {
-      try visitor.visitSingularStringField(value: v, fieldNumber: 12)
-    } }()
-    if !self.networks.isEmpty {
-      try visitor.visitPackedEnumField(value: self.networks, fieldNumber: 13)
-    }
-    try { if let v = self._portList {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
-    } }()
-    if !self.attributes.isEmpty {
-      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: self.attributes, fieldNumber: 15)
-    }
-    try { if let v = self._sourcePortList {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 16)
-    } }()
-    if !self.localGeoip.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.localGeoip, fieldNumber: 17)
-    }
-    try { if let v = self._localPortList {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 18)
-    } }()
-    if !self.ruleTag.isEmpty {
-      try visitor.visitSingularStringField(value: self.ruleTag, fieldNumber: 19)
-    }
-    try { if let v = self._vlessRouteList {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 20)
-    } }()
-    if !self.process.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.process, fieldNumber: 21)
+    if !self.headers.isEmpty {
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: self.headers, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  public static func ==(lhs: Xray_App_Router_RoutingRule, rhs: Xray_App_Router_RoutingRule) -> Bool {
-    if lhs.targetTag != rhs.targetTag {return false}
-    if lhs.ruleTag != rhs.ruleTag {return false}
-    if lhs.domain != rhs.domain {return false}
-    if lhs.geoip != rhs.geoip {return false}
-    if lhs._portList != rhs._portList {return false}
-    if lhs.networks != rhs.networks {return false}
-    if lhs.sourceGeoip != rhs.sourceGeoip {return false}
-    if lhs._sourcePortList != rhs._sourcePortList {return false}
-    if lhs.userEmail != rhs.userEmail {return false}
-    if lhs.inboundTag != rhs.inboundTag {return false}
-    if lhs.`protocol` != rhs.`protocol` {return false}
-    if lhs.attributes != rhs.attributes {return false}
-    if lhs.localGeoip != rhs.localGeoip {return false}
-    if lhs._localPortList != rhs._localPortList {return false}
-    if lhs._vlessRouteList != rhs._vlessRouteList {return false}
-    if lhs.process != rhs.process {return false}
+  public static func ==(lhs: Xray_App_Router_WebhookConfig, rhs: Xray_App_Router_WebhookConfig) -> Bool {
+    if lhs.url != rhs.url {return false}
+    if lhs.deduplication != rhs.deduplication {return false}
+    if lhs.headers != rhs.headers {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -27,9 +27,20 @@ public struct Xray_Proxy_Vless_Reverse: Sendable {
 
   public var tag: String = String()
 
+  public var sniffing: Xray_App_Proxyman_SniffingConfig {
+    get {return _sniffing ?? Xray_App_Proxyman_SniffingConfig()}
+    set {_sniffing = newValue}
+  }
+  /// Returns true if `sniffing` has been explicitly set.
+  public var hasSniffing: Bool {return self._sniffing != nil}
+  /// Clears the value of `sniffing`. Subsequent reads from it will return its default value.
+  public mutating func clearSniffing() {self._sniffing = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
+
+  fileprivate var _sniffing: Xray_App_Proxyman_SniffingConfig? = nil
 }
 
 public struct Xray_Proxy_Vless_Account: Sendable {
@@ -79,6 +90,7 @@ extension Xray_Proxy_Vless_Reverse: SwiftProtobuf.Message, SwiftProtobuf._Messag
   public static let protoMessageName: String = _protobuf_package + ".Reverse"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "tag"),
+    2: .same(proto: "sniffing"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -88,20 +100,29 @@ extension Xray_Proxy_Vless_Reverse: SwiftProtobuf.Message, SwiftProtobuf._Messag
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.tag) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._sniffing) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.tag.isEmpty {
       try visitor.visitSingularStringField(value: self.tag, fieldNumber: 1)
     }
+    try { if let v = self._sniffing {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_Proxy_Vless_Reverse, rhs: Xray_Proxy_Vless_Reverse) -> Bool {
     if lhs.tag != rhs.tag {return false}
+    if lhs._sniffing != rhs._sniffing {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

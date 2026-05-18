@@ -186,6 +186,7 @@ public struct Xray_Transport_Internet_Tls_Config: @unchecked Sendable {
     set {_uniqueStorage()._echConfigList = newValue}
   }
 
+  /// Deprecated
   public var echForceQuery: String {
     get {return _storage._echForceQuery}
     set {_uniqueStorage()._echForceQuery = newValue}

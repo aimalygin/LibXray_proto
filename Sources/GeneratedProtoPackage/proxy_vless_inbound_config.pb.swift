@@ -47,7 +47,7 @@ public struct Xray_Proxy_Vless_Inbound_Config: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var clients: [Xray_Common_Protocol_User] = []
+  public var users: [Xray_Common_Protocol_User] = []
 
   public var fallbacks: [Xray_Proxy_Vless_Inbound_Fallback] = []
 
@@ -135,7 +135,7 @@ extension Xray_Proxy_Vless_Inbound_Fallback: SwiftProtobuf.Message, SwiftProtobu
 extension Xray_Proxy_Vless_Inbound_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Config"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "clients"),
+    1: .same(proto: "users"),
     2: .same(proto: "fallbacks"),
     3: .same(proto: "decryption"),
     4: .same(proto: "xorMode"),
@@ -150,7 +150,7 @@ extension Xray_Proxy_Vless_Inbound_Config: SwiftProtobuf.Message, SwiftProtobuf.
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.clients) }()
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.users) }()
       case 2: try { try decoder.decodeRepeatedMessageField(value: &self.fallbacks) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.decryption) }()
       case 4: try { try decoder.decodeSingularUInt32Field(value: &self.xorMode) }()
@@ -163,8 +163,8 @@ extension Xray_Proxy_Vless_Inbound_Config: SwiftProtobuf.Message, SwiftProtobuf.
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.clients.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.clients, fieldNumber: 1)
+    if !self.users.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.users, fieldNumber: 1)
     }
     if !self.fallbacks.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.fallbacks, fieldNumber: 2)
@@ -188,7 +188,7 @@ extension Xray_Proxy_Vless_Inbound_Config: SwiftProtobuf.Message, SwiftProtobuf.
   }
 
   public static func ==(lhs: Xray_Proxy_Vless_Inbound_Config, rhs: Xray_Proxy_Vless_Inbound_Config) -> Bool {
-    if lhs.clients != rhs.clients {return false}
+    if lhs.users != rhs.users {return false}
     if lhs.fallbacks != rhs.fallbacks {return false}
     if lhs.decryption != rhs.decryption {return false}
     if lhs.xorMode != rhs.xorMode {return false}

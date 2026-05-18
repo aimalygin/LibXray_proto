@@ -8,7 +8,6 @@
 // For information on using the generated types, please see the documentation:
 //   https://github.com/apple/swift-protobuf/
 
-import Foundation
 import SwiftProtobuf
 
 // If the compiler emits an error on this type, it is because this file
@@ -170,52 +169,142 @@ public struct Xray_Transport_Internet_TransportConfig: Sendable {
   fileprivate var _settings: Xray_Common_Serial_TypedMessage? = nil
 }
 
-public struct Xray_Transport_Internet_StreamConfig: Sendable {
+public struct Xray_Transport_Internet_StreamConfig: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   public var address: Xray_Common_Net_IPOrDomain {
-    get {return _address ?? Xray_Common_Net_IPOrDomain()}
-    set {_address = newValue}
+    get {return _storage._address ?? Xray_Common_Net_IPOrDomain()}
+    set {_uniqueStorage()._address = newValue}
   }
   /// Returns true if `address` has been explicitly set.
-  public var hasAddress: Bool {return self._address != nil}
+  public var hasAddress: Bool {return _storage._address != nil}
   /// Clears the value of `address`. Subsequent reads from it will return its default value.
-  public mutating func clearAddress() {self._address = nil}
+  public mutating func clearAddress() {_uniqueStorage()._address = nil}
 
-  public var port: UInt32 = 0
+  public var port: UInt32 {
+    get {return _storage._port}
+    set {_uniqueStorage()._port = newValue}
+  }
 
   /// Effective network.
-  public var protocolName: String = String()
+  public var protocolName: String {
+    get {return _storage._protocolName}
+    set {_uniqueStorage()._protocolName = newValue}
+  }
 
-  public var transportSettings: [Xray_Transport_Internet_TransportConfig] = []
+  public var transportSettings: [Xray_Transport_Internet_TransportConfig] {
+    get {return _storage._transportSettings}
+    set {_uniqueStorage()._transportSettings = newValue}
+  }
 
   /// Type of security. Must be a message name of the settings proto.
-  public var securityType: String = String()
+  public var securityType: String {
+    get {return _storage._securityType}
+    set {_uniqueStorage()._securityType = newValue}
+  }
 
   /// Transport security settings. They can be either TLS or REALITY.
-  public var securitySettings: [Xray_Common_Serial_TypedMessage] = []
+  public var securitySettings: [Xray_Common_Serial_TypedMessage] {
+    get {return _storage._securitySettings}
+    set {_uniqueStorage()._securitySettings = newValue}
+  }
 
-  public var udpmasks: [Xray_Common_Serial_TypedMessage] = []
+  public var udpmasks: [Xray_Common_Serial_TypedMessage] {
+    get {return _storage._udpmasks}
+    set {_uniqueStorage()._udpmasks = newValue}
+  }
 
-  public var tcpmasks: [Xray_Common_Serial_TypedMessage] = []
+  public var tcpmasks: [Xray_Common_Serial_TypedMessage] {
+    get {return _storage._tcpmasks}
+    set {_uniqueStorage()._tcpmasks = newValue}
+  }
+
+  public var quicParams: Xray_Transport_Internet_QuicParams {
+    get {return _storage._quicParams ?? Xray_Transport_Internet_QuicParams()}
+    set {_uniqueStorage()._quicParams = newValue}
+  }
+  /// Returns true if `quicParams` has been explicitly set.
+  public var hasQuicParams: Bool {return _storage._quicParams != nil}
+  /// Clears the value of `quicParams`. Subsequent reads from it will return its default value.
+  public mutating func clearQuicParams() {_uniqueStorage()._quicParams = nil}
 
   public var socketSettings: Xray_Transport_Internet_SocketConfig {
-    get {return _socketSettings ?? Xray_Transport_Internet_SocketConfig()}
-    set {_socketSettings = newValue}
+    get {return _storage._socketSettings ?? Xray_Transport_Internet_SocketConfig()}
+    set {_uniqueStorage()._socketSettings = newValue}
   }
   /// Returns true if `socketSettings` has been explicitly set.
-  public var hasSocketSettings: Bool {return self._socketSettings != nil}
+  public var hasSocketSettings: Bool {return _storage._socketSettings != nil}
   /// Clears the value of `socketSettings`. Subsequent reads from it will return its default value.
-  public mutating func clearSocketSettings() {self._socketSettings = nil}
+  public mutating func clearSocketSettings() {_uniqueStorage()._socketSettings = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
-  fileprivate var _address: Xray_Common_Net_IPOrDomain? = nil
-  fileprivate var _socketSettings: Xray_Transport_Internet_SocketConfig? = nil
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+public struct Xray_Transport_Internet_UdpHop: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var ports: [UInt32] = []
+
+  public var intervalMin: Int64 = 0
+
+  public var intervalMax: Int64 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Xray_Transport_Internet_QuicParams: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var congestion: String = String()
+
+  public var bbrProfile: String = String()
+
+  public var brutalUp: UInt64 = 0
+
+  public var brutalDown: UInt64 = 0
+
+  public var udpHop: Xray_Transport_Internet_UdpHop {
+    get {return _udpHop ?? Xray_Transport_Internet_UdpHop()}
+    set {_udpHop = newValue}
+  }
+  /// Returns true if `udpHop` has been explicitly set.
+  public var hasUdpHop: Bool {return self._udpHop != nil}
+  /// Clears the value of `udpHop`. Subsequent reads from it will return its default value.
+  public mutating func clearUdpHop() {self._udpHop = nil}
+
+  public var initStreamReceiveWindow: UInt64 = 0
+
+  public var maxStreamReceiveWindow: UInt64 = 0
+
+  public var initConnReceiveWindow: UInt64 = 0
+
+  public var maxConnReceiveWindow: UInt64 = 0
+
+  public var maxIdleTimeout: Int64 = 0
+
+  public var keepAlivePeriod: Int64 = 0
+
+  public var disablePathMtuDiscovery: Bool = false
+
+  public var maxIncomingStreams: Int64 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _udpHop: Xray_Transport_Internet_UdpHop? = nil
 }
 
 public struct Xray_Transport_Internet_ProxyConfig: Sendable {
@@ -283,16 +372,6 @@ public struct Xray_Transport_Internet_SocketConfig: @unchecked Sendable {
   public var receiveOriginalDestAddress: Bool {
     get {return _storage._receiveOriginalDestAddress}
     set {_uniqueStorage()._receiveOriginalDestAddress = newValue}
-  }
-
-  public var bindAddress: Data {
-    get {return _storage._bindAddress}
-    set {_uniqueStorage()._bindAddress = newValue}
-  }
-
-  public var bindPort: UInt32 {
-    get {return _storage._bindPort}
-    set {_uniqueStorage()._bindPort = newValue}
   }
 
   public var acceptProxyProtocol: Bool {
@@ -538,7 +617,149 @@ extension Xray_Transport_Internet_StreamConfig: SwiftProtobuf.Message, SwiftProt
     4: .standard(proto: "security_settings"),
     10: .same(proto: "udpmasks"),
     11: .same(proto: "tcpmasks"),
+    12: .standard(proto: "quic_params"),
     6: .standard(proto: "socket_settings"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _address: Xray_Common_Net_IPOrDomain? = nil
+    var _port: UInt32 = 0
+    var _protocolName: String = String()
+    var _transportSettings: [Xray_Transport_Internet_TransportConfig] = []
+    var _securityType: String = String()
+    var _securitySettings: [Xray_Common_Serial_TypedMessage] = []
+    var _udpmasks: [Xray_Common_Serial_TypedMessage] = []
+    var _tcpmasks: [Xray_Common_Serial_TypedMessage] = []
+    var _quicParams: Xray_Transport_Internet_QuicParams? = nil
+    var _socketSettings: Xray_Transport_Internet_SocketConfig? = nil
+
+    #if swift(>=5.10)
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _address = source._address
+      _port = source._port
+      _protocolName = source._protocolName
+      _transportSettings = source._transportSettings
+      _securityType = source._securityType
+      _securitySettings = source._securitySettings
+      _udpmasks = source._udpmasks
+      _tcpmasks = source._tcpmasks
+      _quicParams = source._quicParams
+      _socketSettings = source._socketSettings
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 2: try { try decoder.decodeRepeatedMessageField(value: &_storage._transportSettings) }()
+        case 3: try { try decoder.decodeSingularStringField(value: &_storage._securityType) }()
+        case 4: try { try decoder.decodeRepeatedMessageField(value: &_storage._securitySettings) }()
+        case 5: try { try decoder.decodeSingularStringField(value: &_storage._protocolName) }()
+        case 6: try { try decoder.decodeSingularMessageField(value: &_storage._socketSettings) }()
+        case 8: try { try decoder.decodeSingularMessageField(value: &_storage._address) }()
+        case 9: try { try decoder.decodeSingularUInt32Field(value: &_storage._port) }()
+        case 10: try { try decoder.decodeRepeatedMessageField(value: &_storage._udpmasks) }()
+        case 11: try { try decoder.decodeRepeatedMessageField(value: &_storage._tcpmasks) }()
+        case 12: try { try decoder.decodeSingularMessageField(value: &_storage._quicParams) }()
+        default: break
+        }
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      if !_storage._transportSettings.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._transportSettings, fieldNumber: 2)
+      }
+      if !_storage._securityType.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._securityType, fieldNumber: 3)
+      }
+      if !_storage._securitySettings.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._securitySettings, fieldNumber: 4)
+      }
+      if !_storage._protocolName.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._protocolName, fieldNumber: 5)
+      }
+      try { if let v = _storage._socketSettings {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+      } }()
+      try { if let v = _storage._address {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
+      } }()
+      if _storage._port != 0 {
+        try visitor.visitSingularUInt32Field(value: _storage._port, fieldNumber: 9)
+      }
+      if !_storage._udpmasks.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._udpmasks, fieldNumber: 10)
+      }
+      if !_storage._tcpmasks.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._tcpmasks, fieldNumber: 11)
+      }
+      try { if let v = _storage._quicParams {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 12)
+      } }()
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Xray_Transport_Internet_StreamConfig, rhs: Xray_Transport_Internet_StreamConfig) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._address != rhs_storage._address {return false}
+        if _storage._port != rhs_storage._port {return false}
+        if _storage._protocolName != rhs_storage._protocolName {return false}
+        if _storage._transportSettings != rhs_storage._transportSettings {return false}
+        if _storage._securityType != rhs_storage._securityType {return false}
+        if _storage._securitySettings != rhs_storage._securitySettings {return false}
+        if _storage._udpmasks != rhs_storage._udpmasks {return false}
+        if _storage._tcpmasks != rhs_storage._tcpmasks {return false}
+        if _storage._quicParams != rhs_storage._quicParams {return false}
+        if _storage._socketSettings != rhs_storage._socketSettings {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Xray_Transport_Internet_UdpHop: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".UdpHop"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "ports"),
+    2: .standard(proto: "interval_min"),
+    3: .standard(proto: "interval_max"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -547,15 +768,73 @@ extension Xray_Transport_Internet_StreamConfig: SwiftProtobuf.Message, SwiftProt
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.transportSettings) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.securityType) }()
-      case 4: try { try decoder.decodeRepeatedMessageField(value: &self.securitySettings) }()
-      case 5: try { try decoder.decodeSingularStringField(value: &self.protocolName) }()
-      case 6: try { try decoder.decodeSingularMessageField(value: &self._socketSettings) }()
-      case 8: try { try decoder.decodeSingularMessageField(value: &self._address) }()
-      case 9: try { try decoder.decodeSingularUInt32Field(value: &self.port) }()
-      case 10: try { try decoder.decodeRepeatedMessageField(value: &self.udpmasks) }()
-      case 11: try { try decoder.decodeRepeatedMessageField(value: &self.tcpmasks) }()
+      case 1: try { try decoder.decodeRepeatedUInt32Field(value: &self.ports) }()
+      case 2: try { try decoder.decodeSingularInt64Field(value: &self.intervalMin) }()
+      case 3: try { try decoder.decodeSingularInt64Field(value: &self.intervalMax) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.ports.isEmpty {
+      try visitor.visitPackedUInt32Field(value: self.ports, fieldNumber: 1)
+    }
+    if self.intervalMin != 0 {
+      try visitor.visitSingularInt64Field(value: self.intervalMin, fieldNumber: 2)
+    }
+    if self.intervalMax != 0 {
+      try visitor.visitSingularInt64Field(value: self.intervalMax, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Xray_Transport_Internet_UdpHop, rhs: Xray_Transport_Internet_UdpHop) -> Bool {
+    if lhs.ports != rhs.ports {return false}
+    if lhs.intervalMin != rhs.intervalMin {return false}
+    if lhs.intervalMax != rhs.intervalMax {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Xray_Transport_Internet_QuicParams: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".QuicParams"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "congestion"),
+    2: .standard(proto: "bbr_profile"),
+    3: .standard(proto: "brutal_up"),
+    4: .standard(proto: "brutal_down"),
+    5: .standard(proto: "udp_hop"),
+    6: .standard(proto: "init_stream_receive_window"),
+    7: .standard(proto: "max_stream_receive_window"),
+    8: .standard(proto: "init_conn_receive_window"),
+    9: .standard(proto: "max_conn_receive_window"),
+    10: .standard(proto: "max_idle_timeout"),
+    11: .standard(proto: "keep_alive_period"),
+    12: .standard(proto: "disable_path_mtu_discovery"),
+    13: .standard(proto: "max_incoming_streams"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.congestion) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.bbrProfile) }()
+      case 3: try { try decoder.decodeSingularUInt64Field(value: &self.brutalUp) }()
+      case 4: try { try decoder.decodeSingularUInt64Field(value: &self.brutalDown) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._udpHop) }()
+      case 6: try { try decoder.decodeSingularUInt64Field(value: &self.initStreamReceiveWindow) }()
+      case 7: try { try decoder.decodeSingularUInt64Field(value: &self.maxStreamReceiveWindow) }()
+      case 8: try { try decoder.decodeSingularUInt64Field(value: &self.initConnReceiveWindow) }()
+      case 9: try { try decoder.decodeSingularUInt64Field(value: &self.maxConnReceiveWindow) }()
+      case 10: try { try decoder.decodeSingularInt64Field(value: &self.maxIdleTimeout) }()
+      case 11: try { try decoder.decodeSingularInt64Field(value: &self.keepAlivePeriod) }()
+      case 12: try { try decoder.decodeSingularBoolField(value: &self.disablePathMtuDiscovery) }()
+      case 13: try { try decoder.decodeSingularInt64Field(value: &self.maxIncomingStreams) }()
       default: break
       }
     }
@@ -566,46 +845,62 @@ extension Xray_Transport_Internet_StreamConfig: SwiftProtobuf.Message, SwiftProt
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if !self.transportSettings.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.transportSettings, fieldNumber: 2)
+    if !self.congestion.isEmpty {
+      try visitor.visitSingularStringField(value: self.congestion, fieldNumber: 1)
     }
-    if !self.securityType.isEmpty {
-      try visitor.visitSingularStringField(value: self.securityType, fieldNumber: 3)
+    if !self.bbrProfile.isEmpty {
+      try visitor.visitSingularStringField(value: self.bbrProfile, fieldNumber: 2)
     }
-    if !self.securitySettings.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.securitySettings, fieldNumber: 4)
+    if self.brutalUp != 0 {
+      try visitor.visitSingularUInt64Field(value: self.brutalUp, fieldNumber: 3)
     }
-    if !self.protocolName.isEmpty {
-      try visitor.visitSingularStringField(value: self.protocolName, fieldNumber: 5)
+    if self.brutalDown != 0 {
+      try visitor.visitSingularUInt64Field(value: self.brutalDown, fieldNumber: 4)
     }
-    try { if let v = self._socketSettings {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+    try { if let v = self._udpHop {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
     } }()
-    try { if let v = self._address {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 8)
-    } }()
-    if self.port != 0 {
-      try visitor.visitSingularUInt32Field(value: self.port, fieldNumber: 9)
+    if self.initStreamReceiveWindow != 0 {
+      try visitor.visitSingularUInt64Field(value: self.initStreamReceiveWindow, fieldNumber: 6)
     }
-    if !self.udpmasks.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.udpmasks, fieldNumber: 10)
+    if self.maxStreamReceiveWindow != 0 {
+      try visitor.visitSingularUInt64Field(value: self.maxStreamReceiveWindow, fieldNumber: 7)
     }
-    if !self.tcpmasks.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.tcpmasks, fieldNumber: 11)
+    if self.initConnReceiveWindow != 0 {
+      try visitor.visitSingularUInt64Field(value: self.initConnReceiveWindow, fieldNumber: 8)
+    }
+    if self.maxConnReceiveWindow != 0 {
+      try visitor.visitSingularUInt64Field(value: self.maxConnReceiveWindow, fieldNumber: 9)
+    }
+    if self.maxIdleTimeout != 0 {
+      try visitor.visitSingularInt64Field(value: self.maxIdleTimeout, fieldNumber: 10)
+    }
+    if self.keepAlivePeriod != 0 {
+      try visitor.visitSingularInt64Field(value: self.keepAlivePeriod, fieldNumber: 11)
+    }
+    if self.disablePathMtuDiscovery != false {
+      try visitor.visitSingularBoolField(value: self.disablePathMtuDiscovery, fieldNumber: 12)
+    }
+    if self.maxIncomingStreams != 0 {
+      try visitor.visitSingularInt64Field(value: self.maxIncomingStreams, fieldNumber: 13)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  public static func ==(lhs: Xray_Transport_Internet_StreamConfig, rhs: Xray_Transport_Internet_StreamConfig) -> Bool {
-    if lhs._address != rhs._address {return false}
-    if lhs.port != rhs.port {return false}
-    if lhs.protocolName != rhs.protocolName {return false}
-    if lhs.transportSettings != rhs.transportSettings {return false}
-    if lhs.securityType != rhs.securityType {return false}
-    if lhs.securitySettings != rhs.securitySettings {return false}
-    if lhs.udpmasks != rhs.udpmasks {return false}
-    if lhs.tcpmasks != rhs.tcpmasks {return false}
-    if lhs._socketSettings != rhs._socketSettings {return false}
+  public static func ==(lhs: Xray_Transport_Internet_QuicParams, rhs: Xray_Transport_Internet_QuicParams) -> Bool {
+    if lhs.congestion != rhs.congestion {return false}
+    if lhs.bbrProfile != rhs.bbrProfile {return false}
+    if lhs.brutalUp != rhs.brutalUp {return false}
+    if lhs.brutalDown != rhs.brutalDown {return false}
+    if lhs._udpHop != rhs._udpHop {return false}
+    if lhs.initStreamReceiveWindow != rhs.initStreamReceiveWindow {return false}
+    if lhs.maxStreamReceiveWindow != rhs.maxStreamReceiveWindow {return false}
+    if lhs.initConnReceiveWindow != rhs.initConnReceiveWindow {return false}
+    if lhs.maxConnReceiveWindow != rhs.maxConnReceiveWindow {return false}
+    if lhs.maxIdleTimeout != rhs.maxIdleTimeout {return false}
+    if lhs.keepAlivePeriod != rhs.keepAlivePeriod {return false}
+    if lhs.disablePathMtuDiscovery != rhs.disablePathMtuDiscovery {return false}
+    if lhs.maxIncomingStreams != rhs.maxIncomingStreams {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -718,8 +1013,6 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
     2: .same(proto: "tfo"),
     3: .same(proto: "tproxy"),
     4: .standard(proto: "receive_original_dest_address"),
-    5: .standard(proto: "bind_address"),
-    6: .standard(proto: "bind_port"),
     7: .standard(proto: "accept_proxy_protocol"),
     8: .standard(proto: "domain_strategy"),
     9: .standard(proto: "dialer_proxy"),
@@ -744,8 +1037,6 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
     var _tfo: Int32 = 0
     var _tproxy: Xray_Transport_Internet_SocketConfig.TProxyMode = .off
     var _receiveOriginalDestAddress: Bool = false
-    var _bindAddress: Data = Data()
-    var _bindPort: UInt32 = 0
     var _acceptProxyProtocol: Bool = false
     var _domainStrategy: Xray_Transport_Internet_DomainStrategy = .asIs
     var _dialerProxy: String = String()
@@ -781,8 +1072,6 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
       _tfo = source._tfo
       _tproxy = source._tproxy
       _receiveOriginalDestAddress = source._receiveOriginalDestAddress
-      _bindAddress = source._bindAddress
-      _bindPort = source._bindPort
       _acceptProxyProtocol = source._acceptProxyProtocol
       _domainStrategy = source._domainStrategy
       _dialerProxy = source._dialerProxy
@@ -822,8 +1111,6 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
         case 2: try { try decoder.decodeSingularInt32Field(value: &_storage._tfo) }()
         case 3: try { try decoder.decodeSingularEnumField(value: &_storage._tproxy) }()
         case 4: try { try decoder.decodeSingularBoolField(value: &_storage._receiveOriginalDestAddress) }()
-        case 5: try { try decoder.decodeSingularBytesField(value: &_storage._bindAddress) }()
-        case 6: try { try decoder.decodeSingularUInt32Field(value: &_storage._bindPort) }()
         case 7: try { try decoder.decodeSingularBoolField(value: &_storage._acceptProxyProtocol) }()
         case 8: try { try decoder.decodeSingularEnumField(value: &_storage._domainStrategy) }()
         case 9: try { try decoder.decodeSingularStringField(value: &_storage._dialerProxy) }()
@@ -864,12 +1151,6 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
       }
       if _storage._receiveOriginalDestAddress != false {
         try visitor.visitSingularBoolField(value: _storage._receiveOriginalDestAddress, fieldNumber: 4)
-      }
-      if !_storage._bindAddress.isEmpty {
-        try visitor.visitSingularBytesField(value: _storage._bindAddress, fieldNumber: 5)
-      }
-      if _storage._bindPort != 0 {
-        try visitor.visitSingularUInt32Field(value: _storage._bindPort, fieldNumber: 6)
       }
       if _storage._acceptProxyProtocol != false {
         try visitor.visitSingularBoolField(value: _storage._acceptProxyProtocol, fieldNumber: 7)
@@ -935,8 +1216,6 @@ extension Xray_Transport_Internet_SocketConfig: SwiftProtobuf.Message, SwiftProt
         if _storage._tfo != rhs_storage._tfo {return false}
         if _storage._tproxy != rhs_storage._tproxy {return false}
         if _storage._receiveOriginalDestAddress != rhs_storage._receiveOriginalDestAddress {return false}
-        if _storage._bindAddress != rhs_storage._bindAddress {return false}
-        if _storage._bindPort != rhs_storage._bindPort {return false}
         if _storage._acceptProxyProtocol != rhs_storage._acceptProxyProtocol {return false}
         if _storage._domainStrategy != rhs_storage._domainStrategy {return false}
         if _storage._dialerProxy != rhs_storage._dialerProxy {return false}

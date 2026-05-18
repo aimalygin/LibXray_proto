@@ -29,7 +29,15 @@ public struct Xray_Proxy_Tun_Config: Sendable {
 
   public var mtu: UInt32 = 0
 
+  public var gateway: [String] = []
+
+  public var dns: [String] = []
+
   public var userLevel: UInt32 = 0
+
+  public var autoSystemRoutingTable: [String] = []
+
+  public var autoOutboundsInterface: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -45,7 +53,11 @@ extension Xray_Proxy_Tun_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "name"),
     2: .same(proto: "MTU"),
-    3: .standard(proto: "user_level"),
+    3: .same(proto: "gateway"),
+    4: .same(proto: "DNS"),
+    5: .standard(proto: "user_level"),
+    6: .standard(proto: "auto_system_routing_table"),
+    7: .standard(proto: "auto_outbounds_interface"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -56,7 +68,11 @@ extension Xray_Proxy_Tun_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularStringField(value: &self.name) }()
       case 2: try { try decoder.decodeSingularUInt32Field(value: &self.mtu) }()
-      case 3: try { try decoder.decodeSingularUInt32Field(value: &self.userLevel) }()
+      case 3: try { try decoder.decodeRepeatedStringField(value: &self.gateway) }()
+      case 4: try { try decoder.decodeRepeatedStringField(value: &self.dns) }()
+      case 5: try { try decoder.decodeSingularUInt32Field(value: &self.userLevel) }()
+      case 6: try { try decoder.decodeRepeatedStringField(value: &self.autoSystemRoutingTable) }()
+      case 7: try { try decoder.decodeSingularStringField(value: &self.autoOutboundsInterface) }()
       default: break
       }
     }
@@ -69,8 +85,20 @@ extension Xray_Proxy_Tun_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if self.mtu != 0 {
       try visitor.visitSingularUInt32Field(value: self.mtu, fieldNumber: 2)
     }
+    if !self.gateway.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.gateway, fieldNumber: 3)
+    }
+    if !self.dns.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.dns, fieldNumber: 4)
+    }
     if self.userLevel != 0 {
-      try visitor.visitSingularUInt32Field(value: self.userLevel, fieldNumber: 3)
+      try visitor.visitSingularUInt32Field(value: self.userLevel, fieldNumber: 5)
+    }
+    if !self.autoSystemRoutingTable.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.autoSystemRoutingTable, fieldNumber: 6)
+    }
+    if !self.autoOutboundsInterface.isEmpty {
+      try visitor.visitSingularStringField(value: self.autoOutboundsInterface, fieldNumber: 7)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -78,7 +106,11 @@ extension Xray_Proxy_Tun_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   public static func ==(lhs: Xray_Proxy_Tun_Config, rhs: Xray_Proxy_Tun_Config) -> Bool {
     if lhs.name != rhs.name {return false}
     if lhs.mtu != rhs.mtu {return false}
+    if lhs.gateway != rhs.gateway {return false}
+    if lhs.dns != rhs.dns {return false}
     if lhs.userLevel != rhs.userLevel {return false}
+    if lhs.autoSystemRoutingTable != rhs.autoSystemRoutingTable {return false}
+    if lhs.autoOutboundsInterface != rhs.autoOutboundsInterface {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

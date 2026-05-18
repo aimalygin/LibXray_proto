@@ -21,48 +21,6 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-public enum Xray_App_Dns_DomainMatchingType: SwiftProtobuf.Enum, Swift.CaseIterable {
-  public typealias RawValue = Int
-  case full // = 0
-  case subdomain // = 1
-  case keyword // = 2
-  case regex // = 3
-  case UNRECOGNIZED(Int)
-
-  public init() {
-    self = .full
-  }
-
-  public init?(rawValue: Int) {
-    switch rawValue {
-    case 0: self = .full
-    case 1: self = .subdomain
-    case 2: self = .keyword
-    case 3: self = .regex
-    default: self = .UNRECOGNIZED(rawValue)
-    }
-  }
-
-  public var rawValue: Int {
-    switch self {
-    case .full: return 0
-    case .subdomain: return 1
-    case .keyword: return 2
-    case .regex: return 3
-    case .UNRECOGNIZED(let i): return i
-    }
-  }
-
-  // The compiler won't synthesize support with the UNRECOGNIZED case.
-  public static let allCases: [Xray_App_Dns_DomainMatchingType] = [
-    .full,
-    .subdomain,
-    .keyword,
-    .regex,
-  ]
-
-}
-
 public enum Xray_App_Dns_QueryStrategy: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case useIp // = 0
@@ -129,19 +87,14 @@ public struct Xray_App_Dns_NameServer: @unchecked Sendable {
     set {_uniqueStorage()._skipFallback = newValue}
   }
 
-  public var prioritizedDomain: [Xray_App_Dns_NameServer.PriorityDomain] {
-    get {return _storage._prioritizedDomain}
-    set {_uniqueStorage()._prioritizedDomain = newValue}
+  public var domain: [Xray_Common_Geodata_DomainRule] {
+    get {return _storage._domain}
+    set {_uniqueStorage()._domain = newValue}
   }
 
-  public var expectedGeoip: [Xray_App_Router_GeoIP] {
-    get {return _storage._expectedGeoip}
-    set {_uniqueStorage()._expectedGeoip = newValue}
-  }
-
-  public var originalRules: [Xray_App_Dns_NameServer.OriginalRule] {
-    get {return _storage._originalRules}
-    set {_uniqueStorage()._originalRules = newValue}
+  public var expectedIp: [Xray_Common_Geodata_IPRule] {
+    get {return _storage._expectedIp}
+    set {_uniqueStorage()._expectedIp = newValue}
   }
 
   public var queryStrategy: Xray_App_Dns_QueryStrategy {
@@ -196,9 +149,9 @@ public struct Xray_App_Dns_NameServer: @unchecked Sendable {
     set {_uniqueStorage()._finalQuery = newValue}
   }
 
-  public var unexpectedGeoip: [Xray_App_Router_GeoIP] {
-    get {return _storage._unexpectedGeoip}
-    set {_uniqueStorage()._unexpectedGeoip = newValue}
+  public var unexpectedIp: [Xray_Common_Geodata_IPRule] {
+    get {return _storage._unexpectedIp}
+    set {_uniqueStorage()._unexpectedIp = newValue}
   }
 
   public var actUnprior: Bool {
@@ -212,34 +165,6 @@ public struct Xray_App_Dns_NameServer: @unchecked Sendable {
   }
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public struct PriorityDomain: Sendable {
-    // SwiftProtobuf.Message conformance is added in an extension below. See the
-    // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-    // methods supported on all messages.
-
-    public var type: Xray_App_Dns_DomainMatchingType = .full
-
-    public var domain: String = String()
-
-    public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-    public init() {}
-  }
-
-  public struct OriginalRule: Sendable {
-    // SwiftProtobuf.Message conformance is added in an extension below. See the
-    // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-    // methods supported on all messages.
-
-    public var rule: String = String()
-
-    public var size: UInt32 = 0
-
-    public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-    public init() {}
-  }
 
   public init() {}
 
@@ -286,9 +211,14 @@ public struct Xray_App_Dns_Config: @unchecked Sendable {
     // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
     // methods supported on all messages.
 
-    public var type: Xray_App_Dns_DomainMatchingType = .full
-
-    public var domain: String = String()
+    public var domain: Xray_Common_Geodata_DomainRule {
+      get {return _domain ?? Xray_Common_Geodata_DomainRule()}
+      set {_domain = newValue}
+    }
+    /// Returns true if `domain` has been explicitly set.
+    public var hasDomain: Bool {return self._domain != nil}
+    /// Clears the value of `domain`. Subsequent reads from it will return its default value.
+    public mutating func clearDomain() {self._domain = nil}
 
     public var ip: [Data] = []
 
@@ -299,6 +229,8 @@ public struct Xray_App_Dns_Config: @unchecked Sendable {
     public var unknownFields = SwiftProtobuf.UnknownStorage()
 
     public init() {}
+
+    fileprivate var _domain: Xray_Common_Geodata_DomainRule? = nil
   }
 
   public init() {}
@@ -307,15 +239,6 @@ public struct Xray_App_Dns_Config: @unchecked Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "xray.app.dns"
-
-extension Xray_App_Dns_DomainMatchingType: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "Full"),
-    1: .same(proto: "Subdomain"),
-    2: .same(proto: "Keyword"),
-    3: .same(proto: "Regex"),
-  ]
-}
 
 extension Xray_App_Dns_QueryStrategy: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -332,9 +255,8 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
     1: .same(proto: "address"),
     5: .standard(proto: "client_ip"),
     6: .same(proto: "skipFallback"),
-    2: .standard(proto: "prioritized_domain"),
-    3: .standard(proto: "expected_geoip"),
-    4: .standard(proto: "original_rules"),
+    2: .same(proto: "domain"),
+    3: .standard(proto: "expected_ip"),
     7: .standard(proto: "query_strategy"),
     8: .same(proto: "actPrior"),
     9: .same(proto: "tag"),
@@ -343,7 +265,7 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
     15: .same(proto: "serveStale"),
     16: .same(proto: "serveExpiredTTL"),
     12: .same(proto: "finalQuery"),
-    13: .standard(proto: "unexpected_geoip"),
+    13: .standard(proto: "unexpected_ip"),
     14: .same(proto: "actUnprior"),
     17: .same(proto: "policyID"),
   ]
@@ -352,9 +274,8 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
     var _address: Xray_Common_Net_Endpoint? = nil
     var _clientIp: Data = Data()
     var _skipFallback: Bool = false
-    var _prioritizedDomain: [Xray_App_Dns_NameServer.PriorityDomain] = []
-    var _expectedGeoip: [Xray_App_Router_GeoIP] = []
-    var _originalRules: [Xray_App_Dns_NameServer.OriginalRule] = []
+    var _domain: [Xray_Common_Geodata_DomainRule] = []
+    var _expectedIp: [Xray_Common_Geodata_IPRule] = []
     var _queryStrategy: Xray_App_Dns_QueryStrategy = .useIp
     var _actPrior: Bool = false
     var _tag: String = String()
@@ -363,7 +284,7 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
     var _serveStale: Bool? = nil
     var _serveExpiredTtl: UInt32? = nil
     var _finalQuery: Bool = false
-    var _unexpectedGeoip: [Xray_App_Router_GeoIP] = []
+    var _unexpectedIp: [Xray_Common_Geodata_IPRule] = []
     var _actUnprior: Bool = false
     var _policyID: UInt32 = 0
 
@@ -383,9 +304,8 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
       _address = source._address
       _clientIp = source._clientIp
       _skipFallback = source._skipFallback
-      _prioritizedDomain = source._prioritizedDomain
-      _expectedGeoip = source._expectedGeoip
-      _originalRules = source._originalRules
+      _domain = source._domain
+      _expectedIp = source._expectedIp
       _queryStrategy = source._queryStrategy
       _actPrior = source._actPrior
       _tag = source._tag
@@ -394,7 +314,7 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
       _serveStale = source._serveStale
       _serveExpiredTtl = source._serveExpiredTtl
       _finalQuery = source._finalQuery
-      _unexpectedGeoip = source._unexpectedGeoip
+      _unexpectedIp = source._unexpectedIp
       _actUnprior = source._actUnprior
       _policyID = source._policyID
     }
@@ -416,9 +336,8 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
         // enabled. https://github.com/apple/swift-protobuf/issues/1034
         switch fieldNumber {
         case 1: try { try decoder.decodeSingularMessageField(value: &_storage._address) }()
-        case 2: try { try decoder.decodeRepeatedMessageField(value: &_storage._prioritizedDomain) }()
-        case 3: try { try decoder.decodeRepeatedMessageField(value: &_storage._expectedGeoip) }()
-        case 4: try { try decoder.decodeRepeatedMessageField(value: &_storage._originalRules) }()
+        case 2: try { try decoder.decodeRepeatedMessageField(value: &_storage._domain) }()
+        case 3: try { try decoder.decodeRepeatedMessageField(value: &_storage._expectedIp) }()
         case 5: try { try decoder.decodeSingularBytesField(value: &_storage._clientIp) }()
         case 6: try { try decoder.decodeSingularBoolField(value: &_storage._skipFallback) }()
         case 7: try { try decoder.decodeSingularEnumField(value: &_storage._queryStrategy) }()
@@ -427,7 +346,7 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
         case 10: try { try decoder.decodeSingularUInt64Field(value: &_storage._timeoutMs) }()
         case 11: try { try decoder.decodeSingularBoolField(value: &_storage._disableCache) }()
         case 12: try { try decoder.decodeSingularBoolField(value: &_storage._finalQuery) }()
-        case 13: try { try decoder.decodeRepeatedMessageField(value: &_storage._unexpectedGeoip) }()
+        case 13: try { try decoder.decodeRepeatedMessageField(value: &_storage._unexpectedIp) }()
         case 14: try { try decoder.decodeSingularBoolField(value: &_storage._actUnprior) }()
         case 15: try { try decoder.decodeSingularBoolField(value: &_storage._serveStale) }()
         case 16: try { try decoder.decodeSingularUInt32Field(value: &_storage._serveExpiredTtl) }()
@@ -447,14 +366,11 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
       try { if let v = _storage._address {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
       } }()
-      if !_storage._prioritizedDomain.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._prioritizedDomain, fieldNumber: 2)
+      if !_storage._domain.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._domain, fieldNumber: 2)
       }
-      if !_storage._expectedGeoip.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._expectedGeoip, fieldNumber: 3)
-      }
-      if !_storage._originalRules.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._originalRules, fieldNumber: 4)
+      if !_storage._expectedIp.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._expectedIp, fieldNumber: 3)
       }
       if !_storage._clientIp.isEmpty {
         try visitor.visitSingularBytesField(value: _storage._clientIp, fieldNumber: 5)
@@ -480,8 +396,8 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
       if _storage._finalQuery != false {
         try visitor.visitSingularBoolField(value: _storage._finalQuery, fieldNumber: 12)
       }
-      if !_storage._unexpectedGeoip.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._unexpectedGeoip, fieldNumber: 13)
+      if !_storage._unexpectedIp.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._unexpectedIp, fieldNumber: 13)
       }
       if _storage._actUnprior != false {
         try visitor.visitSingularBoolField(value: _storage._actUnprior, fieldNumber: 14)
@@ -507,9 +423,8 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
         if _storage._address != rhs_storage._address {return false}
         if _storage._clientIp != rhs_storage._clientIp {return false}
         if _storage._skipFallback != rhs_storage._skipFallback {return false}
-        if _storage._prioritizedDomain != rhs_storage._prioritizedDomain {return false}
-        if _storage._expectedGeoip != rhs_storage._expectedGeoip {return false}
-        if _storage._originalRules != rhs_storage._originalRules {return false}
+        if _storage._domain != rhs_storage._domain {return false}
+        if _storage._expectedIp != rhs_storage._expectedIp {return false}
         if _storage._queryStrategy != rhs_storage._queryStrategy {return false}
         if _storage._actPrior != rhs_storage._actPrior {return false}
         if _storage._tag != rhs_storage._tag {return false}
@@ -518,89 +433,13 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
         if _storage._serveStale != rhs_storage._serveStale {return false}
         if _storage._serveExpiredTtl != rhs_storage._serveExpiredTtl {return false}
         if _storage._finalQuery != rhs_storage._finalQuery {return false}
-        if _storage._unexpectedGeoip != rhs_storage._unexpectedGeoip {return false}
+        if _storage._unexpectedIp != rhs_storage._unexpectedIp {return false}
         if _storage._actUnprior != rhs_storage._actUnprior {return false}
         if _storage._policyID != rhs_storage._policyID {return false}
         return true
       }
       if !storagesAreEqual {return false}
     }
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Xray_App_Dns_NameServer.PriorityDomain: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = Xray_App_Dns_NameServer.protoMessageName + ".PriorityDomain"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "type"),
-    2: .same(proto: "domain"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularEnumField(value: &self.type) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.domain) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.type != .full {
-      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 1)
-    }
-    if !self.domain.isEmpty {
-      try visitor.visitSingularStringField(value: self.domain, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Xray_App_Dns_NameServer.PriorityDomain, rhs: Xray_App_Dns_NameServer.PriorityDomain) -> Bool {
-    if lhs.type != rhs.type {return false}
-    if lhs.domain != rhs.domain {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Xray_App_Dns_NameServer.OriginalRule: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = Xray_App_Dns_NameServer.protoMessageName + ".OriginalRule"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "rule"),
-    2: .same(proto: "size"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.rule) }()
-      case 2: try { try decoder.decodeSingularUInt32Field(value: &self.size) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.rule.isEmpty {
-      try visitor.visitSingularStringField(value: self.rule, fieldNumber: 1)
-    }
-    if self.size != 0 {
-      try visitor.visitSingularUInt32Field(value: self.size, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Xray_App_Dns_NameServer.OriginalRule, rhs: Xray_App_Dns_NameServer.OriginalRule) -> Bool {
-    if lhs.rule != rhs.rule {return false}
-    if lhs.size != rhs.size {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -701,7 +540,6 @@ extension Xray_App_Dns_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
 extension Xray_App_Dns_Config.HostMapping: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = Xray_App_Dns_Config.protoMessageName + ".HostMapping"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "type"),
     2: .same(proto: "domain"),
     3: .same(proto: "ip"),
     4: .standard(proto: "proxied_domain"),
@@ -713,8 +551,7 @@ extension Xray_App_Dns_Config.HostMapping: SwiftProtobuf.Message, SwiftProtobuf.
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularEnumField(value: &self.type) }()
-      case 2: try { try decoder.decodeSingularStringField(value: &self.domain) }()
+      case 2: try { try decoder.decodeSingularMessageField(value: &self._domain) }()
       case 3: try { try decoder.decodeRepeatedBytesField(value: &self.ip) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.proxiedDomain) }()
       default: break
@@ -723,12 +560,13 @@ extension Xray_App_Dns_Config.HostMapping: SwiftProtobuf.Message, SwiftProtobuf.
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.type != .full {
-      try visitor.visitSingularEnumField(value: self.type, fieldNumber: 1)
-    }
-    if !self.domain.isEmpty {
-      try visitor.visitSingularStringField(value: self.domain, fieldNumber: 2)
-    }
+    // The use of inline closures is to circumvent an issue where the compiler
+    // allocates stack space for every if/case branch local when no optimizations
+    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+    // https://github.com/apple/swift-protobuf/issues/1182
+    try { if let v = self._domain {
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+    } }()
     if !self.ip.isEmpty {
       try visitor.visitRepeatedBytesField(value: self.ip, fieldNumber: 3)
     }
@@ -739,8 +577,7 @@ extension Xray_App_Dns_Config.HostMapping: SwiftProtobuf.Message, SwiftProtobuf.
   }
 
   public static func ==(lhs: Xray_App_Dns_Config.HostMapping, rhs: Xray_App_Dns_Config.HostMapping) -> Bool {
-    if lhs.type != rhs.type {return false}
-    if lhs.domain != rhs.domain {return false}
+    if lhs._domain != rhs._domain {return false}
     if lhs.ip != rhs.ip {return false}
     if lhs.proxiedDomain != rhs.proxiedDomain {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
