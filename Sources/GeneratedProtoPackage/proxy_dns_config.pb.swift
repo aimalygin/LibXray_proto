@@ -24,7 +24,7 @@ public enum Xray_Proxy_Dns_RuleAction: SwiftProtobuf.Enum, Swift.CaseIterable {
   public typealias RawValue = Int
   case direct // = 0
   case drop // = 1
-  case reject // = 2
+  case `return` // = 2
   case hijack // = 3
   case UNRECOGNIZED(Int)
 
@@ -36,7 +36,7 @@ public enum Xray_Proxy_Dns_RuleAction: SwiftProtobuf.Enum, Swift.CaseIterable {
     switch rawValue {
     case 0: self = .direct
     case 1: self = .drop
-    case 2: self = .reject
+    case 2: self = .return
     case 3: self = .hijack
     default: self = .UNRECOGNIZED(rawValue)
     }
@@ -46,7 +46,7 @@ public enum Xray_Proxy_Dns_RuleAction: SwiftProtobuf.Enum, Swift.CaseIterable {
     switch self {
     case .direct: return 0
     case .drop: return 1
-    case .reject: return 2
+    case .return: return 2
     case .hijack: return 3
     case .UNRECOGNIZED(let i): return i
     }
@@ -56,7 +56,7 @@ public enum Xray_Proxy_Dns_RuleAction: SwiftProtobuf.Enum, Swift.CaseIterable {
   public static let allCases: [Xray_Proxy_Dns_RuleAction] = [
     .direct,
     .drop,
-    .reject,
+    .return,
     .hijack,
   ]
 
@@ -69,9 +69,11 @@ public struct Xray_Proxy_Dns_DNSRuleConfig: Sendable {
 
   public var action: Xray_Proxy_Dns_RuleAction = .direct
 
-  public var qtype: [Int32] = []
+  public var qType: [Int32] = []
 
   public var domain: [Xray_Common_Geodata_DomainRule] = []
+
+  public var rCode: UInt32 = 0
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -111,7 +113,7 @@ extension Xray_Proxy_Dns_RuleAction: SwiftProtobuf._ProtoNameProviding {
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "Direct"),
     1: .same(proto: "Drop"),
-    2: .same(proto: "Reject"),
+    2: .same(proto: "Return"),
     3: .same(proto: "Hijack"),
   ]
 }
@@ -120,8 +122,9 @@ extension Xray_Proxy_Dns_DNSRuleConfig: SwiftProtobuf.Message, SwiftProtobuf._Me
   public static let protoMessageName: String = _protobuf_package + ".DNSRuleConfig"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "action"),
-    2: .same(proto: "qtype"),
+    2: .standard(proto: "q_type"),
     3: .same(proto: "domain"),
+    4: .standard(proto: "r_code"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -131,8 +134,9 @@ extension Xray_Proxy_Dns_DNSRuleConfig: SwiftProtobuf.Message, SwiftProtobuf._Me
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularEnumField(value: &self.action) }()
-      case 2: try { try decoder.decodeRepeatedInt32Field(value: &self.qtype) }()
+      case 2: try { try decoder.decodeRepeatedInt32Field(value: &self.qType) }()
       case 3: try { try decoder.decodeRepeatedMessageField(value: &self.domain) }()
+      case 4: try { try decoder.decodeSingularUInt32Field(value: &self.rCode) }()
       default: break
       }
     }
@@ -142,19 +146,23 @@ extension Xray_Proxy_Dns_DNSRuleConfig: SwiftProtobuf.Message, SwiftProtobuf._Me
     if self.action != .direct {
       try visitor.visitSingularEnumField(value: self.action, fieldNumber: 1)
     }
-    if !self.qtype.isEmpty {
-      try visitor.visitPackedInt32Field(value: self.qtype, fieldNumber: 2)
+    if !self.qType.isEmpty {
+      try visitor.visitPackedInt32Field(value: self.qType, fieldNumber: 2)
     }
     if !self.domain.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.domain, fieldNumber: 3)
+    }
+    if self.rCode != 0 {
+      try visitor.visitSingularUInt32Field(value: self.rCode, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_Proxy_Dns_DNSRuleConfig, rhs: Xray_Proxy_Dns_DNSRuleConfig) -> Bool {
     if lhs.action != rhs.action {return false}
-    if lhs.qtype != rhs.qtype {return false}
+    if lhs.qType != rhs.qType {return false}
     if lhs.domain != rhs.domain {return false}
+    if lhs.rCode != rhs.rCode {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

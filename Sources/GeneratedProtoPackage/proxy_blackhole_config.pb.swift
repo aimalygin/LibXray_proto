@@ -8,6 +8,7 @@
 // For information on using the generated types, please see the documentation:
 //   https://github.com/apple/swift-protobuf/
 
+import Foundation
 import SwiftProtobuf
 
 // If the compiler emits an error on this type, it is because this file
@@ -20,20 +21,14 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-public struct Xray_Proxy_Blackhole_NoneResponse: Sendable {
+public struct Xray_Proxy_Blackhole_Response: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
+  public var type: String = String()
 
-  public init() {}
-}
-
-public struct Xray_Proxy_Blackhole_HTTPResponse: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
+  public var customResponseData: Data = Data()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -45,8 +40,8 @@ public struct Xray_Proxy_Blackhole_Config: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var response: Xray_Common_Serial_TypedMessage {
-    get {return _response ?? Xray_Common_Serial_TypedMessage()}
+  public var response: Xray_Proxy_Blackhole_Response {
+    get {return _response ?? Xray_Proxy_Blackhole_Response()}
     set {_response = newValue}
   }
   /// Returns true if `response` has been explicitly set.
@@ -58,46 +53,46 @@ public struct Xray_Proxy_Blackhole_Config: Sendable {
 
   public init() {}
 
-  fileprivate var _response: Xray_Common_Serial_TypedMessage? = nil
+  fileprivate var _response: Xray_Proxy_Blackhole_Response? = nil
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "xray.proxy.blackhole"
 
-extension Xray_Proxy_Blackhole_NoneResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".NoneResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+extension Xray_Proxy_Blackhole_Response: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".Response"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "type"),
+    2: .standard(proto: "custom_response_data"),
+  ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    // Load everything into unknown fields
-    while try decoder.nextFieldNumber() != nil {}
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.type) }()
+      case 2: try { try decoder.decodeSingularBytesField(value: &self.customResponseData) }()
+      default: break
+      }
+    }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.type.isEmpty {
+      try visitor.visitSingularStringField(value: self.type, fieldNumber: 1)
+    }
+    if !self.customResponseData.isEmpty {
+      try visitor.visitSingularBytesField(value: self.customResponseData, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  public static func ==(lhs: Xray_Proxy_Blackhole_NoneResponse, rhs: Xray_Proxy_Blackhole_NoneResponse) -> Bool {
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Xray_Proxy_Blackhole_HTTPResponse: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".HTTPResponse"
-  public static let _protobuf_nameMap = SwiftProtobuf._NameMap()
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    // Load everything into unknown fields
-    while try decoder.nextFieldNumber() != nil {}
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Xray_Proxy_Blackhole_HTTPResponse, rhs: Xray_Proxy_Blackhole_HTTPResponse) -> Bool {
+  public static func ==(lhs: Xray_Proxy_Blackhole_Response, rhs: Xray_Proxy_Blackhole_Response) -> Bool {
+    if lhs.type != rhs.type {return false}
+    if lhs.customResponseData != rhs.customResponseData {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

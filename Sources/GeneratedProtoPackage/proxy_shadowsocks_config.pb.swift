@@ -27,7 +27,6 @@ public enum Xray_Proxy_Shadowsocks_CipherType: SwiftProtobuf.Enum, Swift.CaseIte
   case aes256Gcm // = 6
   case chacha20Poly1305 // = 7
   case xchacha20Poly1305 // = 8
-  case none // = 9
   case UNRECOGNIZED(Int)
 
   public init() {
@@ -41,7 +40,6 @@ public enum Xray_Proxy_Shadowsocks_CipherType: SwiftProtobuf.Enum, Swift.CaseIte
     case 6: self = .aes256Gcm
     case 7: self = .chacha20Poly1305
     case 8: self = .xchacha20Poly1305
-    case 9: self = .none
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -53,7 +51,6 @@ public enum Xray_Proxy_Shadowsocks_CipherType: SwiftProtobuf.Enum, Swift.CaseIte
     case .aes256Gcm: return 6
     case .chacha20Poly1305: return 7
     case .xchacha20Poly1305: return 8
-    case .none: return 9
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -65,7 +62,6 @@ public enum Xray_Proxy_Shadowsocks_CipherType: SwiftProtobuf.Enum, Swift.CaseIte
     .aes256Gcm,
     .chacha20Poly1305,
     .xchacha20Poly1305,
-    .none,
   ]
 
 }
@@ -132,7 +128,6 @@ extension Xray_Proxy_Shadowsocks_CipherType: SwiftProtobuf._ProtoNameProviding {
     6: .same(proto: "AES_256_GCM"),
     7: .same(proto: "CHACHA20_POLY1305"),
     8: .same(proto: "XCHACHA20_POLY1305"),
-    9: .same(proto: "NONE"),
   ]
 }
 

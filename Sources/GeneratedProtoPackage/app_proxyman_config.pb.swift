@@ -180,15 +180,6 @@ public struct Xray_App_Proxyman_SenderConfig: Sendable {
   /// Clears the value of `streamSettings`. Subsequent reads from it will return its default value.
   public mutating func clearStreamSettings() {self._streamSettings = nil}
 
-  public var proxySettings: Xray_Transport_Internet_ProxyConfig {
-    get {return _proxySettings ?? Xray_Transport_Internet_ProxyConfig()}
-    set {_proxySettings = newValue}
-  }
-  /// Returns true if `proxySettings` has been explicitly set.
-  public var hasProxySettings: Bool {return self._proxySettings != nil}
-  /// Clears the value of `proxySettings`. Subsequent reads from it will return its default value.
-  public mutating func clearProxySettings() {self._proxySettings = nil}
-
   public var multiplexSettings: Xray_App_Proxyman_MultiplexingConfig {
     get {return _multiplexSettings ?? Xray_App_Proxyman_MultiplexingConfig()}
     set {_multiplexSettings = newValue}
@@ -208,7 +199,6 @@ public struct Xray_App_Proxyman_SenderConfig: Sendable {
 
   fileprivate var _via: Xray_Common_Net_IPOrDomain? = nil
   fileprivate var _streamSettings: Xray_Transport_Internet_StreamConfig? = nil
-  fileprivate var _proxySettings: Xray_Transport_Internet_ProxyConfig? = nil
   fileprivate var _multiplexSettings: Xray_App_Proxyman_MultiplexingConfig? = nil
 }
 
@@ -451,7 +441,6 @@ extension Xray_App_Proxyman_SenderConfig: SwiftProtobuf.Message, SwiftProtobuf._
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "via"),
     2: .standard(proto: "stream_settings"),
-    3: .standard(proto: "proxy_settings"),
     4: .standard(proto: "multiplex_settings"),
     5: .standard(proto: "via_cidr"),
     6: .standard(proto: "target_strategy"),
@@ -465,7 +454,6 @@ extension Xray_App_Proxyman_SenderConfig: SwiftProtobuf.Message, SwiftProtobuf._
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularMessageField(value: &self._via) }()
       case 2: try { try decoder.decodeSingularMessageField(value: &self._streamSettings) }()
-      case 3: try { try decoder.decodeSingularMessageField(value: &self._proxySettings) }()
       case 4: try { try decoder.decodeSingularMessageField(value: &self._multiplexSettings) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.viaCidr) }()
       case 6: try { try decoder.decodeSingularEnumField(value: &self.targetStrategy) }()
@@ -485,9 +473,6 @@ extension Xray_App_Proxyman_SenderConfig: SwiftProtobuf.Message, SwiftProtobuf._
     try { if let v = self._streamSettings {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
     } }()
-    try { if let v = self._proxySettings {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 3)
-    } }()
     try { if let v = self._multiplexSettings {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
     } }()
@@ -503,7 +488,6 @@ extension Xray_App_Proxyman_SenderConfig: SwiftProtobuf.Message, SwiftProtobuf._
   public static func ==(lhs: Xray_App_Proxyman_SenderConfig, rhs: Xray_App_Proxyman_SenderConfig) -> Bool {
     if lhs._via != rhs._via {return false}
     if lhs._streamSettings != rhs._streamSettings {return false}
-    if lhs._proxySettings != rhs._proxySettings {return false}
     if lhs._multiplexSettings != rhs._multiplexSettings {return false}
     if lhs.viaCidr != rhs.viaCidr {return false}
     if lhs.targetStrategy != rhs.targetStrategy {return false}

@@ -21,6 +21,78 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+public struct Xray_Transport_Internet_Finalmask_Noise_Segment: @unchecked Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var kind: Xray_Transport_Internet_Finalmask_Noise_Segment.Kind = .bytes
+
+  public var bytes: Data = Data()
+
+  public var minSize: Int64 = 0
+
+  public var maxSize: Int64 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public enum Kind: SwiftProtobuf.Enum, Swift.CaseIterable {
+    public typealias RawValue = Int
+    case bytes // = 0
+    case random // = 1
+    case randomAscii // = 2
+    case randomDigit // = 3
+    case timestamp // = 4
+    case counter // = 5
+    case nonce // = 6
+    case UNRECOGNIZED(Int)
+
+    public init() {
+      self = .bytes
+    }
+
+    public init?(rawValue: Int) {
+      switch rawValue {
+      case 0: self = .bytes
+      case 1: self = .random
+      case 2: self = .randomAscii
+      case 3: self = .randomDigit
+      case 4: self = .timestamp
+      case 5: self = .counter
+      case 6: self = .nonce
+      default: self = .UNRECOGNIZED(rawValue)
+      }
+    }
+
+    public var rawValue: Int {
+      switch self {
+      case .bytes: return 0
+      case .random: return 1
+      case .randomAscii: return 2
+      case .randomDigit: return 3
+      case .timestamp: return 4
+      case .counter: return 5
+      case .nonce: return 6
+      case .UNRECOGNIZED(let i): return i
+      }
+    }
+
+    // The compiler won't synthesize support with the UNRECOGNIZED case.
+    public static let allCases: [Xray_Transport_Internet_Finalmask_Noise_Segment.Kind] = [
+      .bytes,
+      .random,
+      .randomAscii,
+      .randomDigit,
+      .timestamp,
+      .counter,
+      .nonce,
+    ]
+
+  }
+
+  public init() {}
+}
+
 public struct Xray_Transport_Internet_Finalmask_Noise_Item: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -40,6 +112,8 @@ public struct Xray_Transport_Internet_Finalmask_Noise_Item: @unchecked Sendable 
 
   public var delayMax: Int64 = 0
 
+  public var segments: [Xray_Transport_Internet_Finalmask_Noise_Segment] = []
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -56,6 +130,8 @@ public struct Xray_Transport_Internet_Finalmask_Noise_Config: Sendable {
 
   public var items: [Xray_Transport_Internet_Finalmask_Noise_Item] = []
 
+  public var script: String = String()
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -64,6 +140,68 @@ public struct Xray_Transport_Internet_Finalmask_Noise_Config: Sendable {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "xray.transport.internet.finalmask.noise"
+
+extension Xray_Transport_Internet_Finalmask_Noise_Segment: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".Segment"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "kind"),
+    2: .same(proto: "bytes"),
+    3: .standard(proto: "min_size"),
+    4: .standard(proto: "max_size"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularEnumField(value: &self.kind) }()
+      case 2: try { try decoder.decodeSingularBytesField(value: &self.bytes) }()
+      case 3: try { try decoder.decodeSingularInt64Field(value: &self.minSize) }()
+      case 4: try { try decoder.decodeSingularInt64Field(value: &self.maxSize) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.kind != .bytes {
+      try visitor.visitSingularEnumField(value: self.kind, fieldNumber: 1)
+    }
+    if !self.bytes.isEmpty {
+      try visitor.visitSingularBytesField(value: self.bytes, fieldNumber: 2)
+    }
+    if self.minSize != 0 {
+      try visitor.visitSingularInt64Field(value: self.minSize, fieldNumber: 3)
+    }
+    if self.maxSize != 0 {
+      try visitor.visitSingularInt64Field(value: self.maxSize, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Xray_Transport_Internet_Finalmask_Noise_Segment, rhs: Xray_Transport_Internet_Finalmask_Noise_Segment) -> Bool {
+    if lhs.kind != rhs.kind {return false}
+    if lhs.bytes != rhs.bytes {return false}
+    if lhs.minSize != rhs.minSize {return false}
+    if lhs.maxSize != rhs.maxSize {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Xray_Transport_Internet_Finalmask_Noise_Segment.Kind: SwiftProtobuf._ProtoNameProviding {
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "BYTES"),
+    1: .same(proto: "RANDOM"),
+    2: .same(proto: "RANDOM_ASCII"),
+    3: .same(proto: "RANDOM_DIGIT"),
+    4: .same(proto: "TIMESTAMP"),
+    5: .same(proto: "COUNTER"),
+    6: .same(proto: "NONCE"),
+  ]
+}
 
 extension Xray_Transport_Internet_Finalmask_Noise_Item: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Item"
@@ -75,6 +213,7 @@ extension Xray_Transport_Internet_Finalmask_Noise_Item: SwiftProtobuf.Message, S
     5: .same(proto: "packet"),
     6: .standard(proto: "delay_min"),
     7: .standard(proto: "delay_max"),
+    8: .same(proto: "segments"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -90,6 +229,7 @@ extension Xray_Transport_Internet_Finalmask_Noise_Item: SwiftProtobuf.Message, S
       case 5: try { try decoder.decodeSingularBytesField(value: &self.packet) }()
       case 6: try { try decoder.decodeSingularInt64Field(value: &self.delayMin) }()
       case 7: try { try decoder.decodeSingularInt64Field(value: &self.delayMax) }()
+      case 8: try { try decoder.decodeRepeatedMessageField(value: &self.segments) }()
       default: break
       }
     }
@@ -117,6 +257,9 @@ extension Xray_Transport_Internet_Finalmask_Noise_Item: SwiftProtobuf.Message, S
     if self.delayMax != 0 {
       try visitor.visitSingularInt64Field(value: self.delayMax, fieldNumber: 7)
     }
+    if !self.segments.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.segments, fieldNumber: 8)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -128,6 +271,7 @@ extension Xray_Transport_Internet_Finalmask_Noise_Item: SwiftProtobuf.Message, S
     if lhs.packet != rhs.packet {return false}
     if lhs.delayMin != rhs.delayMin {return false}
     if lhs.delayMax != rhs.delayMax {return false}
+    if lhs.segments != rhs.segments {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -139,6 +283,7 @@ extension Xray_Transport_Internet_Finalmask_Noise_Config: SwiftProtobuf.Message,
     1: .standard(proto: "reset_min"),
     2: .standard(proto: "reset_max"),
     3: .same(proto: "items"),
+    4: .same(proto: "script"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -150,6 +295,7 @@ extension Xray_Transport_Internet_Finalmask_Noise_Config: SwiftProtobuf.Message,
       case 1: try { try decoder.decodeSingularInt64Field(value: &self.resetMin) }()
       case 2: try { try decoder.decodeSingularInt64Field(value: &self.resetMax) }()
       case 3: try { try decoder.decodeRepeatedMessageField(value: &self.items) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.script) }()
       default: break
       }
     }
@@ -165,6 +311,9 @@ extension Xray_Transport_Internet_Finalmask_Noise_Config: SwiftProtobuf.Message,
     if !self.items.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.items, fieldNumber: 3)
     }
+    if !self.script.isEmpty {
+      try visitor.visitSingularStringField(value: self.script, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -172,6 +321,7 @@ extension Xray_Transport_Internet_Finalmask_Noise_Config: SwiftProtobuf.Message,
     if lhs.resetMin != rhs.resetMin {return false}
     if lhs.resetMax != rhs.resetMax {return false}
     if lhs.items != rhs.items {return false}
+    if lhs.script != rhs.script {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

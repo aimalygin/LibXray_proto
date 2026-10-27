@@ -246,22 +246,6 @@ public struct Xray_Transport_Internet_StreamConfig: @unchecked Sendable {
   fileprivate var _storage = _StorageClass.defaultInstance
 }
 
-public struct Xray_Transport_Internet_UdpHop: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var ports: [UInt32] = []
-
-  public var intervalMin: Int64 = 0
-
-  public var intervalMax: Int64 = 0
-
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-}
-
 public struct Xray_Transport_Internet_QuicParams: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -275,14 +259,7 @@ public struct Xray_Transport_Internet_QuicParams: Sendable {
 
   public var brutalDown: UInt64 = 0
 
-  public var udpHop: Xray_Transport_Internet_UdpHop {
-    get {return _udpHop ?? Xray_Transport_Internet_UdpHop()}
-    set {_udpHop = newValue}
-  }
-  /// Returns true if `udpHop` has been explicitly set.
-  public var hasUdpHop: Bool {return self._udpHop != nil}
-  /// Clears the value of `udpHop`. Subsequent reads from it will return its default value.
-  public mutating func clearUdpHop() {self._udpHop = nil}
+  public var brutalDisableLossCompensation: Bool = false
 
   public var initStreamReceiveWindow: UInt64 = 0
 
@@ -298,23 +275,13 @@ public struct Xray_Transport_Internet_QuicParams: Sendable {
 
   public var disablePathMtuDiscovery: Bool = false
 
+  public var disableChromeParrot: Bool = false
+
+  public var disableGso: Bool = false
+
   public var maxIncomingStreams: Int64 = 0
 
-  public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public init() {}
-
-  fileprivate var _udpHop: Xray_Transport_Internet_UdpHop? = nil
-}
-
-public struct Xray_Transport_Internet_ProxyConfig: Sendable {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  public var tag: String = String()
-
-  public var transportLayerProxy: Bool = false
+  public var disableStatelessReset: Bool = false
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -754,50 +721,6 @@ extension Xray_Transport_Internet_StreamConfig: SwiftProtobuf.Message, SwiftProt
   }
 }
 
-extension Xray_Transport_Internet_UdpHop: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".UdpHop"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "ports"),
-    2: .standard(proto: "interval_min"),
-    3: .standard(proto: "interval_max"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedUInt32Field(value: &self.ports) }()
-      case 2: try { try decoder.decodeSingularInt64Field(value: &self.intervalMin) }()
-      case 3: try { try decoder.decodeSingularInt64Field(value: &self.intervalMax) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.ports.isEmpty {
-      try visitor.visitPackedUInt32Field(value: self.ports, fieldNumber: 1)
-    }
-    if self.intervalMin != 0 {
-      try visitor.visitSingularInt64Field(value: self.intervalMin, fieldNumber: 2)
-    }
-    if self.intervalMax != 0 {
-      try visitor.visitSingularInt64Field(value: self.intervalMax, fieldNumber: 3)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Xray_Transport_Internet_UdpHop, rhs: Xray_Transport_Internet_UdpHop) -> Bool {
-    if lhs.ports != rhs.ports {return false}
-    if lhs.intervalMin != rhs.intervalMin {return false}
-    if lhs.intervalMax != rhs.intervalMax {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
 extension Xray_Transport_Internet_QuicParams: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".QuicParams"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
@@ -805,7 +728,7 @@ extension Xray_Transport_Internet_QuicParams: SwiftProtobuf.Message, SwiftProtob
     2: .standard(proto: "bbr_profile"),
     3: .standard(proto: "brutal_up"),
     4: .standard(proto: "brutal_down"),
-    5: .standard(proto: "udp_hop"),
+    5: .standard(proto: "brutal_disable_loss_compensation"),
     6: .standard(proto: "init_stream_receive_window"),
     7: .standard(proto: "max_stream_receive_window"),
     8: .standard(proto: "init_conn_receive_window"),
@@ -813,7 +736,10 @@ extension Xray_Transport_Internet_QuicParams: SwiftProtobuf.Message, SwiftProtob
     10: .standard(proto: "max_idle_timeout"),
     11: .standard(proto: "keep_alive_period"),
     12: .standard(proto: "disable_path_mtu_discovery"),
-    13: .standard(proto: "max_incoming_streams"),
+    13: .standard(proto: "disable_chrome_parrot"),
+    14: .same(proto: "disableGSO"),
+    15: .standard(proto: "max_incoming_streams"),
+    16: .standard(proto: "disable_stateless_reset"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -826,7 +752,7 @@ extension Xray_Transport_Internet_QuicParams: SwiftProtobuf.Message, SwiftProtob
       case 2: try { try decoder.decodeSingularStringField(value: &self.bbrProfile) }()
       case 3: try { try decoder.decodeSingularUInt64Field(value: &self.brutalUp) }()
       case 4: try { try decoder.decodeSingularUInt64Field(value: &self.brutalDown) }()
-      case 5: try { try decoder.decodeSingularMessageField(value: &self._udpHop) }()
+      case 5: try { try decoder.decodeSingularBoolField(value: &self.brutalDisableLossCompensation) }()
       case 6: try { try decoder.decodeSingularUInt64Field(value: &self.initStreamReceiveWindow) }()
       case 7: try { try decoder.decodeSingularUInt64Field(value: &self.maxStreamReceiveWindow) }()
       case 8: try { try decoder.decodeSingularUInt64Field(value: &self.initConnReceiveWindow) }()
@@ -834,17 +760,16 @@ extension Xray_Transport_Internet_QuicParams: SwiftProtobuf.Message, SwiftProtob
       case 10: try { try decoder.decodeSingularInt64Field(value: &self.maxIdleTimeout) }()
       case 11: try { try decoder.decodeSingularInt64Field(value: &self.keepAlivePeriod) }()
       case 12: try { try decoder.decodeSingularBoolField(value: &self.disablePathMtuDiscovery) }()
-      case 13: try { try decoder.decodeSingularInt64Field(value: &self.maxIncomingStreams) }()
+      case 13: try { try decoder.decodeSingularBoolField(value: &self.disableChromeParrot) }()
+      case 14: try { try decoder.decodeSingularBoolField(value: &self.disableGso) }()
+      case 15: try { try decoder.decodeSingularInt64Field(value: &self.maxIncomingStreams) }()
+      case 16: try { try decoder.decodeSingularBoolField(value: &self.disableStatelessReset) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    // The use of inline closures is to circumvent an issue where the compiler
-    // allocates stack space for every if/case branch local when no optimizations
-    // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
-    // https://github.com/apple/swift-protobuf/issues/1182
     if !self.congestion.isEmpty {
       try visitor.visitSingularStringField(value: self.congestion, fieldNumber: 1)
     }
@@ -857,9 +782,9 @@ extension Xray_Transport_Internet_QuicParams: SwiftProtobuf.Message, SwiftProtob
     if self.brutalDown != 0 {
       try visitor.visitSingularUInt64Field(value: self.brutalDown, fieldNumber: 4)
     }
-    try { if let v = self._udpHop {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
-    } }()
+    if self.brutalDisableLossCompensation != false {
+      try visitor.visitSingularBoolField(value: self.brutalDisableLossCompensation, fieldNumber: 5)
+    }
     if self.initStreamReceiveWindow != 0 {
       try visitor.visitSingularUInt64Field(value: self.initStreamReceiveWindow, fieldNumber: 6)
     }
@@ -881,8 +806,17 @@ extension Xray_Transport_Internet_QuicParams: SwiftProtobuf.Message, SwiftProtob
     if self.disablePathMtuDiscovery != false {
       try visitor.visitSingularBoolField(value: self.disablePathMtuDiscovery, fieldNumber: 12)
     }
+    if self.disableChromeParrot != false {
+      try visitor.visitSingularBoolField(value: self.disableChromeParrot, fieldNumber: 13)
+    }
+    if self.disableGso != false {
+      try visitor.visitSingularBoolField(value: self.disableGso, fieldNumber: 14)
+    }
     if self.maxIncomingStreams != 0 {
-      try visitor.visitSingularInt64Field(value: self.maxIncomingStreams, fieldNumber: 13)
+      try visitor.visitSingularInt64Field(value: self.maxIncomingStreams, fieldNumber: 15)
+    }
+    if self.disableStatelessReset != false {
+      try visitor.visitSingularBoolField(value: self.disableStatelessReset, fieldNumber: 16)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -892,7 +826,7 @@ extension Xray_Transport_Internet_QuicParams: SwiftProtobuf.Message, SwiftProtob
     if lhs.bbrProfile != rhs.bbrProfile {return false}
     if lhs.brutalUp != rhs.brutalUp {return false}
     if lhs.brutalDown != rhs.brutalDown {return false}
-    if lhs._udpHop != rhs._udpHop {return false}
+    if lhs.brutalDisableLossCompensation != rhs.brutalDisableLossCompensation {return false}
     if lhs.initStreamReceiveWindow != rhs.initStreamReceiveWindow {return false}
     if lhs.maxStreamReceiveWindow != rhs.maxStreamReceiveWindow {return false}
     if lhs.initConnReceiveWindow != rhs.initConnReceiveWindow {return false}
@@ -900,45 +834,10 @@ extension Xray_Transport_Internet_QuicParams: SwiftProtobuf.Message, SwiftProtob
     if lhs.maxIdleTimeout != rhs.maxIdleTimeout {return false}
     if lhs.keepAlivePeriod != rhs.keepAlivePeriod {return false}
     if lhs.disablePathMtuDiscovery != rhs.disablePathMtuDiscovery {return false}
+    if lhs.disableChromeParrot != rhs.disableChromeParrot {return false}
+    if lhs.disableGso != rhs.disableGso {return false}
     if lhs.maxIncomingStreams != rhs.maxIncomingStreams {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Xray_Transport_Internet_ProxyConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".ProxyConfig"
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "tag"),
-    2: .same(proto: "transportLayerProxy"),
-  ]
-
-  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      // The use of inline closures is to circumvent an issue where the compiler
-      // allocates stack space for every case branch when no optimizations are
-      // enabled. https://github.com/apple/swift-protobuf/issues/1034
-      switch fieldNumber {
-      case 1: try { try decoder.decodeSingularStringField(value: &self.tag) }()
-      case 2: try { try decoder.decodeSingularBoolField(value: &self.transportLayerProxy) }()
-      default: break
-      }
-    }
-  }
-
-  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.tag.isEmpty {
-      try visitor.visitSingularStringField(value: self.tag, fieldNumber: 1)
-    }
-    if self.transportLayerProxy != false {
-      try visitor.visitSingularBoolField(value: self.transportLayerProxy, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  public static func ==(lhs: Xray_Transport_Internet_ProxyConfig, rhs: Xray_Transport_Internet_ProxyConfig) -> Bool {
-    if lhs.tag != rhs.tag {return false}
-    if lhs.transportLayerProxy != rhs.transportLayerProxy {return false}
+    if lhs.disableStatelessReset != rhs.disableStatelessReset {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

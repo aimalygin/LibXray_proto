@@ -221,14 +221,14 @@ public struct Xray_Transport_Internet_Splithttp_Config: @unchecked Sendable {
     set {_uniqueStorage()._uplinkHttpmethod = newValue}
   }
 
-  public var sessionPlacement: String {
-    get {return _storage._sessionPlacement}
-    set {_uniqueStorage()._sessionPlacement = newValue}
+  public var sessionIdplacement: String {
+    get {return _storage._sessionIdplacement}
+    set {_uniqueStorage()._sessionIdplacement = newValue}
   }
 
-  public var sessionKey: String {
-    get {return _storage._sessionKey}
-    set {_uniqueStorage()._sessionKey = newValue}
+  public var sessionIdkey: String {
+    get {return _storage._sessionIdkey}
+    set {_uniqueStorage()._sessionIdkey = newValue}
   }
 
   public var seqPlacement: String {
@@ -264,6 +264,20 @@ public struct Xray_Transport_Internet_Splithttp_Config: @unchecked Sendable {
     get {return _storage._serverMaxHeaderBytes}
     set {_uniqueStorage()._serverMaxHeaderBytes = newValue}
   }
+
+  public var sessionIdtable: String {
+    get {return _storage._sessionIdtable}
+    set {_uniqueStorage()._sessionIdtable = newValue}
+  }
+
+  public var sessionIdlength: Xray_Transport_Internet_Splithttp_RangeConfig {
+    get {return _storage._sessionIdlength ?? Xray_Transport_Internet_Splithttp_RangeConfig()}
+    set {_uniqueStorage()._sessionIdlength = newValue}
+  }
+  /// Returns true if `sessionIdlength` has been explicitly set.
+  public var hasSessionIdlength: Bool {return _storage._sessionIdlength != nil}
+  /// Clears the value of `sessionIdlength`. Subsequent reads from it will return its default value.
+  public mutating func clearSessionIdlength() {_uniqueStorage()._sessionIdlength = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -402,14 +416,16 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
     17: .same(proto: "xPaddingPlacement"),
     18: .same(proto: "xPaddingMethod"),
     19: .same(proto: "uplinkHTTPMethod"),
-    20: .same(proto: "sessionPlacement"),
-    21: .same(proto: "sessionKey"),
+    20: .same(proto: "sessionIDPlacement"),
+    21: .same(proto: "sessionIDKey"),
     22: .same(proto: "seqPlacement"),
     23: .same(proto: "seqKey"),
     24: .same(proto: "uplinkDataPlacement"),
     25: .same(proto: "uplinkDataKey"),
     26: .same(proto: "uplinkChunkSize"),
     27: .same(proto: "serverMaxHeaderBytes"),
+    28: .same(proto: "sessionIDTable"),
+    29: .same(proto: "sessionIDLength"),
   ]
 
   fileprivate class _StorageClass {
@@ -432,14 +448,16 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
     var _xPaddingPlacement: String = String()
     var _xPaddingMethod: String = String()
     var _uplinkHttpmethod: String = String()
-    var _sessionPlacement: String = String()
-    var _sessionKey: String = String()
+    var _sessionIdplacement: String = String()
+    var _sessionIdkey: String = String()
     var _seqPlacement: String = String()
     var _seqKey: String = String()
     var _uplinkDataPlacement: String = String()
     var _uplinkDataKey: String = String()
     var _uplinkChunkSize: Xray_Transport_Internet_Splithttp_RangeConfig? = nil
     var _serverMaxHeaderBytes: Int32 = 0
+    var _sessionIdtable: String = String()
+    var _sessionIdlength: Xray_Transport_Internet_Splithttp_RangeConfig? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -473,14 +491,16 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
       _xPaddingPlacement = source._xPaddingPlacement
       _xPaddingMethod = source._xPaddingMethod
       _uplinkHttpmethod = source._uplinkHttpmethod
-      _sessionPlacement = source._sessionPlacement
-      _sessionKey = source._sessionKey
+      _sessionIdplacement = source._sessionIdplacement
+      _sessionIdkey = source._sessionIdkey
       _seqPlacement = source._seqPlacement
       _seqKey = source._seqKey
       _uplinkDataPlacement = source._uplinkDataPlacement
       _uplinkDataKey = source._uplinkDataKey
       _uplinkChunkSize = source._uplinkChunkSize
       _serverMaxHeaderBytes = source._serverMaxHeaderBytes
+      _sessionIdtable = source._sessionIdtable
+      _sessionIdlength = source._sessionIdlength
     }
   }
 
@@ -518,14 +538,16 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
         case 17: try { try decoder.decodeSingularStringField(value: &_storage._xPaddingPlacement) }()
         case 18: try { try decoder.decodeSingularStringField(value: &_storage._xPaddingMethod) }()
         case 19: try { try decoder.decodeSingularStringField(value: &_storage._uplinkHttpmethod) }()
-        case 20: try { try decoder.decodeSingularStringField(value: &_storage._sessionPlacement) }()
-        case 21: try { try decoder.decodeSingularStringField(value: &_storage._sessionKey) }()
+        case 20: try { try decoder.decodeSingularStringField(value: &_storage._sessionIdplacement) }()
+        case 21: try { try decoder.decodeSingularStringField(value: &_storage._sessionIdkey) }()
         case 22: try { try decoder.decodeSingularStringField(value: &_storage._seqPlacement) }()
         case 23: try { try decoder.decodeSingularStringField(value: &_storage._seqKey) }()
         case 24: try { try decoder.decodeSingularStringField(value: &_storage._uplinkDataPlacement) }()
         case 25: try { try decoder.decodeSingularStringField(value: &_storage._uplinkDataKey) }()
         case 26: try { try decoder.decodeSingularMessageField(value: &_storage._uplinkChunkSize) }()
         case 27: try { try decoder.decodeSingularInt32Field(value: &_storage._serverMaxHeaderBytes) }()
+        case 28: try { try decoder.decodeSingularStringField(value: &_storage._sessionIdtable) }()
+        case 29: try { try decoder.decodeSingularMessageField(value: &_storage._sessionIdlength) }()
         default: break
         }
       }
@@ -595,11 +617,11 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
       if !_storage._uplinkHttpmethod.isEmpty {
         try visitor.visitSingularStringField(value: _storage._uplinkHttpmethod, fieldNumber: 19)
       }
-      if !_storage._sessionPlacement.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._sessionPlacement, fieldNumber: 20)
+      if !_storage._sessionIdplacement.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._sessionIdplacement, fieldNumber: 20)
       }
-      if !_storage._sessionKey.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._sessionKey, fieldNumber: 21)
+      if !_storage._sessionIdkey.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._sessionIdkey, fieldNumber: 21)
       }
       if !_storage._seqPlacement.isEmpty {
         try visitor.visitSingularStringField(value: _storage._seqPlacement, fieldNumber: 22)
@@ -619,6 +641,12 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
       if _storage._serverMaxHeaderBytes != 0 {
         try visitor.visitSingularInt32Field(value: _storage._serverMaxHeaderBytes, fieldNumber: 27)
       }
+      if !_storage._sessionIdtable.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._sessionIdtable, fieldNumber: 28)
+      }
+      try { if let v = _storage._sessionIdlength {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 29)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -647,14 +675,16 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
         if _storage._xPaddingPlacement != rhs_storage._xPaddingPlacement {return false}
         if _storage._xPaddingMethod != rhs_storage._xPaddingMethod {return false}
         if _storage._uplinkHttpmethod != rhs_storage._uplinkHttpmethod {return false}
-        if _storage._sessionPlacement != rhs_storage._sessionPlacement {return false}
-        if _storage._sessionKey != rhs_storage._sessionKey {return false}
+        if _storage._sessionIdplacement != rhs_storage._sessionIdplacement {return false}
+        if _storage._sessionIdkey != rhs_storage._sessionIdkey {return false}
         if _storage._seqPlacement != rhs_storage._seqPlacement {return false}
         if _storage._seqKey != rhs_storage._seqKey {return false}
         if _storage._uplinkDataPlacement != rhs_storage._uplinkDataPlacement {return false}
         if _storage._uplinkDataKey != rhs_storage._uplinkDataKey {return false}
         if _storage._uplinkChunkSize != rhs_storage._uplinkChunkSize {return false}
         if _storage._serverMaxHeaderBytes != rhs_storage._serverMaxHeaderBytes {return false}
+        if _storage._sessionIdtable != rhs_storage._sessionIdtable {return false}
+        if _storage._sessionIdlength != rhs_storage._sessionIdlength {return false}
         return true
       }
       if !storagesAreEqual {return false}

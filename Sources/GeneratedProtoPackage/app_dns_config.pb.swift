@@ -164,6 +164,11 @@ public struct Xray_App_Dns_NameServer: @unchecked Sendable {
     set {_uniqueStorage()._policyID = newValue}
   }
 
+  public var id: String {
+    get {return _storage._id}
+    set {_uniqueStorage()._id = newValue}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -203,6 +208,8 @@ public struct Xray_App_Dns_Config: @unchecked Sendable {
   public var disableFallbackIfMatch: Bool = false
 
   public var enableParallelQuery: Bool = false
+
+  public var script: String = String()
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -268,6 +275,7 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
     13: .standard(proto: "unexpected_ip"),
     14: .same(proto: "actUnprior"),
     17: .same(proto: "policyID"),
+    18: .same(proto: "id"),
   ]
 
   fileprivate class _StorageClass {
@@ -287,6 +295,7 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
     var _unexpectedIp: [Xray_Common_Geodata_IPRule] = []
     var _actUnprior: Bool = false
     var _policyID: UInt32 = 0
+    var _id: String = String()
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -317,6 +326,7 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
       _unexpectedIp = source._unexpectedIp
       _actUnprior = source._actUnprior
       _policyID = source._policyID
+      _id = source._id
     }
   }
 
@@ -351,6 +361,7 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
         case 15: try { try decoder.decodeSingularBoolField(value: &_storage._serveStale) }()
         case 16: try { try decoder.decodeSingularUInt32Field(value: &_storage._serveExpiredTtl) }()
         case 17: try { try decoder.decodeSingularUInt32Field(value: &_storage._policyID) }()
+        case 18: try { try decoder.decodeSingularStringField(value: &_storage._id) }()
         default: break
         }
       }
@@ -411,6 +422,9 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
       if _storage._policyID != 0 {
         try visitor.visitSingularUInt32Field(value: _storage._policyID, fieldNumber: 17)
       }
+      if !_storage._id.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._id, fieldNumber: 18)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -436,6 +450,7 @@ extension Xray_App_Dns_NameServer: SwiftProtobuf.Message, SwiftProtobuf._Message
         if _storage._unexpectedIp != rhs_storage._unexpectedIp {return false}
         if _storage._actUnprior != rhs_storage._actUnprior {return false}
         if _storage._policyID != rhs_storage._policyID {return false}
+        if _storage._id != rhs_storage._id {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -459,6 +474,7 @@ extension Xray_App_Dns_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     10: .same(proto: "disableFallback"),
     11: .same(proto: "disableFallbackIfMatch"),
     14: .same(proto: "enableParallelQuery"),
+    15: .same(proto: "script"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -478,6 +494,7 @@ extension Xray_App_Dns_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       case 12: try { try decoder.decodeSingularBoolField(value: &self.serveStale) }()
       case 13: try { try decoder.decodeSingularUInt32Field(value: &self.serveExpiredTtl) }()
       case 14: try { try decoder.decodeSingularBoolField(value: &self.enableParallelQuery) }()
+      case 15: try { try decoder.decodeSingularStringField(value: &self.script) }()
       default: break
       }
     }
@@ -517,6 +534,9 @@ extension Xray_App_Dns_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     if self.enableParallelQuery != false {
       try visitor.visitSingularBoolField(value: self.enableParallelQuery, fieldNumber: 14)
     }
+    if !self.script.isEmpty {
+      try visitor.visitSingularStringField(value: self.script, fieldNumber: 15)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -532,6 +552,7 @@ extension Xray_App_Dns_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     if lhs.disableFallback != rhs.disableFallback {return false}
     if lhs.disableFallbackIfMatch != rhs.disableFallbackIfMatch {return false}
     if lhs.enableParallelQuery != rhs.enableParallelQuery {return false}
+    if lhs.script != rhs.script {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

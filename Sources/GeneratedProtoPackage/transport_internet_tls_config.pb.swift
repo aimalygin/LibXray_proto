@@ -90,15 +90,11 @@ public struct Xray_Transport_Internet_Tls_Certificate: @unchecked Sendable {
   public init() {}
 }
 
+/// Number 1 was assigned and used by an legacy option.
 public struct Xray_Transport_Internet_Tls_Config: @unchecked Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
-
-  public var allowInsecure: Bool {
-    get {return _storage._allowInsecure}
-    set {_uniqueStorage()._allowInsecure = newValue}
-  }
 
   /// List of certificates to be served on server.
   public var certificate: [Xray_Transport_Internet_Tls_Certificate] {
@@ -186,12 +182,6 @@ public struct Xray_Transport_Internet_Tls_Config: @unchecked Sendable {
     set {_uniqueStorage()._echConfigList = newValue}
   }
 
-  /// Deprecated
-  public var echForceQuery: String {
-    get {return _storage._echForceQuery}
-    set {_uniqueStorage()._echForceQuery = newValue}
-  }
-
   public var echSocketSettings: Xray_Transport_Internet_SocketConfig {
     get {return _storage._echSocketSettings ?? Xray_Transport_Internet_SocketConfig()}
     set {_uniqueStorage()._echSocketSettings = newValue}
@@ -204,6 +194,11 @@ public struct Xray_Transport_Internet_Tls_Config: @unchecked Sendable {
   public var pinnedPeerCertSha256: [Data] {
     get {return _storage._pinnedPeerCertSha256}
     set {_uniqueStorage()._pinnedPeerCertSha256 = newValue}
+  }
+
+  public var useSystemCa: Bool {
+    get {return _storage._useSystemCa}
+    set {_uniqueStorage()._useSystemCa = newValue}
   }
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -302,7 +297,6 @@ extension Xray_Transport_Internet_Tls_Certificate.Usage: SwiftProtobuf._ProtoNam
 extension Xray_Transport_Internet_Tls_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Config"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "allow_insecure"),
     2: .same(proto: "certificate"),
     3: .standard(proto: "server_name"),
     4: .standard(proto: "next_protocol"),
@@ -318,13 +312,12 @@ extension Xray_Transport_Internet_Tls_Config: SwiftProtobuf.Message, SwiftProtob
     17: .standard(proto: "verify_peer_cert_by_name"),
     18: .standard(proto: "ech_server_keys"),
     19: .standard(proto: "ech_config_list"),
-    20: .standard(proto: "ech_force_query"),
     21: .standard(proto: "ech_socket_settings"),
     22: .standard(proto: "pinned_peer_cert_sha256"),
+    23: .standard(proto: "use_system_ca"),
   ]
 
   fileprivate class _StorageClass {
-    var _allowInsecure: Bool = false
     var _certificate: [Xray_Transport_Internet_Tls_Certificate] = []
     var _serverName: String = String()
     var _nextProtocol: [String] = []
@@ -340,9 +333,9 @@ extension Xray_Transport_Internet_Tls_Config: SwiftProtobuf.Message, SwiftProtob
     var _verifyPeerCertByName: [String] = []
     var _echServerKeys: Data = Data()
     var _echConfigList: String = String()
-    var _echForceQuery: String = String()
     var _echSocketSettings: Xray_Transport_Internet_SocketConfig? = nil
     var _pinnedPeerCertSha256: [Data] = []
+    var _useSystemCa: Bool = false
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -357,7 +350,6 @@ extension Xray_Transport_Internet_Tls_Config: SwiftProtobuf.Message, SwiftProtob
     private init() {}
 
     init(copying source: _StorageClass) {
-      _allowInsecure = source._allowInsecure
       _certificate = source._certificate
       _serverName = source._serverName
       _nextProtocol = source._nextProtocol
@@ -373,9 +365,9 @@ extension Xray_Transport_Internet_Tls_Config: SwiftProtobuf.Message, SwiftProtob
       _verifyPeerCertByName = source._verifyPeerCertByName
       _echServerKeys = source._echServerKeys
       _echConfigList = source._echConfigList
-      _echForceQuery = source._echForceQuery
       _echSocketSettings = source._echSocketSettings
       _pinnedPeerCertSha256 = source._pinnedPeerCertSha256
+      _useSystemCa = source._useSystemCa
     }
   }
 
@@ -394,7 +386,6 @@ extension Xray_Transport_Internet_Tls_Config: SwiftProtobuf.Message, SwiftProtob
         // allocates stack space for every case branch when no optimizations are
         // enabled. https://github.com/apple/swift-protobuf/issues/1034
         switch fieldNumber {
-        case 1: try { try decoder.decodeSingularBoolField(value: &_storage._allowInsecure) }()
         case 2: try { try decoder.decodeRepeatedMessageField(value: &_storage._certificate) }()
         case 3: try { try decoder.decodeSingularStringField(value: &_storage._serverName) }()
         case 4: try { try decoder.decodeRepeatedStringField(value: &_storage._nextProtocol) }()
@@ -410,9 +401,9 @@ extension Xray_Transport_Internet_Tls_Config: SwiftProtobuf.Message, SwiftProtob
         case 17: try { try decoder.decodeRepeatedStringField(value: &_storage._verifyPeerCertByName) }()
         case 18: try { try decoder.decodeSingularBytesField(value: &_storage._echServerKeys) }()
         case 19: try { try decoder.decodeSingularStringField(value: &_storage._echConfigList) }()
-        case 20: try { try decoder.decodeSingularStringField(value: &_storage._echForceQuery) }()
         case 21: try { try decoder.decodeSingularMessageField(value: &_storage._echSocketSettings) }()
         case 22: try { try decoder.decodeRepeatedBytesField(value: &_storage._pinnedPeerCertSha256) }()
+        case 23: try { try decoder.decodeSingularBoolField(value: &_storage._useSystemCa) }()
         default: break
         }
       }
@@ -425,9 +416,6 @@ extension Xray_Transport_Internet_Tls_Config: SwiftProtobuf.Message, SwiftProtob
       // allocates stack space for every if/case branch local when no optimizations
       // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
       // https://github.com/apple/swift-protobuf/issues/1182
-      if _storage._allowInsecure != false {
-        try visitor.visitSingularBoolField(value: _storage._allowInsecure, fieldNumber: 1)
-      }
       if !_storage._certificate.isEmpty {
         try visitor.visitRepeatedMessageField(value: _storage._certificate, fieldNumber: 2)
       }
@@ -473,14 +461,14 @@ extension Xray_Transport_Internet_Tls_Config: SwiftProtobuf.Message, SwiftProtob
       if !_storage._echConfigList.isEmpty {
         try visitor.visitSingularStringField(value: _storage._echConfigList, fieldNumber: 19)
       }
-      if !_storage._echForceQuery.isEmpty {
-        try visitor.visitSingularStringField(value: _storage._echForceQuery, fieldNumber: 20)
-      }
       try { if let v = _storage._echSocketSettings {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 21)
       } }()
       if !_storage._pinnedPeerCertSha256.isEmpty {
         try visitor.visitRepeatedBytesField(value: _storage._pinnedPeerCertSha256, fieldNumber: 22)
+      }
+      if _storage._useSystemCa != false {
+        try visitor.visitSingularBoolField(value: _storage._useSystemCa, fieldNumber: 23)
       }
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -491,7 +479,6 @@ extension Xray_Transport_Internet_Tls_Config: SwiftProtobuf.Message, SwiftProtob
       let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
         let _storage = _args.0
         let rhs_storage = _args.1
-        if _storage._allowInsecure != rhs_storage._allowInsecure {return false}
         if _storage._certificate != rhs_storage._certificate {return false}
         if _storage._serverName != rhs_storage._serverName {return false}
         if _storage._nextProtocol != rhs_storage._nextProtocol {return false}
@@ -507,9 +494,9 @@ extension Xray_Transport_Internet_Tls_Config: SwiftProtobuf.Message, SwiftProtob
         if _storage._verifyPeerCertByName != rhs_storage._verifyPeerCertByName {return false}
         if _storage._echServerKeys != rhs_storage._echServerKeys {return false}
         if _storage._echConfigList != rhs_storage._echConfigList {return false}
-        if _storage._echForceQuery != rhs_storage._echForceQuery {return false}
         if _storage._echSocketSettings != rhs_storage._echSocketSettings {return false}
         if _storage._pinnedPeerCertSha256 != rhs_storage._pinnedPeerCertSha256 {return false}
+        if _storage._useSystemCa != rhs_storage._useSystemCa {return false}
         return true
       }
       if !storagesAreEqual {return false}

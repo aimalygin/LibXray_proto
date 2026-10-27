@@ -32,7 +32,7 @@ public struct Xray_Proxy_Wireguard_PeerConfig: Sendable {
 
   public var endpoint: String = String()
 
-  public var keepAlive: UInt32 = 0
+  public var keepAlive: String = String()
 
   public var allowedIps: [String] = []
 
@@ -52,65 +52,19 @@ public struct Xray_Proxy_Wireguard_DeviceConfig: @unchecked Sendable {
 
   public var peers: [Xray_Proxy_Wireguard_PeerConfig] = []
 
+  public var users: [Xray_Common_Protocol_User] = []
+
   public var mtu: Int32 = 0
 
-  public var numWorkers: Int32 = 0
-
   public var reserved: Data = Data()
-
-  public var domainStrategy: Xray_Proxy_Wireguard_DeviceConfig.DomainStrategy = .forceIp
 
   public var isClient: Bool = false
 
   public var noKernelTun: Bool = false
 
+  public var dns: [String] = []
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  public enum DomainStrategy: SwiftProtobuf.Enum, Swift.CaseIterable {
-    public typealias RawValue = Int
-    case forceIp // = 0
-    case forceIp4 // = 1
-    case forceIp6 // = 2
-    case forceIp46 // = 3
-    case forceIp64 // = 4
-    case UNRECOGNIZED(Int)
-
-    public init() {
-      self = .forceIp
-    }
-
-    public init?(rawValue: Int) {
-      switch rawValue {
-      case 0: self = .forceIp
-      case 1: self = .forceIp4
-      case 2: self = .forceIp6
-      case 3: self = .forceIp46
-      case 4: self = .forceIp64
-      default: self = .UNRECOGNIZED(rawValue)
-      }
-    }
-
-    public var rawValue: Int {
-      switch self {
-      case .forceIp: return 0
-      case .forceIp4: return 1
-      case .forceIp6: return 2
-      case .forceIp46: return 3
-      case .forceIp64: return 4
-      case .UNRECOGNIZED(let i): return i
-      }
-    }
-
-    // The compiler won't synthesize support with the UNRECOGNIZED case.
-    public static let allCases: [Xray_Proxy_Wireguard_DeviceConfig.DomainStrategy] = [
-      .forceIp,
-      .forceIp4,
-      .forceIp6,
-      .forceIp46,
-      .forceIp64,
-    ]
-
-  }
 
   public init() {}
 }
@@ -138,7 +92,7 @@ extension Xray_Proxy_Wireguard_PeerConfig: SwiftProtobuf.Message, SwiftProtobuf.
       case 1: try { try decoder.decodeSingularStringField(value: &self.publicKey) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.preSharedKey) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.endpoint) }()
-      case 4: try { try decoder.decodeSingularUInt32Field(value: &self.keepAlive) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.keepAlive) }()
       case 5: try { try decoder.decodeRepeatedStringField(value: &self.allowedIps) }()
       default: break
       }
@@ -155,8 +109,8 @@ extension Xray_Proxy_Wireguard_PeerConfig: SwiftProtobuf.Message, SwiftProtobuf.
     if !self.endpoint.isEmpty {
       try visitor.visitSingularStringField(value: self.endpoint, fieldNumber: 3)
     }
-    if self.keepAlive != 0 {
-      try visitor.visitSingularUInt32Field(value: self.keepAlive, fieldNumber: 4)
+    if !self.keepAlive.isEmpty {
+      try visitor.visitSingularStringField(value: self.keepAlive, fieldNumber: 4)
     }
     if !self.allowedIps.isEmpty {
       try visitor.visitRepeatedStringField(value: self.allowedIps, fieldNumber: 5)
@@ -181,12 +135,12 @@ extension Xray_Proxy_Wireguard_DeviceConfig: SwiftProtobuf.Message, SwiftProtobu
     1: .standard(proto: "secret_key"),
     2: .same(proto: "endpoint"),
     3: .same(proto: "peers"),
+    5: .same(proto: "users"),
     4: .same(proto: "mtu"),
-    5: .standard(proto: "num_workers"),
     6: .same(proto: "reserved"),
-    7: .standard(proto: "domain_strategy"),
     8: .standard(proto: "is_client"),
     9: .standard(proto: "no_kernel_tun"),
+    10: .same(proto: "DNS"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -199,11 +153,11 @@ extension Xray_Proxy_Wireguard_DeviceConfig: SwiftProtobuf.Message, SwiftProtobu
       case 2: try { try decoder.decodeRepeatedStringField(value: &self.endpoint) }()
       case 3: try { try decoder.decodeRepeatedMessageField(value: &self.peers) }()
       case 4: try { try decoder.decodeSingularInt32Field(value: &self.mtu) }()
-      case 5: try { try decoder.decodeSingularInt32Field(value: &self.numWorkers) }()
+      case 5: try { try decoder.decodeRepeatedMessageField(value: &self.users) }()
       case 6: try { try decoder.decodeSingularBytesField(value: &self.reserved) }()
-      case 7: try { try decoder.decodeSingularEnumField(value: &self.domainStrategy) }()
       case 8: try { try decoder.decodeSingularBoolField(value: &self.isClient) }()
       case 9: try { try decoder.decodeSingularBoolField(value: &self.noKernelTun) }()
+      case 10: try { try decoder.decodeRepeatedStringField(value: &self.dns) }()
       default: break
       }
     }
@@ -222,20 +176,20 @@ extension Xray_Proxy_Wireguard_DeviceConfig: SwiftProtobuf.Message, SwiftProtobu
     if self.mtu != 0 {
       try visitor.visitSingularInt32Field(value: self.mtu, fieldNumber: 4)
     }
-    if self.numWorkers != 0 {
-      try visitor.visitSingularInt32Field(value: self.numWorkers, fieldNumber: 5)
+    if !self.users.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.users, fieldNumber: 5)
     }
     if !self.reserved.isEmpty {
       try visitor.visitSingularBytesField(value: self.reserved, fieldNumber: 6)
-    }
-    if self.domainStrategy != .forceIp {
-      try visitor.visitSingularEnumField(value: self.domainStrategy, fieldNumber: 7)
     }
     if self.isClient != false {
       try visitor.visitSingularBoolField(value: self.isClient, fieldNumber: 8)
     }
     if self.noKernelTun != false {
       try visitor.visitSingularBoolField(value: self.noKernelTun, fieldNumber: 9)
+    }
+    if !self.dns.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.dns, fieldNumber: 10)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -244,23 +198,13 @@ extension Xray_Proxy_Wireguard_DeviceConfig: SwiftProtobuf.Message, SwiftProtobu
     if lhs.secretKey != rhs.secretKey {return false}
     if lhs.endpoint != rhs.endpoint {return false}
     if lhs.peers != rhs.peers {return false}
+    if lhs.users != rhs.users {return false}
     if lhs.mtu != rhs.mtu {return false}
-    if lhs.numWorkers != rhs.numWorkers {return false}
     if lhs.reserved != rhs.reserved {return false}
-    if lhs.domainStrategy != rhs.domainStrategy {return false}
     if lhs.isClient != rhs.isClient {return false}
     if lhs.noKernelTun != rhs.noKernelTun {return false}
+    if lhs.dns != rhs.dns {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
-}
-
-extension Xray_Proxy_Wireguard_DeviceConfig.DomainStrategy: SwiftProtobuf._ProtoNameProviding {
-  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "FORCE_IP"),
-    1: .same(proto: "FORCE_IP4"),
-    2: .same(proto: "FORCE_IP6"),
-    3: .same(proto: "FORCE_IP46"),
-    4: .same(proto: "FORCE_IP64"),
-  ]
 }

@@ -32,6 +32,22 @@ public struct Xray_Transport_Internet_Finalmask_Salamander_Config: Sendable {
   public init() {}
 }
 
+public struct Xray_Transport_Internet_Finalmask_Salamander_GeckoConfig: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var password: String = String()
+
+  public var minPacketSize: Int32 = 0
+
+  public var maxPacketSize: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "xray.transport.internet.finalmask.salamander"
@@ -63,6 +79,50 @@ extension Xray_Transport_Internet_Finalmask_Salamander_Config: SwiftProtobuf.Mes
 
   public static func ==(lhs: Xray_Transport_Internet_Finalmask_Salamander_Config, rhs: Xray_Transport_Internet_Finalmask_Salamander_Config) -> Bool {
     if lhs.password != rhs.password {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Xray_Transport_Internet_Finalmask_Salamander_GeckoConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".GeckoConfig"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "password"),
+    2: .same(proto: "MinPacketSize"),
+    3: .same(proto: "MaxPacketSize"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.password) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.minPacketSize) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.maxPacketSize) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.password.isEmpty {
+      try visitor.visitSingularStringField(value: self.password, fieldNumber: 1)
+    }
+    if self.minPacketSize != 0 {
+      try visitor.visitSingularInt32Field(value: self.minPacketSize, fieldNumber: 2)
+    }
+    if self.maxPacketSize != 0 {
+      try visitor.visitSingularInt32Field(value: self.maxPacketSize, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Xray_Transport_Internet_Finalmask_Salamander_GeckoConfig, rhs: Xray_Transport_Internet_Finalmask_Salamander_GeckoConfig) -> Bool {
+    if lhs.password != rhs.password {return false}
+    if lhs.minPacketSize != rhs.minPacketSize {return false}
+    if lhs.maxPacketSize != rhs.maxPacketSize {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

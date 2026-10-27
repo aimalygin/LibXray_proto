@@ -39,6 +39,12 @@ public struct Xray_Proxy_Tun_Config: Sendable {
 
   public var autoOutboundsInterface: String = String()
 
+  public var desc: String = String()
+
+  public var autoSystemDnsToGateway: Bool = false
+
+  public var autoSystemWfpBlockLeak: [String] = []
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -58,6 +64,9 @@ extension Xray_Proxy_Tun_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     5: .standard(proto: "user_level"),
     6: .standard(proto: "auto_system_routing_table"),
     7: .standard(proto: "auto_outbounds_interface"),
+    8: .same(proto: "desc"),
+    9: .standard(proto: "auto_system_dns_to_gateway"),
+    10: .standard(proto: "auto_system_wfp_block_leak"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -73,6 +82,9 @@ extension Xray_Proxy_Tun_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
       case 5: try { try decoder.decodeSingularUInt32Field(value: &self.userLevel) }()
       case 6: try { try decoder.decodeRepeatedStringField(value: &self.autoSystemRoutingTable) }()
       case 7: try { try decoder.decodeSingularStringField(value: &self.autoOutboundsInterface) }()
+      case 8: try { try decoder.decodeSingularStringField(value: &self.desc) }()
+      case 9: try { try decoder.decodeSingularBoolField(value: &self.autoSystemDnsToGateway) }()
+      case 10: try { try decoder.decodeRepeatedStringField(value: &self.autoSystemWfpBlockLeak) }()
       default: break
       }
     }
@@ -100,6 +112,15 @@ extension Xray_Proxy_Tun_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if !self.autoOutboundsInterface.isEmpty {
       try visitor.visitSingularStringField(value: self.autoOutboundsInterface, fieldNumber: 7)
     }
+    if !self.desc.isEmpty {
+      try visitor.visitSingularStringField(value: self.desc, fieldNumber: 8)
+    }
+    if self.autoSystemDnsToGateway != false {
+      try visitor.visitSingularBoolField(value: self.autoSystemDnsToGateway, fieldNumber: 9)
+    }
+    if !self.autoSystemWfpBlockLeak.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.autoSystemWfpBlockLeak, fieldNumber: 10)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -111,6 +132,9 @@ extension Xray_Proxy_Tun_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
     if lhs.userLevel != rhs.userLevel {return false}
     if lhs.autoSystemRoutingTable != rhs.autoSystemRoutingTable {return false}
     if lhs.autoOutboundsInterface != rhs.autoOutboundsInterface {return false}
+    if lhs.desc != rhs.desc {return false}
+    if lhs.autoSystemDnsToGateway != rhs.autoSystemDnsToGateway {return false}
+    if lhs.autoSystemWfpBlockLeak != rhs.autoSystemWfpBlockLeak {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -156,6 +156,12 @@ public struct Xray_App_Router_RoutingRule: @unchecked Sendable {
   /// Clears the value of `webhook`. Subsequent reads from it will return its default value.
   public mutating func clearWebhook() {_uniqueStorage()._webhook = nil}
 
+  /// List of operating systems for matching the one Xray itself is running on.
+  public var localOs: [String] {
+    get {return _storage._localOs}
+    set {_uniqueStorage()._localOs = newValue}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OneOf_TargetTag: Equatable, Sendable {
@@ -268,6 +274,8 @@ public struct Xray_App_Router_Config: Sendable {
 
   public var balancingRule: [Xray_App_Router_BalancingRule] = []
 
+  public var script: String = String()
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum DomainStrategy: SwiftProtobuf.Enum, Swift.CaseIterable {
@@ -342,6 +350,7 @@ extension Xray_App_Router_RoutingRule: SwiftProtobuf.Message, SwiftProtobuf._Mes
     20: .standard(proto: "vless_route_list"),
     21: .same(proto: "process"),
     22: .same(proto: "webhook"),
+    23: .standard(proto: "local_os"),
   ]
 
   fileprivate class _StorageClass {
@@ -362,6 +371,7 @@ extension Xray_App_Router_RoutingRule: SwiftProtobuf.Message, SwiftProtobuf._Mes
     var _vlessRouteList: Xray_Common_Net_PortList? = nil
     var _process: [String] = []
     var _webhook: Xray_App_Router_WebhookConfig? = nil
+    var _localOs: [String] = []
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -393,6 +403,7 @@ extension Xray_App_Router_RoutingRule: SwiftProtobuf.Message, SwiftProtobuf._Mes
       _vlessRouteList = source._vlessRouteList
       _process = source._process
       _webhook = source._webhook
+      _localOs = source._localOs
     }
   }
 
@@ -443,6 +454,7 @@ extension Xray_App_Router_RoutingRule: SwiftProtobuf.Message, SwiftProtobuf._Mes
         case 20: try { try decoder.decodeSingularMessageField(value: &_storage._vlessRouteList) }()
         case 21: try { try decoder.decodeRepeatedStringField(value: &_storage._process) }()
         case 22: try { try decoder.decodeSingularMessageField(value: &_storage._webhook) }()
+        case 23: try { try decoder.decodeRepeatedStringField(value: &_storage._localOs) }()
         default: break
         }
       }
@@ -509,6 +521,9 @@ extension Xray_App_Router_RoutingRule: SwiftProtobuf.Message, SwiftProtobuf._Mes
       try { if let v = _storage._webhook {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 22)
       } }()
+      if !_storage._localOs.isEmpty {
+        try visitor.visitRepeatedStringField(value: _storage._localOs, fieldNumber: 23)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -535,6 +550,7 @@ extension Xray_App_Router_RoutingRule: SwiftProtobuf.Message, SwiftProtobuf._Mes
         if _storage._vlessRouteList != rhs_storage._vlessRouteList {return false}
         if _storage._process != rhs_storage._process {return false}
         if _storage._webhook != rhs_storage._webhook {return false}
+        if _storage._localOs != rhs_storage._localOs {return false}
         return true
       }
       if !storagesAreEqual {return false}
@@ -754,6 +770,7 @@ extension Xray_App_Router_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     1: .standard(proto: "domain_strategy"),
     2: .same(proto: "rule"),
     3: .standard(proto: "balancing_rule"),
+    4: .same(proto: "script"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -765,6 +782,7 @@ extension Xray_App_Router_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       case 1: try { try decoder.decodeSingularEnumField(value: &self.domainStrategy) }()
       case 2: try { try decoder.decodeRepeatedMessageField(value: &self.rule) }()
       case 3: try { try decoder.decodeRepeatedMessageField(value: &self.balancingRule) }()
+      case 4: try { try decoder.decodeSingularStringField(value: &self.script) }()
       default: break
       }
     }
@@ -780,6 +798,9 @@ extension Xray_App_Router_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if !self.balancingRule.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.balancingRule, fieldNumber: 3)
     }
+    if !self.script.isEmpty {
+      try visitor.visitSingularStringField(value: self.script, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -787,6 +808,7 @@ extension Xray_App_Router_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if lhs.domainStrategy != rhs.domainStrategy {return false}
     if lhs.rule != rhs.rule {return false}
     if lhs.balancingRule != rhs.balancingRule {return false}
+    if lhs.script != rhs.script {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -25,8 +25,6 @@ public struct Xray_Transport_Internet_Hysteria_Config: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var version: Int32 = 0
-
   public var auth: String = String()
 
   public var udpIdleTimeout: Int64 = 0
@@ -38,6 +36,8 @@ public struct Xray_Transport_Internet_Hysteria_Config: Sendable {
   public var masqURL: String = String()
 
   public var masqURLRewriteHost: Bool = false
+
+  public var masqURLXForwarded: Bool = false
 
   public var masqURLInsecure: Bool = false
 
@@ -59,17 +59,17 @@ fileprivate let _protobuf_package = "xray.transport.internet.hysteria"
 extension Xray_Transport_Internet_Hysteria_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".Config"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "version"),
     2: .same(proto: "auth"),
     3: .standard(proto: "udp_idle_timeout"),
     4: .standard(proto: "masq_type"),
     5: .standard(proto: "masq_file"),
     6: .standard(proto: "masq_url"),
     7: .standard(proto: "masq_url_rewrite_host"),
-    8: .standard(proto: "masq_url_insecure"),
-    9: .standard(proto: "masq_string"),
-    10: .standard(proto: "masq_string_headers"),
-    11: .standard(proto: "masq_string_status_code"),
+    8: .standard(proto: "masq_url_x_forwarded"),
+    9: .standard(proto: "masq_url_insecure"),
+    10: .standard(proto: "masq_string"),
+    11: .standard(proto: "masq_string_headers"),
+    12: .standard(proto: "masq_string_status_code"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -78,26 +78,23 @@ extension Xray_Transport_Internet_Hysteria_Config: SwiftProtobuf.Message, SwiftP
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularInt32Field(value: &self.version) }()
       case 2: try { try decoder.decodeSingularStringField(value: &self.auth) }()
       case 3: try { try decoder.decodeSingularInt64Field(value: &self.udpIdleTimeout) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.masqType) }()
       case 5: try { try decoder.decodeSingularStringField(value: &self.masqFile) }()
       case 6: try { try decoder.decodeSingularStringField(value: &self.masqURL) }()
       case 7: try { try decoder.decodeSingularBoolField(value: &self.masqURLRewriteHost) }()
-      case 8: try { try decoder.decodeSingularBoolField(value: &self.masqURLInsecure) }()
-      case 9: try { try decoder.decodeSingularStringField(value: &self.masqString) }()
-      case 10: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &self.masqStringHeaders) }()
-      case 11: try { try decoder.decodeSingularInt32Field(value: &self.masqStringStatusCode) }()
+      case 8: try { try decoder.decodeSingularBoolField(value: &self.masqURLXForwarded) }()
+      case 9: try { try decoder.decodeSingularBoolField(value: &self.masqURLInsecure) }()
+      case 10: try { try decoder.decodeSingularStringField(value: &self.masqString) }()
+      case 11: try { try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: &self.masqStringHeaders) }()
+      case 12: try { try decoder.decodeSingularInt32Field(value: &self.masqStringStatusCode) }()
       default: break
       }
     }
   }
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.version != 0 {
-      try visitor.visitSingularInt32Field(value: self.version, fieldNumber: 1)
-    }
     if !self.auth.isEmpty {
       try visitor.visitSingularStringField(value: self.auth, fieldNumber: 2)
     }
@@ -116,29 +113,32 @@ extension Xray_Transport_Internet_Hysteria_Config: SwiftProtobuf.Message, SwiftP
     if self.masqURLRewriteHost != false {
       try visitor.visitSingularBoolField(value: self.masqURLRewriteHost, fieldNumber: 7)
     }
+    if self.masqURLXForwarded != false {
+      try visitor.visitSingularBoolField(value: self.masqURLXForwarded, fieldNumber: 8)
+    }
     if self.masqURLInsecure != false {
-      try visitor.visitSingularBoolField(value: self.masqURLInsecure, fieldNumber: 8)
+      try visitor.visitSingularBoolField(value: self.masqURLInsecure, fieldNumber: 9)
     }
     if !self.masqString.isEmpty {
-      try visitor.visitSingularStringField(value: self.masqString, fieldNumber: 9)
+      try visitor.visitSingularStringField(value: self.masqString, fieldNumber: 10)
     }
     if !self.masqStringHeaders.isEmpty {
-      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: self.masqStringHeaders, fieldNumber: 10)
+      try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMap<SwiftProtobuf.ProtobufString,SwiftProtobuf.ProtobufString>.self, value: self.masqStringHeaders, fieldNumber: 11)
     }
     if self.masqStringStatusCode != 0 {
-      try visitor.visitSingularInt32Field(value: self.masqStringStatusCode, fieldNumber: 11)
+      try visitor.visitSingularInt32Field(value: self.masqStringStatusCode, fieldNumber: 12)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_Transport_Internet_Hysteria_Config, rhs: Xray_Transport_Internet_Hysteria_Config) -> Bool {
-    if lhs.version != rhs.version {return false}
     if lhs.auth != rhs.auth {return false}
     if lhs.udpIdleTimeout != rhs.udpIdleTimeout {return false}
     if lhs.masqType != rhs.masqType {return false}
     if lhs.masqFile != rhs.masqFile {return false}
     if lhs.masqURL != rhs.masqURL {return false}
     if lhs.masqURLRewriteHost != rhs.masqURLRewriteHost {return false}
+    if lhs.masqURLXForwarded != rhs.masqURLXForwarded {return false}
     if lhs.masqURLInsecure != rhs.masqURLInsecure {return false}
     if lhs.masqString != rhs.masqString {return false}
     if lhs.masqStringHeaders != rhs.masqStringHeaders {return false}

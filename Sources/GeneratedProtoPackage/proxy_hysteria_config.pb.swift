@@ -25,8 +25,6 @@ public struct Xray_Proxy_Hysteria_ClientConfig: Sendable {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var version: Int32 = 0
-
   public var server: Xray_Common_Protocol_ServerEndpoint {
     get {return _server ?? Xray_Common_Protocol_ServerEndpoint()}
     set {_server = newValue}
@@ -62,8 +60,7 @@ fileprivate let _protobuf_package = "xray.proxy.hysteria"
 extension Xray_Proxy_Hysteria_ClientConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   public static let protoMessageName: String = _protobuf_package + ".ClientConfig"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "version"),
-    2: .same(proto: "server"),
+    1: .same(proto: "server"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -72,8 +69,7 @@ extension Xray_Proxy_Hysteria_ClientConfig: SwiftProtobuf.Message, SwiftProtobuf
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeSingularInt32Field(value: &self.version) }()
-      case 2: try { try decoder.decodeSingularMessageField(value: &self._server) }()
+      case 1: try { try decoder.decodeSingularMessageField(value: &self._server) }()
       default: break
       }
     }
@@ -84,17 +80,13 @@ extension Xray_Proxy_Hysteria_ClientConfig: SwiftProtobuf.Message, SwiftProtobuf
     // allocates stack space for every if/case branch local when no optimizations
     // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
     // https://github.com/apple/swift-protobuf/issues/1182
-    if self.version != 0 {
-      try visitor.visitSingularInt32Field(value: self.version, fieldNumber: 1)
-    }
     try { if let v = self._server {
-      try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
+      try visitor.visitSingularMessageField(value: v, fieldNumber: 1)
     } }()
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_Proxy_Hysteria_ClientConfig, rhs: Xray_Proxy_Hysteria_ClientConfig) -> Bool {
-    if lhs.version != rhs.version {return false}
     if lhs._server != rhs._server {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

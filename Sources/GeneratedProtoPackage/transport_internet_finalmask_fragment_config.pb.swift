@@ -29,17 +29,17 @@ public struct Xray_Transport_Internet_Finalmask_Fragment_Config: Sendable {
 
   public var packetsTo: Int64 = 0
 
-  public var lengthMin: Int64 = 0
-
-  public var lengthMax: Int64 = 0
-
-  public var delayMin: Int64 = 0
-
-  public var delayMax: Int64 = 0
-
   public var maxSplitMin: Int64 = 0
 
   public var maxSplitMax: Int64 = 0
+
+  public var lengthsMin: [Int64] = []
+
+  public var lengthsMax: [Int64] = []
+
+  public var delaysMin: [Int64] = []
+
+  public var delaysMax: [Int64] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -55,12 +55,12 @@ extension Xray_Transport_Internet_Finalmask_Fragment_Config: SwiftProtobuf.Messa
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "packets_from"),
     2: .standard(proto: "packets_to"),
-    3: .standard(proto: "length_min"),
-    4: .standard(proto: "length_max"),
-    5: .standard(proto: "delay_min"),
-    6: .standard(proto: "delay_max"),
     7: .standard(proto: "max_split_min"),
     8: .standard(proto: "max_split_max"),
+    9: .standard(proto: "lengths_min"),
+    10: .standard(proto: "lengths_max"),
+    11: .standard(proto: "delays_min"),
+    12: .standard(proto: "delays_max"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -71,12 +71,12 @@ extension Xray_Transport_Internet_Finalmask_Fragment_Config: SwiftProtobuf.Messa
       switch fieldNumber {
       case 1: try { try decoder.decodeSingularInt64Field(value: &self.packetsFrom) }()
       case 2: try { try decoder.decodeSingularInt64Field(value: &self.packetsTo) }()
-      case 3: try { try decoder.decodeSingularInt64Field(value: &self.lengthMin) }()
-      case 4: try { try decoder.decodeSingularInt64Field(value: &self.lengthMax) }()
-      case 5: try { try decoder.decodeSingularInt64Field(value: &self.delayMin) }()
-      case 6: try { try decoder.decodeSingularInt64Field(value: &self.delayMax) }()
       case 7: try { try decoder.decodeSingularInt64Field(value: &self.maxSplitMin) }()
       case 8: try { try decoder.decodeSingularInt64Field(value: &self.maxSplitMax) }()
+      case 9: try { try decoder.decodeRepeatedInt64Field(value: &self.lengthsMin) }()
+      case 10: try { try decoder.decodeRepeatedInt64Field(value: &self.lengthsMax) }()
+      case 11: try { try decoder.decodeRepeatedInt64Field(value: &self.delaysMin) }()
+      case 12: try { try decoder.decodeRepeatedInt64Field(value: &self.delaysMax) }()
       default: break
       }
     }
@@ -89,23 +89,23 @@ extension Xray_Transport_Internet_Finalmask_Fragment_Config: SwiftProtobuf.Messa
     if self.packetsTo != 0 {
       try visitor.visitSingularInt64Field(value: self.packetsTo, fieldNumber: 2)
     }
-    if self.lengthMin != 0 {
-      try visitor.visitSingularInt64Field(value: self.lengthMin, fieldNumber: 3)
-    }
-    if self.lengthMax != 0 {
-      try visitor.visitSingularInt64Field(value: self.lengthMax, fieldNumber: 4)
-    }
-    if self.delayMin != 0 {
-      try visitor.visitSingularInt64Field(value: self.delayMin, fieldNumber: 5)
-    }
-    if self.delayMax != 0 {
-      try visitor.visitSingularInt64Field(value: self.delayMax, fieldNumber: 6)
-    }
     if self.maxSplitMin != 0 {
       try visitor.visitSingularInt64Field(value: self.maxSplitMin, fieldNumber: 7)
     }
     if self.maxSplitMax != 0 {
       try visitor.visitSingularInt64Field(value: self.maxSplitMax, fieldNumber: 8)
+    }
+    if !self.lengthsMin.isEmpty {
+      try visitor.visitPackedInt64Field(value: self.lengthsMin, fieldNumber: 9)
+    }
+    if !self.lengthsMax.isEmpty {
+      try visitor.visitPackedInt64Field(value: self.lengthsMax, fieldNumber: 10)
+    }
+    if !self.delaysMin.isEmpty {
+      try visitor.visitPackedInt64Field(value: self.delaysMin, fieldNumber: 11)
+    }
+    if !self.delaysMax.isEmpty {
+      try visitor.visitPackedInt64Field(value: self.delaysMax, fieldNumber: 12)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -113,12 +113,12 @@ extension Xray_Transport_Internet_Finalmask_Fragment_Config: SwiftProtobuf.Messa
   public static func ==(lhs: Xray_Transport_Internet_Finalmask_Fragment_Config, rhs: Xray_Transport_Internet_Finalmask_Fragment_Config) -> Bool {
     if lhs.packetsFrom != rhs.packetsFrom {return false}
     if lhs.packetsTo != rhs.packetsTo {return false}
-    if lhs.lengthMin != rhs.lengthMin {return false}
-    if lhs.lengthMax != rhs.lengthMax {return false}
-    if lhs.delayMin != rhs.delayMin {return false}
-    if lhs.delayMax != rhs.delayMax {return false}
     if lhs.maxSplitMin != rhs.maxSplitMin {return false}
     if lhs.maxSplitMax != rhs.maxSplitMax {return false}
+    if lhs.lengthsMin != rhs.lengthsMin {return false}
+    if lhs.lengthsMax != rhs.lengthsMax {return false}
+    if lhs.delaysMin != rhs.delaysMin {return false}
+    if lhs.delaysMax != rhs.delaysMax {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

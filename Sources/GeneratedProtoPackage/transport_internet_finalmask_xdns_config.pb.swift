@@ -20,14 +20,81 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+public struct Xray_Transport_Internet_Finalmask_Xdns_DomainProto: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var name: String = String()
+
+  public var lenLimit: Int32 = 0
+
+  public var labelLimit: Int32 = 0
+
+  public var types: [Int32] = []
+
+  public var edns0: Int32 = 0
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Xray_Transport_Internet_Finalmask_Xdns_ResolverProto: @unchecked Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var type: String {
+    get {return _storage._type}
+    set {_uniqueStorage()._type = newValue}
+  }
+
+  public var addr: String {
+    get {return _storage._addr}
+    set {_uniqueStorage()._addr = newValue}
+  }
+
+  public var worker: Int32 {
+    get {return _storage._worker}
+    set {_uniqueStorage()._worker = newValue}
+  }
+
+  public var tlsConfig: Xray_Transport_Internet_Tls_Config {
+    get {return _storage._tlsConfig ?? Xray_Transport_Internet_Tls_Config()}
+    set {_uniqueStorage()._tlsConfig = newValue}
+  }
+  /// Returns true if `tlsConfig` has been explicitly set.
+  public var hasTlsConfig: Bool {return _storage._tlsConfig != nil}
+  /// Clears the value of `tlsConfig`. Subsequent reads from it will return its default value.
+  public mutating func clearTlsConfig() {_uniqueStorage()._tlsConfig = nil}
+
+  public var quicConfig: Xray_Transport_Internet_QuicParams {
+    get {return _storage._quicConfig ?? Xray_Transport_Internet_QuicParams()}
+    set {_uniqueStorage()._quicConfig = newValue}
+  }
+  /// Returns true if `quicConfig` has been explicitly set.
+  public var hasQuicConfig: Bool {return _storage._quicConfig != nil}
+  /// Clears the value of `quicConfig`. Subsequent reads from it will return its default value.
+  public mutating func clearQuicConfig() {_uniqueStorage()._quicConfig = nil}
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
 public struct Xray_Transport_Internet_Finalmask_Xdns_Config: Sendable {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  public var domains: [String] = []
+  public var domains: [Xray_Transport_Internet_Finalmask_Xdns_DomainProto] = []
 
-  public var resolvers: [String] = []
+  public var resolvers: [Xray_Transport_Internet_Finalmask_Xdns_ResolverProto] = []
+
+  public var extraPoll: Int32 = 0
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -38,11 +105,14 @@ public struct Xray_Transport_Internet_Finalmask_Xdns_Config: Sendable {
 
 fileprivate let _protobuf_package = "xray.transport.internet.finalmask.xdns"
 
-extension Xray_Transport_Internet_Finalmask_Xdns_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  public static let protoMessageName: String = _protobuf_package + ".Config"
+extension Xray_Transport_Internet_Finalmask_Xdns_DomainProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".DomainProto"
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "domains"),
-    2: .same(proto: "resolvers"),
+    1: .same(proto: "name"),
+    2: .standard(proto: "len_limit"),
+    3: .standard(proto: "label_limit"),
+    4: .same(proto: "types"),
+    5: .same(proto: "edns0"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -51,8 +121,171 @@ extension Xray_Transport_Internet_Finalmask_Xdns_Config: SwiftProtobuf.Message, 
       // allocates stack space for every case branch when no optimizations are
       // enabled. https://github.com/apple/swift-protobuf/issues/1034
       switch fieldNumber {
-      case 1: try { try decoder.decodeRepeatedStringField(value: &self.domains) }()
-      case 2: try { try decoder.decodeRepeatedStringField(value: &self.resolvers) }()
+      case 1: try { try decoder.decodeSingularStringField(value: &self.name) }()
+      case 2: try { try decoder.decodeSingularInt32Field(value: &self.lenLimit) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.labelLimit) }()
+      case 4: try { try decoder.decodeRepeatedInt32Field(value: &self.types) }()
+      case 5: try { try decoder.decodeSingularInt32Field(value: &self.edns0) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
+    }
+    if self.lenLimit != 0 {
+      try visitor.visitSingularInt32Field(value: self.lenLimit, fieldNumber: 2)
+    }
+    if self.labelLimit != 0 {
+      try visitor.visitSingularInt32Field(value: self.labelLimit, fieldNumber: 3)
+    }
+    if !self.types.isEmpty {
+      try visitor.visitPackedInt32Field(value: self.types, fieldNumber: 4)
+    }
+    if self.edns0 != 0 {
+      try visitor.visitSingularInt32Field(value: self.edns0, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Xray_Transport_Internet_Finalmask_Xdns_DomainProto, rhs: Xray_Transport_Internet_Finalmask_Xdns_DomainProto) -> Bool {
+    if lhs.name != rhs.name {return false}
+    if lhs.lenLimit != rhs.lenLimit {return false}
+    if lhs.labelLimit != rhs.labelLimit {return false}
+    if lhs.types != rhs.types {return false}
+    if lhs.edns0 != rhs.edns0 {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Xray_Transport_Internet_Finalmask_Xdns_ResolverProto: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".ResolverProto"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "type"),
+    2: .same(proto: "addr"),
+    3: .same(proto: "worker"),
+    4: .standard(proto: "tls_config"),
+    5: .standard(proto: "quic_config"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _type: String = String()
+    var _addr: String = String()
+    var _worker: Int32 = 0
+    var _tlsConfig: Xray_Transport_Internet_Tls_Config? = nil
+    var _quicConfig: Xray_Transport_Internet_QuicParams? = nil
+
+    #if swift(>=5.10)
+      // This property is used as the initial default value for new instances of the type.
+      // The type itself is protecting the reference to its storage via CoW semantics.
+      // This will force a copy to be made of this reference when the first mutation occurs;
+      // hence, it is safe to mark this as `nonisolated(unsafe)`.
+      static nonisolated(unsafe) let defaultInstance = _StorageClass()
+    #else
+      static let defaultInstance = _StorageClass()
+    #endif
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _type = source._type
+      _addr = source._addr
+      _worker = source._worker
+      _tlsConfig = source._tlsConfig
+      _quicConfig = source._quicConfig
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        // The use of inline closures is to circumvent an issue where the compiler
+        // allocates stack space for every case branch when no optimizations are
+        // enabled. https://github.com/apple/swift-protobuf/issues/1034
+        switch fieldNumber {
+        case 1: try { try decoder.decodeSingularStringField(value: &_storage._type) }()
+        case 2: try { try decoder.decodeSingularStringField(value: &_storage._addr) }()
+        case 3: try { try decoder.decodeSingularInt32Field(value: &_storage._worker) }()
+        case 4: try { try decoder.decodeSingularMessageField(value: &_storage._tlsConfig) }()
+        case 5: try { try decoder.decodeSingularMessageField(value: &_storage._quicConfig) }()
+        default: break
+        }
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every if/case branch local when no optimizations
+      // are enabled. https://github.com/apple/swift-protobuf/issues/1034 and
+      // https://github.com/apple/swift-protobuf/issues/1182
+      if !_storage._type.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._type, fieldNumber: 1)
+      }
+      if !_storage._addr.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._addr, fieldNumber: 2)
+      }
+      if _storage._worker != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._worker, fieldNumber: 3)
+      }
+      try { if let v = _storage._tlsConfig {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      } }()
+      try { if let v = _storage._quicConfig {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+      } }()
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Xray_Transport_Internet_Finalmask_Xdns_ResolverProto, rhs: Xray_Transport_Internet_Finalmask_Xdns_ResolverProto) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._type != rhs_storage._type {return false}
+        if _storage._addr != rhs_storage._addr {return false}
+        if _storage._worker != rhs_storage._worker {return false}
+        if _storage._tlsConfig != rhs_storage._tlsConfig {return false}
+        if _storage._quicConfig != rhs_storage._quicConfig {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Xray_Transport_Internet_Finalmask_Xdns_Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".Config"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "domains"),
+    2: .same(proto: "resolvers"),
+    3: .standard(proto: "extra_poll"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.domains) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.resolvers) }()
+      case 3: try { try decoder.decodeSingularInt32Field(value: &self.extraPoll) }()
       default: break
       }
     }
@@ -60,10 +293,13 @@ extension Xray_Transport_Internet_Finalmask_Xdns_Config: SwiftProtobuf.Message, 
 
   public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if !self.domains.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.domains, fieldNumber: 1)
+      try visitor.visitRepeatedMessageField(value: self.domains, fieldNumber: 1)
     }
     if !self.resolvers.isEmpty {
-      try visitor.visitRepeatedStringField(value: self.resolvers, fieldNumber: 2)
+      try visitor.visitRepeatedMessageField(value: self.resolvers, fieldNumber: 2)
+    }
+    if self.extraPoll != 0 {
+      try visitor.visitSingularInt32Field(value: self.extraPoll, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -71,6 +307,7 @@ extension Xray_Transport_Internet_Finalmask_Xdns_Config: SwiftProtobuf.Message, 
   public static func ==(lhs: Xray_Transport_Internet_Finalmask_Xdns_Config, rhs: Xray_Transport_Internet_Finalmask_Xdns_Config) -> Bool {
     if lhs.domains != rhs.domains {return false}
     if lhs.resolvers != rhs.resolvers {return false}
+    if lhs.extraPoll != rhs.extraPoll {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -26,10 +26,6 @@ public enum Xray_Common_Protocol_SecurityType: SwiftProtobuf.Enum, Swift.CaseIte
   case auto // = 2
   case aes128Gcm // = 3
   case chacha20Poly1305 // = 4
-
-  /// [DEPRECATED 2023-06] 
-  case none // = 5
-  case zero // = 6
   case UNRECOGNIZED(Int)
 
   public init() {
@@ -42,8 +38,6 @@ public enum Xray_Common_Protocol_SecurityType: SwiftProtobuf.Enum, Swift.CaseIte
     case 2: self = .auto
     case 3: self = .aes128Gcm
     case 4: self = .chacha20Poly1305
-    case 5: self = .none
-    case 6: self = .zero
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -54,8 +48,6 @@ public enum Xray_Common_Protocol_SecurityType: SwiftProtobuf.Enum, Swift.CaseIte
     case .auto: return 2
     case .aes128Gcm: return 3
     case .chacha20Poly1305: return 4
-    case .none: return 5
-    case .zero: return 6
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -66,8 +58,6 @@ public enum Xray_Common_Protocol_SecurityType: SwiftProtobuf.Enum, Swift.CaseIte
     .auto,
     .aes128Gcm,
     .chacha20Poly1305,
-    .none,
-    .zero,
   ]
 
 }
@@ -94,8 +84,6 @@ extension Xray_Common_Protocol_SecurityType: SwiftProtobuf._ProtoNameProviding {
     2: .same(proto: "AUTO"),
     3: .same(proto: "AES128_GCM"),
     4: .same(proto: "CHACHA20_POLY1305"),
-    5: .same(proto: "NONE"),
-    6: .same(proto: "ZERO"),
   ]
 }
 

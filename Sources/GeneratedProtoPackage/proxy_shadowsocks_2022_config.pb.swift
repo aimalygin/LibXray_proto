@@ -137,10 +137,6 @@ public struct Xray_Proxy_Shadowsocks2022_ClientConfig: Sendable {
 
   public var key: String = String()
 
-  public var udpOverTcp: Bool = false
-
-  public var udpOverTcpVersion: UInt32 = 0
-
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -407,8 +403,6 @@ extension Xray_Proxy_Shadowsocks2022_ClientConfig: SwiftProtobuf.Message, SwiftP
     2: .same(proto: "port"),
     3: .same(proto: "method"),
     4: .same(proto: "key"),
-    5: .standard(proto: "udp_over_tcp"),
-    6: .standard(proto: "udp_over_tcp_version"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -421,8 +415,6 @@ extension Xray_Proxy_Shadowsocks2022_ClientConfig: SwiftProtobuf.Message, SwiftP
       case 2: try { try decoder.decodeSingularUInt32Field(value: &self.port) }()
       case 3: try { try decoder.decodeSingularStringField(value: &self.method) }()
       case 4: try { try decoder.decodeSingularStringField(value: &self.key) }()
-      case 5: try { try decoder.decodeSingularBoolField(value: &self.udpOverTcp) }()
-      case 6: try { try decoder.decodeSingularUInt32Field(value: &self.udpOverTcpVersion) }()
       default: break
       }
     }
@@ -445,12 +437,6 @@ extension Xray_Proxy_Shadowsocks2022_ClientConfig: SwiftProtobuf.Message, SwiftP
     if !self.key.isEmpty {
       try visitor.visitSingularStringField(value: self.key, fieldNumber: 4)
     }
-    if self.udpOverTcp != false {
-      try visitor.visitSingularBoolField(value: self.udpOverTcp, fieldNumber: 5)
-    }
-    if self.udpOverTcpVersion != 0 {
-      try visitor.visitSingularUInt32Field(value: self.udpOverTcpVersion, fieldNumber: 6)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -459,8 +445,6 @@ extension Xray_Proxy_Shadowsocks2022_ClientConfig: SwiftProtobuf.Message, SwiftP
     if lhs.port != rhs.port {return false}
     if lhs.method != rhs.method {return false}
     if lhs.key != rhs.key {return false}
-    if lhs.udpOverTcp != rhs.udpOverTcp {return false}
-    if lhs.udpOverTcpVersion != rhs.udpOverTcpVersion {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

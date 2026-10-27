@@ -203,7 +203,19 @@ public struct Xray_Transport_Internet_Finalmask_Header_Custom_UDPConfig: Sendabl
 
   public var server: [Xray_Transport_Internet_Finalmask_Header_Custom_UDPItem] = []
 
-  public var mode: String = String()
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
+}
+
+public struct Xray_Transport_Internet_Finalmask_Header_Custom_UDPStandaloneConfig: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var client: [Xray_Transport_Internet_Finalmask_Header_Custom_UDPItem] = []
+
+  public var server: [Xray_Transport_Internet_Finalmask_Header_Custom_UDPItem] = []
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -593,7 +605,6 @@ extension Xray_Transport_Internet_Finalmask_Header_Custom_UDPConfig: SwiftProtob
   public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "client"),
     2: .same(proto: "server"),
-    3: .same(proto: "mode"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -604,7 +615,6 @@ extension Xray_Transport_Internet_Finalmask_Header_Custom_UDPConfig: SwiftProtob
       switch fieldNumber {
       case 1: try { try decoder.decodeRepeatedMessageField(value: &self.client) }()
       case 2: try { try decoder.decodeRepeatedMessageField(value: &self.server) }()
-      case 3: try { try decoder.decodeSingularStringField(value: &self.mode) }()
       default: break
       }
     }
@@ -617,16 +627,50 @@ extension Xray_Transport_Internet_Finalmask_Header_Custom_UDPConfig: SwiftProtob
     if !self.server.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.server, fieldNumber: 2)
     }
-    if !self.mode.isEmpty {
-      try visitor.visitSingularStringField(value: self.mode, fieldNumber: 3)
-    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   public static func ==(lhs: Xray_Transport_Internet_Finalmask_Header_Custom_UDPConfig, rhs: Xray_Transport_Internet_Finalmask_Header_Custom_UDPConfig) -> Bool {
     if lhs.client != rhs.client {return false}
     if lhs.server != rhs.server {return false}
-    if lhs.mode != rhs.mode {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Xray_Transport_Internet_Finalmask_Header_Custom_UDPStandaloneConfig: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".UDPStandaloneConfig"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "client"),
+    2: .same(proto: "server"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeRepeatedMessageField(value: &self.client) }()
+      case 2: try { try decoder.decodeRepeatedMessageField(value: &self.server) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.client.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.client, fieldNumber: 1)
+    }
+    if !self.server.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.server, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Xray_Transport_Internet_Finalmask_Header_Custom_UDPStandaloneConfig, rhs: Xray_Transport_Internet_Finalmask_Header_Custom_UDPStandaloneConfig) -> Bool {
+    if lhs.client != rhs.client {return false}
+    if lhs.server != rhs.server {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
