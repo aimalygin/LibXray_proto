@@ -94,11 +94,38 @@ public struct Xray_Transport_Internet_Xdrive_Config: @unchecked Sendable {
   /// Clears the value of `xmux`. Subsequent reads from it will return its default value.
   public mutating func clearXmux() {_uniqueStorage()._xmux = nil}
 
+  public var s3: Xray_Transport_Internet_Xdrive_S3Config {
+    get {return _storage._s3 ?? Xray_Transport_Internet_Xdrive_S3Config()}
+    set {_uniqueStorage()._s3 = newValue}
+  }
+  /// Returns true if `s3` has been explicitly set.
+  public var hasS3: Bool {return _storage._s3 != nil}
+  /// Clears the value of `s3`. Subsequent reads from it will return its default value.
+  public mutating func clearS3() {_uniqueStorage()._s3 = nil}
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+public struct Xray_Transport_Internet_Xdrive_S3Config: Sendable {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  public var endpoint: String = String()
+
+  public var region: String = String()
+
+  public var bucket: String = String()
+
+  public var pathStyle: Bool = false
+
+  public var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  public init() {}
 }
 
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
@@ -121,6 +148,7 @@ extension Xray_Transport_Internet_Xdrive_Config: SwiftProtobuf.Message, SwiftPro
     11: .standard(proto: "hole_timeout_ms"),
     12: .same(proto: "template"),
     13: .same(proto: "xmux"),
+    14: .same(proto: "s3"),
   ]
 
   fileprivate class _StorageClass {
@@ -137,6 +165,7 @@ extension Xray_Transport_Internet_Xdrive_Config: SwiftProtobuf.Message, SwiftPro
     var _holeTimeoutMs: UInt32 = 0
     var _template: String = String()
     var _xmux: Xray_Transport_Internet_Splithttp_XmuxConfig? = nil
+    var _s3: Xray_Transport_Internet_Xdrive_S3Config? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -164,6 +193,7 @@ extension Xray_Transport_Internet_Xdrive_Config: SwiftProtobuf.Message, SwiftPro
       _holeTimeoutMs = source._holeTimeoutMs
       _template = source._template
       _xmux = source._xmux
+      _s3 = source._s3
     }
   }
 
@@ -195,6 +225,7 @@ extension Xray_Transport_Internet_Xdrive_Config: SwiftProtobuf.Message, SwiftPro
         case 11: try { try decoder.decodeSingularUInt32Field(value: &_storage._holeTimeoutMs) }()
         case 12: try { try decoder.decodeSingularStringField(value: &_storage._template) }()
         case 13: try { try decoder.decodeSingularMessageField(value: &_storage._xmux) }()
+        case 14: try { try decoder.decodeSingularMessageField(value: &_storage._s3) }()
         default: break
         }
       }
@@ -246,6 +277,9 @@ extension Xray_Transport_Internet_Xdrive_Config: SwiftProtobuf.Message, SwiftPro
       try { if let v = _storage._xmux {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 13)
       } }()
+      try { if let v = _storage._s3 {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 14)
+      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -268,10 +302,61 @@ extension Xray_Transport_Internet_Xdrive_Config: SwiftProtobuf.Message, SwiftPro
         if _storage._holeTimeoutMs != rhs_storage._holeTimeoutMs {return false}
         if _storage._template != rhs_storage._template {return false}
         if _storage._xmux != rhs_storage._xmux {return false}
+        if _storage._s3 != rhs_storage._s3 {return false}
         return true
       }
       if !storagesAreEqual {return false}
     }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Xray_Transport_Internet_Xdrive_S3Config: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  public static let protoMessageName: String = _protobuf_package + ".S3Config"
+  public static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "endpoint"),
+    2: .same(proto: "region"),
+    3: .same(proto: "bucket"),
+    4: .standard(proto: "path_style"),
+  ]
+
+  public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      // The use of inline closures is to circumvent an issue where the compiler
+      // allocates stack space for every case branch when no optimizations are
+      // enabled. https://github.com/apple/swift-protobuf/issues/1034
+      switch fieldNumber {
+      case 1: try { try decoder.decodeSingularStringField(value: &self.endpoint) }()
+      case 2: try { try decoder.decodeSingularStringField(value: &self.region) }()
+      case 3: try { try decoder.decodeSingularStringField(value: &self.bucket) }()
+      case 4: try { try decoder.decodeSingularBoolField(value: &self.pathStyle) }()
+      default: break
+      }
+    }
+  }
+
+  public func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.endpoint.isEmpty {
+      try visitor.visitSingularStringField(value: self.endpoint, fieldNumber: 1)
+    }
+    if !self.region.isEmpty {
+      try visitor.visitSingularStringField(value: self.region, fieldNumber: 2)
+    }
+    if !self.bucket.isEmpty {
+      try visitor.visitSingularStringField(value: self.bucket, fieldNumber: 3)
+    }
+    if self.pathStyle != false {
+      try visitor.visitSingularBoolField(value: self.pathStyle, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  public static func ==(lhs: Xray_Transport_Internet_Xdrive_S3Config, rhs: Xray_Transport_Internet_Xdrive_S3Config) -> Bool {
+    if lhs.endpoint != rhs.endpoint {return false}
+    if lhs.region != rhs.region {return false}
+    if lhs.bucket != rhs.bucket {return false}
+    if lhs.pathStyle != rhs.pathStyle {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

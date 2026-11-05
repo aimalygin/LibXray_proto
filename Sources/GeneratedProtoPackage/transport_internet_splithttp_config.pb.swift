@@ -8,6 +8,7 @@
 // For information on using the generated types, please see the documentation:
 //   https://github.com/apple/swift-protobuf/
 
+import Foundation
 import SwiftProtobuf
 
 // If the compiler emits an error on this type, it is because this file
@@ -279,6 +280,11 @@ public struct Xray_Transport_Internet_Splithttp_Config: @unchecked Sendable {
   /// Clears the value of `sessionIdlength`. Subsequent reads from it will return its default value.
   public mutating func clearSessionIdlength() {_uniqueStorage()._sessionIdlength = nil}
 
+  public var h2Params: Data {
+    get {return _storage._h2Params}
+    set {_uniqueStorage()._h2Params = newValue}
+  }
+
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
@@ -426,6 +432,7 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
     27: .same(proto: "serverMaxHeaderBytes"),
     28: .same(proto: "sessionIDTable"),
     29: .same(proto: "sessionIDLength"),
+    30: .same(proto: "h2Params"),
   ]
 
   fileprivate class _StorageClass {
@@ -458,6 +465,7 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
     var _serverMaxHeaderBytes: Int32 = 0
     var _sessionIdtable: String = String()
     var _sessionIdlength: Xray_Transport_Internet_Splithttp_RangeConfig? = nil
+    var _h2Params: Data = Data()
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -501,6 +509,7 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
       _serverMaxHeaderBytes = source._serverMaxHeaderBytes
       _sessionIdtable = source._sessionIdtable
       _sessionIdlength = source._sessionIdlength
+      _h2Params = source._h2Params
     }
   }
 
@@ -548,6 +557,7 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
         case 27: try { try decoder.decodeSingularInt32Field(value: &_storage._serverMaxHeaderBytes) }()
         case 28: try { try decoder.decodeSingularStringField(value: &_storage._sessionIdtable) }()
         case 29: try { try decoder.decodeSingularMessageField(value: &_storage._sessionIdlength) }()
+        case 30: try { try decoder.decodeSingularBytesField(value: &_storage._h2Params) }()
         default: break
         }
       }
@@ -647,6 +657,9 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
       try { if let v = _storage._sessionIdlength {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 29)
       } }()
+      if !_storage._h2Params.isEmpty {
+        try visitor.visitSingularBytesField(value: _storage._h2Params, fieldNumber: 30)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -685,6 +698,7 @@ extension Xray_Transport_Internet_Splithttp_Config: SwiftProtobuf.Message, Swift
         if _storage._serverMaxHeaderBytes != rhs_storage._serverMaxHeaderBytes {return false}
         if _storage._sessionIdtable != rhs_storage._sessionIdtable {return false}
         if _storage._sessionIdlength != rhs_storage._sessionIdlength {return false}
+        if _storage._h2Params != rhs_storage._h2Params {return false}
         return true
       }
       if !storagesAreEqual {return false}
