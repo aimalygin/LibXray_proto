@@ -158,21 +158,31 @@ public struct Xray_Proxy_Freedom_FinalRuleConfig: Sendable {
 
   public var ip: [Xray_Common_Geodata_IPRule] = []
 
-  public var blockDelay: Xray_Proxy_Freedom_Range {
-    get {return _blockDelay ?? Xray_Proxy_Freedom_Range()}
-    set {_blockDelay = newValue}
+  public var delay: Xray_Proxy_Freedom_Range {
+    get {return _delay ?? Xray_Proxy_Freedom_Range()}
+    set {_delay = newValue}
   }
-  /// Returns true if `blockDelay` has been explicitly set.
-  public var hasBlockDelay: Bool {return self._blockDelay != nil}
-  /// Clears the value of `blockDelay`. Subsequent reads from it will return its default value.
-  public mutating func clearBlockDelay() {self._blockDelay = nil}
+  /// Returns true if `delay` has been explicitly set.
+  public var hasDelay: Bool {return self._delay != nil}
+  /// Clears the value of `delay`. Subsequent reads from it will return its default value.
+  public mutating func clearDelay() {self._delay = nil}
+
+  public var logLevel: Xray_Common_Log_Severity {
+    get {return _logLevel ?? .unknown}
+    set {_logLevel = newValue}
+  }
+  /// Returns true if `logLevel` has been explicitly set.
+  public var hasLogLevel: Bool {return self._logLevel != nil}
+  /// Clears the value of `logLevel`. Subsequent reads from it will return its default value.
+  public mutating func clearLogLevel() {self._logLevel = nil}
 
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public init() {}
 
   fileprivate var _portList: Xray_Common_Net_PortList? = nil
-  fileprivate var _blockDelay: Xray_Proxy_Freedom_Range? = nil
+  fileprivate var _delay: Xray_Proxy_Freedom_Range? = nil
+  fileprivate var _logLevel: Xray_Common_Log_Severity? = nil
 }
 
 public struct Xray_Proxy_Freedom_Config: @unchecked Sendable {
@@ -458,7 +468,8 @@ extension Xray_Proxy_Freedom_FinalRuleConfig: SwiftProtobuf.Message, SwiftProtob
     2: .same(proto: "networks"),
     3: .standard(proto: "port_list"),
     4: .same(proto: "ip"),
-    5: .standard(proto: "block_delay"),
+    5: .same(proto: "delay"),
+    6: .standard(proto: "log_level"),
   ]
 
   public mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -471,7 +482,8 @@ extension Xray_Proxy_Freedom_FinalRuleConfig: SwiftProtobuf.Message, SwiftProtob
       case 2: try { try decoder.decodeRepeatedEnumField(value: &self.networks) }()
       case 3: try { try decoder.decodeSingularMessageField(value: &self._portList) }()
       case 4: try { try decoder.decodeRepeatedMessageField(value: &self.ip) }()
-      case 5: try { try decoder.decodeSingularMessageField(value: &self._blockDelay) }()
+      case 5: try { try decoder.decodeSingularMessageField(value: &self._delay) }()
+      case 6: try { try decoder.decodeSingularEnumField(value: &self._logLevel) }()
       default: break
       }
     }
@@ -494,8 +506,11 @@ extension Xray_Proxy_Freedom_FinalRuleConfig: SwiftProtobuf.Message, SwiftProtob
     if !self.ip.isEmpty {
       try visitor.visitRepeatedMessageField(value: self.ip, fieldNumber: 4)
     }
-    try { if let v = self._blockDelay {
+    try { if let v = self._delay {
       try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+    } }()
+    try { if let v = self._logLevel {
+      try visitor.visitSingularEnumField(value: v, fieldNumber: 6)
     } }()
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -505,7 +520,8 @@ extension Xray_Proxy_Freedom_FinalRuleConfig: SwiftProtobuf.Message, SwiftProtob
     if lhs.networks != rhs.networks {return false}
     if lhs._portList != rhs._portList {return false}
     if lhs.ip != rhs.ip {return false}
-    if lhs._blockDelay != rhs._blockDelay {return false}
+    if lhs._delay != rhs._delay {return false}
+    if lhs._logLevel != rhs._logLevel {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
